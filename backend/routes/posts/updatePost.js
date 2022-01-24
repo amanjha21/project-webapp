@@ -1,3 +1,4 @@
+const Schemas = require("../../models/index");
 module.exports = async (req, res) => {
   const userId = req.body.userId || "61eaeee6ef856a79a71d19b9";
   const postId = req.body.postId || "61eb01253b5a09f2341e84b0";
@@ -20,7 +21,7 @@ module.exports = async (req, res) => {
       });
     }
     if (post.user != userId) {
-      return res.status(403).json({
+      return res.status(400).json({
         success: false,
         message: "Post doesn't exist ",
       });
