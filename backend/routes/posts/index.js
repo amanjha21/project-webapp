@@ -1,18 +1,18 @@
 const router = require("express").Router();
-const Schemas = require("../../models/index");
-const uploader = require("../../helpers/uploader");
-const mongoose = require("mongoose");
-const ObjectId = mongoose.Types.ObjectId;
 const getPosts = require("./getPosts");
 const getPostById = require("./getPostById");
+const getPostByUserId = require("./getPostByUserId");
 const addPost = require("./addPost");
 const updatePost = require("./updatePost");
-const deletePost = require("./deletePost");
+const deletePostById = require("./deletePostById");
+const deletePostsByUserId = require("./deletePostsByUserId");
 
 //get post route
 router.get("/", getPosts);
 //get post by postid route
 router.get("/:id", getPostById);
+//get post by userid route
+router.get("/user/:id", getPostByUserId);
 
 //add post route
 router.post("/", addPost);
@@ -21,5 +21,7 @@ router.post("/", addPost);
 router.post("/update", updatePost);
 
 //delete post
-router.delete("/", deletePost);
+router.delete("/:id", deletePostById);
+//delete all post for user
+router.delete("/delete/all", deletePostsByUserId);
 module.exports = router;
