@@ -1,26 +1,26 @@
 const Schemas = require("../../models/index");
 
 module.exports = async (req,res) => {
-    const organizationId = req.params.id || "453eerw189y6yy6422e23";
-    if (organizationId.length != 24) {
+    const teamId = req.params.id || "453eerw189y6yy6422e23";
+    if (teamId.length != 24) {
         return res.status(400).json({
           success: false,
           message: "Invalid Request",
         });
       }
     try{
-    const organization = await Schemas.Organization.findOne({_id: organizationId}).exec();
-    if(!organization) {
+    const team = await Schemas.Team.findOne({_id: teamId}).exec();
+    if(!team) {
         return res.status(400).json({
             success: false,
-            message: "Organization doesn't exist",
+            message: "Team doesn't exist",
         });
     }
-    const result = await Schemas.Organization.deleteOne({_id: organizationId}).exec();
+    const result = await Schemas.Team.deleteOne({_id: teamId}).exec();
     if(result.deletedCount == 1){
         res.status(200).json({
             success: true,
-            message: "Organization deleted successfully",
+            message: "Team deleted successfully",
         });
     }else{
         res.status(400).json({
