@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const getPosts = require("./getPosts");
 const getPostById = require("./getPostById");
-const getPostByUserId = require("./getPostByUserId");
+const getPostsByUserId = require("./getPostsByUserId");
 const addPost = require("./addPost");
 const updatePost = require("./updatePost");
 const deletePostById = require("./deletePostById");
@@ -12,7 +12,7 @@ router.get("/", getPosts);
 //get post by postid route
 router.get("/:id", getPostById);
 //get post by userid route
-router.get("/user/:id", getPostByUserId);
+router.get("/user/:id", getPostsByUserId);
 
 //add post route
 router.post("/", addPost);
