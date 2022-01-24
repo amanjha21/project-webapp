@@ -1,6 +1,7 @@
+const Schemas = require("../../models/index");
 module.exports = async (req, res) => {
   const userId = req.body.userId || "61eaeee6ef856a79a71d19b9";
-  const postId = req.body.postId || "61eb01802628524805be0d4b";
+  const postId = req.params.id || "61eb01802628524805be0d4b";
   try {
     //check if this post exists and belongs to this user
     const post = await Schemas.Post.findOne({ _id: postId }).exec();
