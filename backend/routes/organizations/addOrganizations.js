@@ -1,11 +1,20 @@
+const Schemas = require("../../models/index");
+
 module.exports = async (req,res) => {
-  const organizationId = req.body.organizationId || "453eerw189y6yy6422e23";
   const name = req.body.name || "NIT";
   const email_format = req.body.email_format || "nit.ac.in";
 
   try {
+    //Check if Organization already exists
+    const result = await Schemas.Organization.findOne({email_format}).exec();
+    if(result){
+      return res.status(400).json({
+        success: false,
+        message: "Request failed",
+     });
+    }
+
     const organization = new Schemas.Organization({
-    organizationId,
     name,
     email_format,
    });

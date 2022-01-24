@@ -1,5 +1,7 @@
+const Schemas = require("../../models/index");
+
 module.exports = async (req,res) => {
-    const organizationId = req.body.organizationId || "453eerw189y6yy6422e23";
+    const organizationId = req.body.id || "453eerw189y6yy6422e23";
     try{
     const organization = await SchemaTypes.Organization.findOne({_id: organizationId}).exec();
     if(!organization) {

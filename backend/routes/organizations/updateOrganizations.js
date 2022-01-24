@@ -1,5 +1,7 @@
+const Schemas = require("../../models/index");
+
 module.exports = async (req,res) => {
-  const organizationId = req.body.organizationId || "453eerw189y6yy6422e23";
+  const organizationId = req.body.id || "453eerw189y6yy6422e23";
   const name = req.body.name || "NIT";
   const email_format = req.body.email_format || "nit.ac.in";
 
@@ -17,7 +19,7 @@ module.exports = async (req,res) => {
               message: "Organization doesn't exist",
           });
       }
-      if(name != organization.name){
+      if(name && name != organization.name){
           organization.name = name;
           await organization.save();
           res.status(200).json({
@@ -30,6 +32,19 @@ module.exports = async (req,res) => {
             message: "Failed to Update",
         });
     }
+    if(email_format && email_format != organization.email_format){
+        organization.email_format = email_format;
+        await organization.save();
+        res.status(200).json({
+            success: true,
+            message: "Organization Updated Successfully",
+        });
+    }else{
+      res.status(304).json({
+          success: false,
+          message: "Failed to Update",
+      });
+  }
       
   }catch (err){
       console.log(err);

@@ -7,15 +7,15 @@ const updateOrganizations = require("./updateOrganizations");
 const deleteOrganizations = require("./deleteOrganizations");
 
 //Get Organization
-router.get("/", getOrganizations);
+router.get("/:id", getOrganizations);
 
 //Add Organization
 router.post("/", addOrganizations);
 
 //Update Organization
-router.post("/update" , updateOrganizations)
+router.post("/update/:id" , updateOrganizations)
 
 //Delete Organization
-router.delete("/", deleteOrganizations);
+router.delete("/:id", deleteOrganizations);
 
 module.exports = router;

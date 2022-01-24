@@ -7,7 +7,7 @@ const getPosts = require("./getPosts");
 const getPostById = require("./getPostById");
 const addPost = require("./addPost");
 const updatePost = require("./updatePost");
-const deletePost = require("./deletePost");
+const deletePost = require("./deletePostById");
 
 //get post route
 router.get("/", getPosts);

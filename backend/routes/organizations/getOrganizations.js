@@ -1,3 +1,5 @@
+const Schemas = require("../../models/index");
+
 module.exports = async (req, res) => {
   const organizationId = req.params.id;
   if (organizationId.length != 24) {
@@ -7,11 +9,11 @@ module.exports = async (req, res) => {
     });
   }
   try {
-    const organization = await Schemas.Reaction.aggregate(pipeline);
+    const organization = await Schemas.Organization.findOne({_id: organizationId}).exec();
     if (organization.length == 0) {
       return res.status(400).json({
         success: false,
-        message: "Invalid Request",
+        message: "Organization doesn't exist",
       });
     }
     res.status(200).json(organization);
