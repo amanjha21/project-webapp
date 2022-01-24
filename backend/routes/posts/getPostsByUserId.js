@@ -2,9 +2,12 @@ const Schemas = require("../../models/index");
 const pipeline = require("../../helpers/pipeline");
 
 module.exports = async (req, res) => {
-  const postId = req.params.id;
-  const userId = "61eaeee6ef856a79a71d19b9";
-  if (postId.length != 24) {
+  //get user id from req.params
+  const userId = req.params.id || "61eaeee6ef856a79a71d19b9";
+  const currentUserId = "61eaeee6ef856a79a71d19b9";
+  const page = parseInt(req.query.page);
+  const noOfPosts = parseInt(req.query.number);
+  if (userId.length != 24) {
     return res.status(400).json({
       success: false,
       message: "Invalid Request",
@@ -12,7 +15,7 @@ module.exports = async (req, res) => {
   }
   try {
     const post = await Schemas.Post.aggregate(
-      pipeline.postById(postId, userId)
+      pipeline.postsByUserId(userId, currentUserId, page, noOfPosts)
     );
     if (post.length == 0) {
       return res.status(400).json({
