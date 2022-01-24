@@ -1,5 +1,9 @@
+const Schemas = require("../../models/index");
+const pipeline = require("../../helpers/pipeline");
+
 module.exports = async (req, res) => {
   const postId = req.params.id;
+  const userId = "61eaeee6ef856a79a71d19b9";
   if (postId.length != 24) {
     return res.status(400).json({
       success: false,
@@ -7,7 +11,9 @@ module.exports = async (req, res) => {
     });
   }
   try {
-    const post = await Schemas.Reaction.aggregate(pipeline);
+    const post = await Schemas.Post.aggregate(
+      pipeline.postById(postId, userId)
+    );
     if (post.length == 0) {
       return res.status(400).json({
         success: false,
