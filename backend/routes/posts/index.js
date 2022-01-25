@@ -4,7 +4,6 @@ const getPostById = require("./getPostById");
 const getPostsByUserId = require("./getPostsByUserId");
 const addPost = require("./addPost");
 const updatePost = require("./updatePost");
-//const deletePost = require("./deletePostById");
 const deletePostById = require("./deletePostById");
 const deletePostsByUserId = require("./deletePostsByUserId");
 
