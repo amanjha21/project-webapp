@@ -1,12 +1,10 @@
 const Schemas = require("../../models/index");
-const mongoose = require("mongoose");
-const ObjectId = mongoose.Types.ObjectId;
 
 module.exports = async (req, res) => {
   const teamId = req.params.id;
   const name = req.body.name;
-  const organizationId = req.body.organizationId;
-  const userId = req.body.userId;
+  const organization = req.body.organization;
+  const manager = req.body.manager;
 
   if (teamId.length != 24) {
     return res.status(400).json({
@@ -14,7 +12,7 @@ module.exports = async (req, res) => {
       message: "Invalid Request",
     });
   }
-  if (!name && !organizationId && !userId) {
+  if (!name && !organization && !manager) {
     return res.status(403).json({
       success: false,
       message: "Nothing to update",
@@ -30,19 +28,30 @@ module.exports = async (req, res) => {
         message: "Team doesn't exist",
       });
     }
-    if (name && name != organization.name) {
-      organization.name = name;
-      await organization.save();
+
+    if (name && name != team.name) {
+      team.name = name;
+      await team.save();
+    }
+
+    if (organization && organization != team.organization) {
+      team.organization = organization;
+      await team.save();
+    }
+
+    if (manager && manager != team.manager) {
+      team.manager = manager;
+      await team.save();
+    }
+
+    if (
+      name == team.name ||
+      organization == team.organization ||
+      manager == team.manager
+    ) {
       res.status(200).json({
         success: true,
-        message: "Organization Updated Successfully",
-      });
-    } else if (email_format && email_format != organization.email_format) {
-      organization.email_format = email_format;
-      await organization.save();
-      res.status(200).json({
-        success: true,
-        message: "Organization Updated Successfully",
+        message: "Team Updated Successfully",
       });
     } else {
       res.status(400).json({
