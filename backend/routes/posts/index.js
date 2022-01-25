@@ -4,12 +4,9 @@ const getPostById = require("./getPostById");
 const getPostsByUserId = require("./getPostsByUserId");
 const addPost = require("./addPost");
 const updatePost = require("./updatePost");
-<<<<<<< HEAD
-const deletePost = require("./deletePostById");
-=======
+//const deletePost = require("./deletePostById");
 const deletePostById = require("./deletePostById");
 const deletePostsByUserId = require("./deletePostsByUserId");
->>>>>>> 35e4e50450f12083325a65d9556b41e5e325f6d8
 
 //get post route
 router.get("/", getPosts);
