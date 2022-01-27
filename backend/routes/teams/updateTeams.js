@@ -5,7 +5,7 @@ module.exports = async (req, res) => {
   const name = req.body.name;
   const organization = req.body.organization;
   const admin = req.body.admin;
-  const moderator = req.body.moderator;
+  const mod = req.body.moderator;
 
   if (teamId.length != 24) {
     return res.status(400).json({
@@ -13,7 +13,7 @@ module.exports = async (req, res) => {
       message: "Invalid Request",
     });
   }
-  if (!name && !organization && !admin && !moderator) {
+  if (!name && !organization && !admin && !mod) {
     return res.status(403).json({
       success: false,
       message: "Nothing to update",
@@ -46,31 +46,21 @@ module.exports = async (req, res) => {
       await team.save();
     }
 
-    if (moderator && !team.moderator.includes(moderator)) {
-      team.moderator.push(moderator);
+    if (mod && !team.moderator.includes(mod)) {
+      team.moderator.push(mod);
       await team.save();
-    } else if (moderator) {
-      const index = team.moderator.indexOf(moderator);
-      team.moderator.splice(index, 1);
+    } else {
+      if (mod) {
+        const index = team.moderator.indexOf(mod);
+        team.moderator.splice(index, 1);
+      }
       await team.save();
     }
 
-    if (
-      name == team.name ||
-      organization == team.organization ||
-      admin == team.admin ||
-      team.moderator.includes(moderator)
-    ) {
-      res.status(200).json({
-        success: true,
-        message: "Team Updated Successfully",
-      });
-    } else {
-      res.status(400).json({
-        success: false,
-        message: "Failed to Update",
-      });
-    }
+    res.status(200).json({
+      success: true,
+      message: "Team Updated Successfully",
+    });
   } catch (err) {
     console.log(err);
     res.status(404).json({
