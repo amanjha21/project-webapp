@@ -4,7 +4,6 @@ const mongoose = require("mongoose");
 const getTeamById = require("./getTeamById");
 const getTeams = require("./getTeams");
 const getTeamsByOrganizationId = require("./getTeamsByOrganizationId");
-const getTeamsByUserId = require("./getTeamsByUserId");
 const addTeams = require("./addTeams");
 const updateTeams = require("./updateTeams");
 const deleteTeams = require("./deleteTeams");
@@ -17,9 +16,6 @@ router.get("/", getTeams);
 
 //Get Teams By OrganizationId
 router.get("/organization/:id", getTeamsByOrganizationId);
-
-//Get Teams By UserId
-router.get("/user/:id", getTeamsByUserId);
 
 //Add Team
 router.post("/", addTeams);
