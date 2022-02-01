@@ -5,7 +5,8 @@ const ObjectId = mongoose.Types.ObjectId;
 module.exports = async (req, res) => {
   const name = req.body.name;
   const organization = req.body.organization;
-  const user = req.body.user;
+  const admin = req.body.admin;
+  const moderator = req.body.moderator || [];
 
   try {
     //Check if Team already exists
@@ -23,7 +24,8 @@ module.exports = async (req, res) => {
     const team = new Schemas.Team({
       name,
       organization,
-      manager: user,
+      admin,
+      moderator,
     });
 
     await team.save();

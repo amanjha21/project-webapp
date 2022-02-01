@@ -4,10 +4,10 @@ module.exports = async (req, res) => {
   const userName = req.body.name;
   const userEmail = req.body.email;
   const organisation = req.body.organization;
-  const team = req.body.team;
+  const team = req.body.team || [];
   try {
     const result = await Schemas.User.findOne({
-      email: userEmail
+      email: userEmail,
     }).exec();
 
     if (result) {
@@ -35,6 +35,4 @@ module.exports = async (req, res) => {
       message: "Failed to create",
     });
   }
-
-
 };

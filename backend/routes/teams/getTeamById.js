@@ -2,6 +2,7 @@ const Schemas = require("../../models/index");
 
 module.exports = async (req, res) => {
   const teamId = req.params.id;
+
   if (teamId.length != 24) {
     return res.status(400).json({
       success: false,
