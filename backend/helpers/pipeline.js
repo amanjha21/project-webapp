@@ -763,8 +763,152 @@ const postsByUserId = (userId, currentUserId, pageInput, number) => {
     return pipeline;
   }
 };
+const organizationDetails = (organizationId) => {
+  const pipeline = [
+    {
+      $match: {
+        _id: new ObjectId(organizationId),
+      },
+    },
+    {
+      $lookup: {
+        from: "users",
+        localField: "_id",
+        foreignField: "organization",
+        as: "users",
+      },
+    },
+    {
+      $lookup: {
+        from: "teams",
+        localField: "_id",
+        foreignField: "organization",
+        as: "teams",
+      },
+    },
+    {
+      $unwind: {
+        path: "$users",
+        preserveNullAndEmptyArrays: true,
+      },
+    },
+    {
+      $project: {
+        _id: 1,
+        name: 1,
+        email_format: 1,
+        user: "$users._id",
+        createdAt: 1,
+        updatedAt: 1,
+        teams: 1,
+      },
+    },
+    {
+      $lookup: {
+        from: "posts",
+        localField: "user",
+        foreignField: "user",
+        as: "posts",
+      },
+    },
+    {
+      $unwind: {
+        path: "$posts",
+        preserveNullAndEmptyArrays: true,
+      },
+    },
+    {
+      $project: {
+        _id: 1,
+        name: 1,
+        email_format: 1,
+        user: 1,
+        post: "$posts._id",
+        createdAt: 1,
+        updatedAt: 1,
+        teams: 1,
+      },
+    },
+    {
+      $unwind: {
+        path: "$teams",
+        preserveNullAndEmptyArrays: true,
+      },
+    },
+    {
+      $project: {
+        _id: 1,
+        name: 1,
+        email_format: 1,
+        user: 1,
+        post: 1,
+        team: "$teams._id",
+        createdAt: 1,
+        updatedAt: 1,
+      },
+    },
+    {
+      $lookup: {
+        from: "notices",
+        localField: "team",
+        foreignField: "team",
+        as: "notices",
+      },
+    },
+    {
+      $unwind: {
+        path: "$notices",
+        preserveNullAndEmptyArrays: true,
+      },
+    },
+    {
+      $project: {
+        _id: 1,
+        name: 1,
+        email_format: 1,
+        user: 1,
+        post: 1,
+        team: 1,
+        notice: "$notices._id",
+        createdAt: 1,
+        updatedAt: 1,
+      },
+    },
+    {
+      $group: {
+        _id: "$_id",
+        name: {
+          $first: "$name",
+        },
+        email_format: {
+          $first: "$email_format",
+        },
+        createdAt: {
+          $first: "$createdAt",
+        },
+        updatedAt: {
+          $first: "$updatedAt",
+        },
+        users: {
+          $addToSet: "$user",
+        },
+        posts: {
+          $addToSet: "$post",
+        },
+        teams: {
+          $addToSet: "$team",
+        },
+        notices: {
+          $addToSet: "$notice",
+        },
+      },
+    },
+  ];
+  return pipeline;
+};
 module.exports = {
   postById,
   posts,
   postsByUserId,
+  organizationDetails,
 };
