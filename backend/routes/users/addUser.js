@@ -1,8 +1,8 @@
 const Schemas = require("../../models/index");
 
 module.exports = async (req, res) => {
-  const userName = req.body.userName;
-  const userEmail = req.body.userEmail;
+  const userName = req.body.name;
+  const userEmail = req.body.email;
   const organisation = req.body.organization;
   const team = req.body.team || [];
   try {

@@ -9,7 +9,9 @@ module.exports = async (req, res) => {
     });
   }
   try {
-    const organization = await Schemas.Organization.findOne({_id: organizationId}).exec();
+    const organization = await Schemas.Organization.findOne({
+      _id: organizationId
+    }).exec();
 
     if (!organization) {
       return res.status(400).json({

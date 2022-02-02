@@ -16,7 +16,7 @@ module.exports = async (req, res) => {
     if (!user) {
       res.status(404).json({
         success: false,
-        message: "Invalid Request",
+        message: "User doesnot exist!!",
 
       });
     } else {
