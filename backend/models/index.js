@@ -4,7 +4,7 @@ const Post = require("./Posts");
 const Reaction = require("./Reactions");
 const Team = require("./Teams");
 const Notice = require("./Notices");
-const Notice_Audience = require("./Notice_Audiences");
+const Notice_Reaction = require("./Notice_Reactions");
 
 module.exports = {
   User,
@@ -13,5 +13,5 @@ module.exports = {
   Reaction,
   Team,
   Notice,
-  Notice_Audience,
+  Notice_Reaction,
 };
