@@ -4,7 +4,8 @@ module.exports = async (req, res) => {
   const teamId = req.params.id;
   const name = req.body.name;
   const organization = req.body.organization;
-  const manager = req.body.manager;
+  const admin = req.body.admin;
+  const mod = req.body.moderator;
 
   if (teamId.length != 24) {
     return res.status(400).json({
@@ -12,7 +13,7 @@ module.exports = async (req, res) => {
       message: "Invalid Request",
     });
   }
-  if (!name && !organization && !manager) {
+  if (!name && !organization && !admin && !mod) {
     return res.status(403).json({
       success: false,
       message: "Nothing to update",
@@ -22,6 +23,7 @@ module.exports = async (req, res) => {
     const team = await Schemas.Team.findOne({
       _id: teamId,
     }).exec();
+
     if (!team) {
       return res.status(400).json({
         success: false,
@@ -39,26 +41,26 @@ module.exports = async (req, res) => {
       await team.save();
     }
 
-    if (manager && manager != team.manager) {
-      team.manager = manager;
+    if (admin && admin != team.admin) {
+      team.admin = admin;
       await team.save();
     }
 
-    if (
-      name == team.name ||
-      organization == team.organization ||
-      manager == team.manager
-    ) {
-      res.status(200).json({
-        success: true,
-        message: "Team Updated Successfully",
-      });
+    if (mod && !team.moderator.includes(mod)) {
+      team.moderator.push(mod);
+      await team.save();
     } else {
-      res.status(400).json({
-        success: false,
-        message: "Failed to Update",
-      });
+      if (mod) {
+        const index = team.moderator.indexOf(mod);
+        team.moderator.splice(index, 1);
+      }
+      await team.save();
     }
+
+    res.status(200).json({
+      success: true,
+      message: "Team Updated Successfully",
+    });
   } catch (err) {
     console.log(err);
     res.status(404).json({
