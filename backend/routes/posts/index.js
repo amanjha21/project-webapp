@@ -6,22 +6,39 @@ const addPost = require("./addPost");
 const updatePost = require("./updatePost");
 const deletePostById = require("./deletePostById");
 const deletePostsByUserId = require("./deletePostsByUserId");
-
+const validation = require("../../middlewares/validation");
+const validationSchema = require("./@validationSchema");
 //get post route
-router.get("/", getPosts);
+router.get("/", validation(validationSchema.getPosts, "query"), getPosts);
 //get post by postid route
 router.get("/:id", getPostById);
-//get post by userid route
-router.get("/user/:id", getPostsByUserId);
+//get posts by userid route
+router.get(
+  "/user/:id",
+  validation(validationSchema.getPosts, "query"),
+  getPostsByUserId
+);
 
 //add post route
-router.post("/", addPost);
+router.post("/", validation(validationSchema.addPostValidation), addPost);
 
 //update post route
-router.post("/update", updatePost);
+router.post(
+  "/update",
+  validation(validationSchema.updatePostValidation),
+  updatePost
+);
 
 //delete post
-router.delete("/:id", deletePostById);
+router.delete(
+  "/:id",
+  validation(validationSchema.deletePostByIdValidation),
+  deletePostById
+);
 //delete all post for user
-router.delete("/delete/all", deletePostsByUserId);
+router.delete(
+  "/delete/all",
+  validation(validationSchema.deletePostsByUserIdValidation),
+  deletePostsByUserId
+);
 module.exports = router;
