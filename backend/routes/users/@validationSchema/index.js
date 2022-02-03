@@ -4,7 +4,7 @@ const addUserValidation = Joi.object({
     name: Joi.string().required(),
     email: Joi.string().email().required(),
 
-    teams: Joi.array().items(Joi.string().length(24).optional()),
+
 });
 
 const deleteUserValidation = Joi.object({
@@ -25,7 +25,7 @@ const getUsersByTeamId = Joi.object({
     teamId: Joi.string().length(24).required(),
 })
 
-const getUsersByOrganizationId = Joi.object({
+const getUsersByOrgainzationId = Joi.object({
     organizationId: Joi.string().length(24).required(),
 })
 module.exports = {
@@ -33,6 +33,6 @@ module.exports = {
     deleteUserValidation,
     updateUserValidation,
     getUsersByTeamId,
-    getUsersByOrganizationId,
+    getUsersByOrgainzationId,
     getUserValidation,
 };
