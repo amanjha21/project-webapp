@@ -4,7 +4,7 @@ module.exports = async (req, res) => {
   const userName = req.body.name;
   const userEmail = req.body.email;
   const email_format = userEmail.split("@").pop();
-  const team = req.body.team || [];
+
   try {
     //check if organization exists
     const organization = await Schemas.Organization.findOne({
@@ -37,7 +37,7 @@ module.exports = async (req, res) => {
         name: userName,
         email: userEmail,
         organization: organization._id,
-        teams: [organizationTeam._id, ...team],
+        teams: [organizationTeam._id],
       });
 
 
