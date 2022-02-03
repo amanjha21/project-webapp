@@ -10,7 +10,6 @@ router.use("/post", posts);
 router.use("/organization", organizations);
 router.use("/user", users);
 router.use("/team", teams);
-router.use("/reaction", reactions);
 router.use("/notice", notices);
 
 module.exports = router;
