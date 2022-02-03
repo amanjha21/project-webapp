@@ -3,7 +3,6 @@ const posts = require("./posts/index");
 const organizations = require("./organizations/index");
 const users = require("./users/index");
 const teams = require("./teams/index");
-const reactions = require("./reactions/index");
 const notices = require("./notices/index");
 
 router.use("/post", posts);
