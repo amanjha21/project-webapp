@@ -37,7 +37,7 @@ router.delete(
 );
 //delete all post for user
 router.delete(
-  "/delete/all",
+  "/user/delete-all",
   validation(validationSchema.deletePostsByUserIdValidation),
   deletePostsByUserId
 );

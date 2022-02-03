@@ -1,4 +1,5 @@
 const Schemas = require("../../models/index");
+const uploader = require("../../helpers/uploader");
 module.exports = async (req, res) => {
   const userId = req.body.userId || "61eaeee6ef856a79a71d19b9";
   const content = req.body.content || "abcd";

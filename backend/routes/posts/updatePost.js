@@ -1,4 +1,5 @@
 const Schemas = require("../../models/index");
+const uploader = require("../../helpers/uploader");
 module.exports = async (req, res) => {
   const userId = req.body.userId || "61eaeee6ef856a79a71d19b9";
   const postId = req.body.postId || "61eb01253b5a09f2341e84b0";
@@ -39,7 +40,6 @@ module.exports = async (req, res) => {
         })
       );
       post.image_link = imageUrl;
-      console.log(post);
     }
     await post.save();
     res.status(200).json({

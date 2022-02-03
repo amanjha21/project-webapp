@@ -1,25 +1,41 @@
+const mongoose = require("mongoose");
+const ObjectId = mongoose.Types.ObjectId;
 const Schemas = require("../../models/index");
 module.exports = async (req, res) => {
-  const userId = req.body.userId || "61eaeee6ef856a79a71d19b8";
+  const userId = req.body.userId || "61f2df2099088e5c1c0cb5f3";
   try {
-    //check if this post exists and belongs to this user
-    const postExists = await Schemas.Post.exists({ user: userId });
-    if (!postExists) {
+    //find all posts by this userId and get a array of postId
+    const result = await Schemas.Podt.aggregate([
+      {
+        $match: {
+          user: new ObjectId(userId),
+        },
+      },
+      {
+        $group: {
+          _id: "post",
+          posts: {
+            $push: "$_id",
+          },
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+        },
+      },
+    ]);
+    if (result.length == 0) {
       return res.status(400).json({
         success: false,
-        message: `Posts doesn't exist`,
-      });
-    }
-    const result = await Schemas.Post.delete({ user: userId }).exec();
-    if (result.deletedCount != 0) {
-      res.status(200).json({
-        success: true,
-        message: `${result.deletedCount} posts deleted successfully`,
+        message: `Post/s doesn't exist`,
       });
     } else {
-      res.status(400).json({
-        success: false,
-        message: "Failed to delete",
+      const postIdArray = result[0].posts;
+      await deletePostsByUserId(postIdArray);
+      res.status(200).json({
+        success: true,
+        message: "Post/s deleted successfully",
       });
     }
   } catch (err) {
@@ -28,5 +44,20 @@ module.exports = async (req, res) => {
       success: false,
       message: err.message,
     });
+  }
+};
+
+const deletePostsByUserId = async (postIdArray) => {
+  try {
+    //delete post reactions
+    await Schemas.Reaction.deleteMany({
+      post: { $in: postIdArray },
+    });
+    //delete post/s
+    await Schemas.Post.deleteMany({
+      _id: { $in: postIdArray },
+    });
+  } catch (error) {
+    throw error;
   }
 };
