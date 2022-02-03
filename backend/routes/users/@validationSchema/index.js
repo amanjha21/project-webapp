@@ -19,3 +19,11 @@ const getUserValidation = Joi.Object({
     id: Joi.string().length(24),
 
 });
+
+const getUsersByTeamId = Joi.Object({
+    teamId: Joi.string().length(24).required(),
+})
+
+const getUsersByOrganizationId = Joi.Object({
+    organizationId: Joi.string().length(24).required(),
+})
