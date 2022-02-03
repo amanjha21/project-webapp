@@ -8,7 +8,7 @@ const updateNotice = require("./updateNotice");
 const deleteNoticeById = require("./deleteNoticeById");
 const deleteNoticesByUserId = require("./deleteNoticesByUserId");
 const deleteNoticesByTeamId = require("./deleteNoticesByTeamId");
-
+const reactions = require("./reactions/index");
 //get Notice route
 router.get("/", getNotices);
 //get Notice by Noticeid route
@@ -30,4 +30,5 @@ router.delete("/:id", deleteNoticeById);
 router.delete("/user/delete-all", deleteNoticesByUserId);
 //delete all Notice by a team
 router.delete("/team/delete-all", deleteNoticesByTeamId);
+router.use("/reaction", reactions);
 module.exports = router;
