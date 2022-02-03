@@ -1,7 +1,7 @@
 const Schemas = require("../../models/index");
 module.exports = async (req, res) => {
 
-    const organizationId = req.body.organizationId;
+    const organizationId = req.params.id;
     try {
         const user = await Schemas.User.findOne({
             organization: organizationId

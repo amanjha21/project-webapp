@@ -5,6 +5,7 @@ module.exports = async (req, res) => {
   const name = req.body.name;
   const email_id = req.body.email;
   const teams = req.body.teams;
+
   //checking if the userId length is proper or not
   if (userId.length != 24) {
     return res.status(400).json({
@@ -39,6 +40,11 @@ module.exports = async (req, res) => {
     if (email_id && email_id !== user.email) {
       user.email = email_id;
       await user.save();
+      const userCredential = await Schemas.User_Credential.findOne({
+        _id: userId
+      });
+      userCredential.email = email_id;
+      await userCredential.save();
     }
     // checking if teams exists and if it needs to be updated in the database
     if (teams && user.teams.includes(teams)) {

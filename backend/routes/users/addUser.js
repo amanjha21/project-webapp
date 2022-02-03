@@ -1,6 +1,6 @@
 const Schemas = require("../../models/index");
 
-module.exports = async (req, res) => {
+module.exports = async (req, res, next) => {
   const userName = req.body.name;
   const userEmail = req.body.email;
   const email_format = userEmail.split("@").pop();
@@ -41,12 +41,10 @@ module.exports = async (req, res) => {
       });
 
 
-      await user.save();
+      const newUser = await user.save();
+      res.locals.user = newUser;
 
-      res.status(202).json({
-        success: true,
-        message: "User creation successful",
-      });
+      next();
     }
   } catch (err) {
     res.status(400).json({
