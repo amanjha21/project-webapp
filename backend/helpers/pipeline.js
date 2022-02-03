@@ -1712,6 +1712,285 @@ const noticesByUserId = (userId, currentUserId, pageInput, number) => {
     return pipeline;
   }
 };
+const noticesByTeamId = (teamId, currentUserId, pageInput, number) => {
+  let page = pageInput || 1;
+  let noOfPosts = number || defaultNoOfPosts;
+  page--;
+  if (currentUserId) {
+    const pipeline = [
+      {
+        $match: {
+          team: new ObjectId(teamId),
+        },
+      },
+      {
+        $sort: {
+          createdAt: -1,
+        },
+      },
+      {
+        $skip: page * noOfPosts,
+      },
+      {
+        $limit: noOfPosts,
+      },
+      {
+        $lookup: {
+          from: "notice_reactions",
+          localField: "_id",
+          foreignField: "notice",
+          as: "reaction",
+        },
+      },
+      {
+        $unwind: { path: "$reaction", preserveNullAndEmptyArrays: true },
+      },
+      {
+        $sort: {
+          "reaction.createdAt": -1,
+        },
+      },
+      {
+        $group: {
+          _id: "$_id",
+          content: {
+            $first: "$content",
+          },
+          image_link: {
+            $first: "$image_link",
+          },
+          user: {
+            $first: "$user",
+          },
+          team: {
+            $first: "$team",
+          },
+          createdAt: {
+            $first: "$createdAt",
+          },
+          updatedAt: {
+            $first: "$updatedAt",
+          },
+          reactions: {
+            $push: {
+              $cond: [
+                {
+                  $ne: ["$reaction.type", "comment"],
+                },
+                {
+                  type: "$reaction.type",
+                  user: "$reaction.user",
+                },
+                "$$REMOVE",
+              ],
+            },
+          },
+          comments: {
+            $push: {
+              $cond: [
+                {
+                  $and: [
+                    {
+                      $ne: ["$reaction.user", new ObjectId(currentUserId)],
+                    },
+                    {
+                      $eq: ["$reaction.type", "comment"],
+                    },
+                  ],
+                },
+                {
+                  text: "$reaction.comment",
+                  user: "$reaction.user",
+                  createdAt: "$reaction.createdAt",
+                },
+                "$$REMOVE",
+              ],
+            },
+          },
+          user_comments: {
+            $push: {
+              $cond: [
+                {
+                  $and: [
+                    {
+                      $eq: ["$reaction.user", new ObjectId(currentUserId)],
+                    },
+                    {
+                      $eq: ["$reaction.type", "comment"],
+                    },
+                  ],
+                },
+                {
+                  text: "$reaction.comment",
+                  user: "$reaction.user",
+                  createdAt: "$reaction.createdAt",
+                },
+                "$$REMOVE",
+              ],
+            },
+          },
+          reaction_by_user: {
+            $push: {
+              $cond: [
+                {
+                  $and: [
+                    {
+                      $eq: ["$reaction.user", new ObjectId(currentUserId)],
+                    },
+                    {
+                      $ne: ["$reaction.type", "comment"],
+                    },
+                  ],
+                },
+                {
+                  type: "$reaction.type",
+                  createdAt: "$reaction.createdAt",
+                },
+                "$$REMOVE",
+              ],
+            },
+          },
+        },
+      },
+      {
+        $project: {
+          _id: 1,
+          content: 1,
+          image_link: 1,
+          createdAt: 1,
+          updatedAt: 1,
+          user: 1,
+          team: 1,
+          reactions: 1,
+          reaction_by_user: 1,
+          comments: {
+            $slice: [
+              {
+                $concatArrays: ["$user_comments", "$comments"],
+              },
+              0,
+              defaultNoOfComments,
+            ],
+          },
+        },
+      },
+      {
+        $sort: {
+          createdAt: -1,
+        },
+      },
+    ];
+    return pipeline;
+  } else {
+    const pipeline = [
+      {
+        $match: {
+          team: new ObjectId(teamId),
+        },
+      },
+      {
+        $sort: {
+          createdAt: -1,
+        },
+      },
+      {
+        $skip: page * noOfPosts,
+      },
+      {
+        $limit: noOfPosts,
+      },
+      {
+        $lookup: {
+          from: "notice_reactions",
+          localField: "_id",
+          foreignField: "notice",
+          as: "reaction",
+        },
+      },
+      {
+        $unwind: { path: "$reaction", preserveNullAndEmptyArrays: true },
+      },
+      {
+        $sort: {
+          "reaction.createdAt": -1,
+        },
+      },
+      {
+        $group: {
+          _id: "$_id",
+          content: {
+            $first: "$content",
+          },
+          image_link: {
+            $first: "$image_link",
+          },
+          user: {
+            $first: "$user",
+          },
+          team: {
+            $first: "$team",
+          },
+          createdAt: {
+            $first: "$createdAt",
+          },
+          updatedAt: {
+            $first: "$updatedAt",
+          },
+          reactions: {
+            $push: {
+              $cond: [
+                {
+                  $ne: ["$reaction.type", "comment"],
+                },
+                {
+                  type: "$reaction.type",
+                  user: "$reaction.user",
+                },
+                "$$REMOVE",
+              ],
+            },
+          },
+          comments: {
+            $push: {
+              $cond: [
+                {
+                  $eq: ["$reaction.type", "comment"],
+                },
+                {
+                  text: "$reaction.comment",
+                  user: "$reaction.user",
+                  createdAt: "$reaction.createdAt",
+                },
+                "$$REMOVE",
+              ],
+            },
+          },
+        },
+      },
+      {
+        $project: {
+          _id: 1,
+          content: 1,
+          image_link: 1,
+          createdAt: 1,
+          updatedAt: 1,
+          user: 1,
+          team: 1,
+          reactions: 1,
+          comments: {
+            $slice: ["$comments", 0, defaultNoOfComments],
+          },
+        },
+      },
+      {
+        $sort: {
+          createdAt: -1,
+        },
+      },
+    ];
+    return pipeline;
+  }
+};
 module.exports = {
   postById,
   posts,
@@ -1720,4 +1999,5 @@ module.exports = {
   noticeById,
   notices,
   noticesByUserId,
+  noticesByTeamId,
 };
