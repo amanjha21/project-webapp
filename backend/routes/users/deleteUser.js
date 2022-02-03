@@ -1,6 +1,7 @@
 const Schemas = require("../../models/index");
-
+pipeline = require("../../helpers/pipeline");
 module.exports = async (req, res) => {
+
 
   const userId = req.params.id;
   if (userId.length != 24) {
@@ -19,22 +20,15 @@ module.exports = async (req, res) => {
         message: "User doesnot exist!!",
 
       });
-    } else {
-      const result = await Schemas.User.deleteOne({
-        _id: userId
-      }).exec();
-      if (result.deletedCount == 1) {
-        res.status(200).json({
-          success: true,
-          message: "User deleted successfully",
-        });
-      } else {
-        res.status(400).json({
-          success: false,
-          message: "Invalid Request",
-        });
-      }
+
     }
+    const userDetails = await Schemas.User.aggregate(pipeline.userDetails(userId));
+
+    await deleteUser(userDetails[0]);
+    res.status(200).json({
+      success: true,
+      message: "User deleted successfully",
+    });
   } catch (err) {
     console.log(err);
     res.status(404).json({
@@ -43,3 +37,30 @@ module.exports = async (req, res) => {
     });
   }
 };
+const deleteUser = async (userId) => {
+  try {
+    //delete userReactions
+    const userReactionArray = userDetails.reactions;
+    await Schemas.Reaction.deleteMany({
+      _id: {
+        $in: noticeIdArray
+      },
+    });
+    //delete userPosts
+    const userPostArray = userDetails.Posts;
+    await Schemas.Post.deleteMany({
+      _id: {
+        $in: userPostArray
+      }
+    });
+    //delete user
+    const user = userDetails._id;
+    await Schemas.User.deleteOne({
+      _id: user
+    });
+  } catch (err) {
+    throw err;
+
+  }
+
+}
