@@ -3,9 +3,25 @@ const Schemas = require("../../models/index");
 module.exports = async (req, res) => {
   const userName = req.body.name;
   const userEmail = req.body.email;
-  const organisation = req.body.organization;
+  const email_format = userEmail.split("@").pop();
   const team = req.body.team || [];
   try {
+    //check if organization exists
+    const organization = await Schemas.Organization.findOne({
+      email_format: email_format
+    });
+
+    if (!organization) {
+      return res.status(404).json({
+        success: false,
+        message: "Invalid Request!",
+      });
+    }
+    const organizationTeam = await Schemas.Team.findOne({
+      organization: organization._id,
+      name: organization.name,
+    })
+    console.log(organization);
     const result = await Schemas.User.findOne({
       email: userEmail,
     }).exec();
@@ -16,14 +32,17 @@ module.exports = async (req, res) => {
         message: "User already exists ",
       });
     } else {
-      const newUser = new Schemas.User({
+
+      const user = new Schemas.User({
         name: userName,
         email: userEmail,
-        organization: organisation,
-        teams: teams.push(team),
+        organization: organization._id,
+        teams: [organizationTeam._id, ...team],
       });
 
-      await newUser.save();
+
+      await user.save();
+
       res.status(202).json({
         success: true,
         message: "User creation successful",

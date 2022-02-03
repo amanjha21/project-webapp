@@ -9,7 +9,7 @@ const getUser = require("./getUser");
 const updateUser = require("./updateUser");
 const getUsersByOrganizationId = require("./getUsersByOrganizationId");
 const getUsersByTeamId = require("./getUsersByTeamId");
-const validation = require("../../helpers/validation");
+const validation = require("../../middlewares/validation");
 const validationSchema = require("./@validationSchema");
 
 // get user route

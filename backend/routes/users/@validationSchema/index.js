@@ -1,29 +1,38 @@
 const Joi = require("@hapi/joi");
-const addUserValidation = Joi.Object({
+
+const addUserValidation = Joi.object({
     name: Joi.string().required(),
     email: Joi.string().email().required(),
-    organization: Joi.string().length(24).required(),
-    team: Joi.string().length(24).required(),
+
+    teams: Joi.array().items(Joi.string().length(24).optional()),
 });
 
-const deleteUserValidation = Joi.Object({
+const deleteUserValidation = Joi.object({
     id: Joi.string().length(24).required(),
 });
-const updateUserValidation = joi.object({
+const updateUserValidation = Joi.object({
     name: Joi.string().required(),
     email: Joi.string().email().required(),
     teams: Joi.array().items(Joi.string().length(24)),
 });
 
-const getUserValidation = Joi.Object({
+const getUserValidation = Joi.object({
     id: Joi.string().length(24),
 
 });
 
-const getUsersByTeamId = Joi.Object({
+const getUsersByTeamId = Joi.object({
     teamId: Joi.string().length(24).required(),
 })
 
-const getUsersByOrganizationId = Joi.Object({
+const getUsersByOrganizationId = Joi.object({
     organizationId: Joi.string().length(24).required(),
 })
+module.exports = {
+    addUserValidation,
+    deleteUserValidation,
+    updateUserValidation,
+    getUsersByTeamId,
+    getUsersByOrganizationId,
+    getUserValidation,
+};
