@@ -1,6 +1,4 @@
 const router = require("express").Router();
-const Schemas = require("../../models/index");
-const mongoose = require("mongoose");
 const getOrganizationById = require("./getOrganizationById");
 const getOrganizations = require("./getOrganizations");
 const addOrganizations = require("./addOrganizations");

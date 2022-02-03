@@ -20,7 +20,6 @@ const addOrganizationsValidation = Joi.object({
 const updateOrganizationsValidation = Joi.object({
   organizationId: Joi.string().length(24).required(),
   name: Joi.string().optional(),
-  email_format: Joi.string().optional(),
 });
 
 const deleteOrganizationsValidation = Joi.object({
