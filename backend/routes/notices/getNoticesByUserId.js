@@ -10,20 +10,20 @@ module.exports = async (req, res) => {
   if (userId.length != 24) {
     return res.status(400).json({
       success: false,
-      message: "Post/s doesn't exist",
+      message: "Invalid Request",
     });
   }
   try {
-    const post = await Schemas.Post.aggregate(
-      pipeline.postsByUserId(userId, currentUserId, page, noOfPosts)
+    const notices = await Schemas.Notice.aggregate(
+      pipeline.noticesByUserId(userId, currentUserId, page, noOfPosts)
     );
-    if (post.length == 0) {
+    if (notices.length == 0) {
       return res.status(400).json({
         success: false,
-        message: "Post/s doesn't exist",
+        message: "Invalid Request",
       });
     }
-    res.status(200).json(post);
+    res.status(200).json(notices);
   } catch (err) {
     res.status(404).json({
       success: false,

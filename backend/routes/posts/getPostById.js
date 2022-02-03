@@ -7,7 +7,7 @@ module.exports = async (req, res) => {
   if (postId.length != 24) {
     return res.status(400).json({
       success: false,
-      message: "Invalid Request",
+      message: "Post doesn't exist",
     });
   }
   try {
@@ -17,7 +17,7 @@ module.exports = async (req, res) => {
     if (post.length == 0) {
       return res.status(400).json({
         success: false,
-        message: "Invalid Request",
+        message: "Post doesn't exist",
       });
     }
     res.status(200).json(post);

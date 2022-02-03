@@ -2,13 +2,15 @@ const Schemas = require("../../models/index");
 const uploader = require("../../helpers/uploader");
 module.exports = async (req, res) => {
   const userId = req.body.userId || "61eaeee6ef856a79a71d19b9";
-  const content = req.body.content || "abcd";
+  const teamId = req.body.teamId || "61f2de8599088e5c1c0cb5ea";
+  const content = req.body.content || "abloj";
   const imageData = req.body.imageData;
   try {
-    const post = new Schemas.Post({
+    const notice = new Schemas.Notice({
       content,
       image_link: "",
       user: userId,
+      team: teamId,
     });
     if (imageData) {
       let imageUrl = await Promise.all(
@@ -17,13 +19,13 @@ module.exports = async (req, res) => {
           return url;
         })
       );
-      post.image_link = imageUrl;
+      notice.image_link = imageUrl;
     }
 
-    await post.save();
+    await notice.save();
     res.status(201).json({
       success: true,
-      message: "Post Created Successfully",
+      message: "Notice Created Successfully",
     });
   } catch (err) {
     console.log(err);

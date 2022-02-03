@@ -54,9 +54,10 @@ const deleteOrganization = async (organizationDetails) => {
     });
 
     //Delete Notice Reaction
-
     const noticeIdArray = organizationDetails.notices;
-    // await Schemas.Notice.deleteMany({ post: { $in: postIdArray } });
+    await Schemas.Notice_Reaction.deleteMany({
+      notice: { $in: noticeIdArray },
+    });
 
     //Delete Notices
     await Schemas.Notice.deleteMany({ _id: { $in: noticeIdArray } });

@@ -5,7 +5,7 @@ module.exports = async (req, res) => {
   const name = req.body.name;
   const organization = req.body.organization;
   const admin = req.body.admin;
-  const mod = req.body.moderator;
+  const moderator = req.body.moderator;
 
   if (teamId.length != 24) {
     return res.status(400).json({
@@ -13,7 +13,7 @@ module.exports = async (req, res) => {
       message: "Invalid Request",
     });
   }
-  if (!name && !organization && !admin && !mod) {
+  if (!name && !organization && !admin && !moderator) {
     return res.status(403).json({
       success: false,
       message: "Nothing to update",
@@ -46,12 +46,12 @@ module.exports = async (req, res) => {
       await team.save();
     }
 
-    if (mod && !team.moderator.includes(mod)) {
-      team.moderator.push(mod);
+    if (moderator && !team.moderator.includes(moderator)) {
+      team.moderator.push(moderator);
       await team.save();
     } else {
-      if (mod) {
-        const index = team.moderator.indexOf(mod);
+      if (moderator) {
+        const index = team.moderator.indexOf(moderator);
         team.moderator.splice(index, 1);
       }
       await team.save();

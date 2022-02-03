@@ -6,18 +6,17 @@ module.exports = async (req, res) => {
   const page = parseInt(req.query.page);
   const noOfPosts = parseInt(req.query.number);
   try {
-    const post = await Schemas.Post.aggregate(
-      pipeline.posts(userId, page, noOfPosts)
+    const notices = await Schemas.Notice.aggregate(
+      pipeline.notices(userId, page, noOfPosts)
     );
-    if (post.length == 0) {
+    if (notices.length == 0) {
       return res.status(400).json({
         success: false,
         message: "Invalid Request",
       });
     }
-    res.status(200).json(post);
+    res.status(200).json(notices);
   } catch (err) {
-    console.log(err);
     res.status(404).json({
       success: false,
       message: err.message,

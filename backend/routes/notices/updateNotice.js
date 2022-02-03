@@ -2,7 +2,7 @@ const Schemas = require("../../models/index");
 const uploader = require("../../helpers/uploader");
 module.exports = async (req, res) => {
   const userId = req.body.userId || "61eaeee6ef856a79a71d19b9";
-  const postId = req.body.postId || "61eb01253b5a09f2341e84b0";
+  const noticeId = req.body.noticeId || "61eb01253b5a09f2341e84b0";
   const content = req.body.content;
   const imageData = req.body.imageData;
 
@@ -13,23 +13,23 @@ module.exports = async (req, res) => {
     });
   }
   try {
-    //check if this post exists and belongs to this user
-    const post = await Schemas.Post.findOne({ _id: postId }).exec();
-    if (!post) {
+    //check if this notice exists and belongs to this user
+    const notice = await Schemas.Notice.findOne({ _id: noticeId }).exec();
+    if (!notice) {
       return res.status(400).json({
         success: false,
-        message: `Post doesn't exist`,
+        message: `Notice doesn't exist`,
       });
     }
-    if (post.user != userId) {
+    if (notice.user != userId) {
       return res.status(400).json({
         success: false,
-        message: "Post doesn't exist ",
+        message: "Notice doesn't exist ",
       });
     }
     //update content if exists
     if (content) {
-      post.content = content;
+      notice.content = content;
     }
     // update image if exixts
     if (imageData) {
@@ -39,15 +39,14 @@ module.exports = async (req, res) => {
           return url;
         })
       );
-      post.image_link = imageUrl;
+      notice.image_link = imageUrl;
     }
-    await post.save();
+    await notice.save();
     res.status(200).json({
       success: true,
-      message: "Post Updated Successfully",
+      message: "Notice Updated Successfully",
     });
   } catch (err) {
-    console.log(err);
     res.status(404).json({
       success: false,
       message: err.message,

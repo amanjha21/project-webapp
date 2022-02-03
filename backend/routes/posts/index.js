@@ -8,6 +8,7 @@ const deletePostById = require("./deletePostById");
 const deletePostsByUserId = require("./deletePostsByUserId");
 const validation = require("../../middlewares/validation");
 const validationSchema = require("./@validationSchema");
+const reactions = require("./reactions/index");
 //get post route
 router.get("/", validation(validationSchema.getPosts, "query"), getPosts);
 //get post by postid route
@@ -37,8 +38,9 @@ router.delete(
 );
 //delete all post for user
 router.delete(
-  "/delete/all",
+  "/user/delete-all",
   validation(validationSchema.deletePostsByUserIdValidation),
   deletePostsByUserId
 );
+router.use("/reaction", reactions);
 module.exports = router;

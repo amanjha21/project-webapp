@@ -2,19 +2,19 @@ const mongoose = require("mongoose");
 const ObjectId = mongoose.Types.ObjectId;
 const Schemas = require("../../models/index");
 module.exports = async (req, res) => {
-  const userId = req.body.userId || "61f2df2099088e5c1c0cb5f3";
+  const teamId = req.body.teamId || "61f2df2099088e5c1c0cb5f3";
   try {
-    //find all posts by this userId and get a array of postId
-    const result = await Schemas.Podt.aggregate([
+    //find all notices by this teamId and get a array of noticeId
+    const result = await Schemas.Notice.aggregate([
       {
         $match: {
-          user: new ObjectId(userId),
+          team: new ObjectId(teamId),
         },
       },
       {
         $group: {
-          _id: "post",
-          posts: {
+          _id: "notice",
+          notices: {
             $push: "$_id",
           },
         },
@@ -28,14 +28,14 @@ module.exports = async (req, res) => {
     if (result.length == 0) {
       return res.status(400).json({
         success: false,
-        message: `Post/s doesn't exist`,
+        message: `Notice/s doesn't exist`,
       });
     } else {
-      const postIdArray = result[0].posts;
-      await deletePostsByUserId(postIdArray);
+      const noticeIdArray = result[0].notices;
+      await deleteNoticeByTeamId(noticeIdArray);
       res.status(200).json({
         success: true,
-        message: "Post/s deleted successfully",
+        message: "Notice/s deleted successfully",
       });
     }
   } catch (err) {
@@ -46,16 +46,15 @@ module.exports = async (req, res) => {
     });
   }
 };
-
-const deletePostsByUserId = async (postIdArray) => {
+const deleteNoticeByTeamId = async (noticeIdArray) => {
   try {
-    //delete post reactions
-    await Schemas.Reaction.deleteMany({
-      post: { $in: postIdArray },
+    //delete notice reactions
+    await Schemas.Notice_Reaction.deleteMany({
+      notice: { $in: noticeIdArray },
     });
-    //delete post/s
-    await Schemas.Post.deleteMany({
-      _id: { $in: postIdArray },
+    //delete notice/s
+    await Schemas.Notice.deleteMany({
+      _id: { $in: noticeIdArray },
     });
   } catch (error) {
     throw error;
