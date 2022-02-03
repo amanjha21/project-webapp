@@ -21,7 +21,7 @@ module.exports = async (req, res) => {
       organization: organization._id,
       name: organization.name,
     })
-    console.log(organization);
+
     const result = await Schemas.User.findOne({
       email: userEmail,
     }).exec();
