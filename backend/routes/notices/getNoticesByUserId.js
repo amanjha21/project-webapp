@@ -6,7 +6,7 @@ module.exports = async (req, res) => {
   const userId = req.params.id || "61eaeee6ef856a79a71d19b9";
   const currentUserId = "61eaeee6ef856a79a71d19b9";
   const page = parseInt(req.query.page);
-  const noOfPosts = parseInt(req.query.number);
+  const noOfPosts = parseInt(req.query.limit);
   if (userId.length != 24) {
     return res.status(400).json({
       success: false,

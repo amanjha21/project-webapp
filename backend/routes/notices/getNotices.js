@@ -4,7 +4,7 @@ const pipeline = require("../../helpers/pipeline");
 module.exports = async (req, res) => {
   const userId = "61eaeee6ef856a79a71d19b9" || 0;
   const page = parseInt(req.query.page);
-  const noOfPosts = parseInt(req.query.number);
+  const noOfPosts = parseInt(req.query.limit);
   try {
     const notices = await Schemas.Notice.aggregate(
       pipeline.notices(userId, page, noOfPosts)
