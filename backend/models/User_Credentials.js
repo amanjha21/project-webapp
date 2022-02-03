@@ -4,8 +4,8 @@ const userCredSchema = new mongoose.Schema({
             type: mongoose.SchemaTypes.ObjectId,
             ref: "Users",
         },
-        email: string,
-        password: string,
+        email: String,
+        password: String,
     }
 
 );
