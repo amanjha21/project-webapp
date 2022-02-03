@@ -5,7 +5,7 @@ const ObjectId = mongoose.Types.ObjectId;
 const uploader = require("../../helpers/uploader");
 const addUser = require("./addUser");
 const deleteUser = require("./deleteUser");
-const getUser = require("./getUser");
+const getUserById = require("./getUserById");
 const updateUser = require("./updateUser");
 const getUsersByOrganizationId = require("./getUsersByOrganizationId");
 const getUsersByTeamId = require("./getUsersByTeamId");
@@ -13,7 +13,7 @@ const validation = require("../../middlewares/validation");
 const validationSchema = require("./@validationSchema");
 
 // get user route
-router.get("/:id", validation(validationSchema.getUserValidation, "query"), getUser);
+router.get("/:id", validation(validationSchema.getUserValidation, "query"), getUserById);
 // create user route
 router.post("/register", validation(validationSchema.addUserValidation), addUser);
 // update user route
