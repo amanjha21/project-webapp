@@ -2,8 +2,8 @@ const Joi = require("@hapi/joi");
 
 const addCommentValidation = Joi.object({
     comment: Joi.string().required(),
-    user: Joi.string().length(24).required(),
-    post: Joi.string().length(24).required()
+    userId: Joi.string().length(24).required(),
+    postId: Joi.string().length(24).required()
 });
 
 const deleteCommentValidation = Joi.object({
@@ -15,7 +15,7 @@ const deleteCommentValidation = Joi.object({
 const updateCommentValidation = Joi.object({
     type: Joi.string().required,
     userId: Joi.string().length(24).required(),
-    post: Joi.string().length(24).required(),
+    postId: Joi.string().length(24).required(),
 })
 
 module.exports = {
