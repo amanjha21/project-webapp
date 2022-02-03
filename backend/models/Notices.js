@@ -7,6 +7,10 @@ const noticeSchema = new mongoose.Schema(
       type: mongoose.SchemaTypes.ObjectId,
       ref: "Users",
     },
+    team: {
+      type: mongoose.SchemaTypes.ObjectId,
+      ref: "Teams",
+    },
   },
   {
     timestamps: true,
