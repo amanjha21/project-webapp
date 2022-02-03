@@ -1,9 +1,11 @@
 const Schemas = require("../../models/index");
 
 module.exports = async (req, res) => {
-  const name = req.body.name || "NIT";
-  const email_format = req.body.email_format || "nit.ac.in";
+  const name = req.body.name;
+  const adminName = req.body.adminName;
+  const adminEmail = req.body.adminEmail;
 
+  const email_format = adminEmail.split("@").pop();
   try {
     //Check if Organization already exists
     const result = await Schemas.Organization.findOne({ email_format }).exec();
@@ -19,7 +21,29 @@ module.exports = async (req, res) => {
       email_format,
     });
 
-    await organization.save();
+    const newOrganization = await organization.save();
+
+    const admin = new Schemas.User({
+      name: adminName,
+      email: adminEmail,
+      organization: newOrganization._id,
+      teams: [],
+    });
+
+    const newAdmin = await admin.save();
+
+    const team = new Schemas.Team({
+      name: newOrganization.name,
+      organization: newOrganization._id,
+      admin: newAdmin._id,
+      moderator: [],
+    });
+
+    const newTeam = await team.save();
+
+    newAdmin.teams = [newTeam];
+    await newAdmin.save();
+
     res.status(201).json({
       success: true,
       message: "Organization added successfully",
