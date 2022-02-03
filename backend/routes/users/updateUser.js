@@ -41,8 +41,8 @@ module.exports = async (req, res) => {
       await user.save();
     }
     // checking if teams exists and if it needs to be updated in the database
-    if (teams && teams != user.teams) {
-      user.teams = teams;
+    if (teams && user.teams.includes(teams)) {
+      user.teams.push(teams);
       await user.save();
 
     }

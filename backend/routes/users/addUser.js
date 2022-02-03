@@ -20,7 +20,7 @@ module.exports = async (req, res) => {
         name: userName,
         email: userEmail,
         organization: organisation,
-        teams: team,
+        teams: teams.push(team),
       });
 
       await newUser.save();

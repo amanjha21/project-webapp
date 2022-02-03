@@ -3,18 +3,20 @@ const Schemas = require("../../models/index");
 const mongoose = require("mongoose");
 const ObjectId = mongoose.Types.ObjectId;
 const uploader = require("../../helpers/uploader");
-const createUser = require("./addUser");
+const addUser = require("./addUser");
 const deleteUser = require("./deleteUser");
 const getUser = require("./getUser");
 const updateUser = require("./updateUser");
+const validation = require("../../helpers/validation");
+const validationSchema = require("./@validationSchema");
 
 // get user route
-router.get("/:id", getUser);
+router.get("/:id", validation(validationSchema.getUserValidation, "query"), getUser);
 // create user route
-router.post("/register", createUser);
+router.post("/register", validation(validationSchema.addUserValidation), addUser);
 // update user route
-router.post("/update/:id", updateUser);
+router.post("/update/:id", validation(validationSchema.updateUserValidation), updateUser);
 // delete user route
-router.delete("/:id", deleteUser);
+router.delete("/:id", validation(validationSchema.deleteUserValidation, "query"), deleteUser);
 
 module.exports = router;
