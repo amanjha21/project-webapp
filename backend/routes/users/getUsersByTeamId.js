@@ -1,7 +1,7 @@
 const Schemas = require("../../models/index");
 module.exports = async (req, res) => {
 
-    const teamId = req.body.teamId;
+    const teamId = req.params.id;
     try {
         const user = await Schemas.User.findOne({
             teams: {

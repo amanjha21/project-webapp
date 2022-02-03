@@ -11,19 +11,23 @@ const getUsersByOrganizationId = require("./getUsersByOrganizationId");
 const getUsersByTeamId = require("./getUsersByTeamId");
 const validation = require("../../middlewares/validation");
 const validationSchema = require("./@validationSchema");
+const signUp = require("../../middlewares/auth/user/signup");
+const updateUserPassword = require("./updateUserPassword");
 
 // get user route
 router.get("/:id", validation(validationSchema.getUserValidation, "query"), getUserById);
+
+router.post("/updatePassword/:id", validation(validationSchema.updateUserPasswordValidation), updateUserPassword);
 // create user route
-router.post("/register", validation(validationSchema.addUserValidation), addUser);
+router.post("/register", validation(validationSchema.addUserValidation), addUser, signUp);
 // update user route
 router.post("/update/:id", validation(validationSchema.updateUserValidation), updateUser);
 // delete user route
 router.delete("/:id", validation(validationSchema.deleteUserValidation, "query"), deleteUser);
 // get user by TeamId route
-router.get("/", validation(validationSchema.getUsersByTeamId), getUsersByTeamId);
+router.get("/team/:id", validation(validationSchema.getUsersByTeamId), getUsersByTeamId);
 // get user by OrganizationId router
-router.get("/", validation(validationSchema.getUsersByOrgainzationId), getUsersByOrganizationId);
+router.get("/organization/:id", validation(validationSchema.getUsersByOrgainzationId), getUsersByOrganizationId);
 
 
 module.exports = router;

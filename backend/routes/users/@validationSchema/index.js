@@ -3,16 +3,20 @@ const Joi = require("@hapi/joi");
 const addUserValidation = Joi.object({
     name: Joi.string().required(),
     email: Joi.string().email().required(),
-
+    password: Joi.string().min(8).required(),
 
 });
+const updateUserPasswordValidation = Joi.object({
+    oldPassword: Joi.string().min(8).required(),
+    newPassword: Joi.string().min(8).required(),
+})
 
 const deleteUserValidation = Joi.object({
     id: Joi.string().length(24).required(),
 });
 const updateUserValidation = Joi.object({
-    name: Joi.string().required(),
-    email: Joi.string().email().required(),
+    name: Joi.string().optional(),
+    email: Joi.string().email().optional(),
     teams: Joi.array().items(Joi.string().length(24)),
 });
 
@@ -35,4 +39,5 @@ module.exports = {
     getUsersByTeamId,
     getUsersByOrgainzationId,
     getUserValidation,
+    updateUserPasswordValidation,
 };
