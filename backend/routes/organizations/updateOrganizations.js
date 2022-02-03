@@ -1,9 +1,8 @@
 const Schemas = require("../../models/index");
 
 module.exports = async (req, res) => {
-  const organizationId = req.params.id || "453eerw189y6yy6422e23";
+  const organizationId = req.params.id;
   const name = req.body.name;
-  const email_format = req.body.email_format;
 
   if (organizationId.length != 24) {
     return res.status(400).json({
@@ -11,7 +10,7 @@ module.exports = async (req, res) => {
       message: "Invalid Request",
     });
   }
-  if (!name && !email_format) {
+  if (!name) {
     return res.status(403).json({
       success: false,
       message: "Nothing to update",
@@ -33,25 +32,10 @@ module.exports = async (req, res) => {
       await organization.save();
     }
 
-    if (email_format && email_format != organization.email_format) {
-      organization.email_format = email_format;
-      await organization.save();
-    }
-
-    if (
-      name == organization.name ||
-      email_format == organization.email_format
-    ) {
-      res.status(200).json({
-        success: true,
-        message: "Organization Updated Successfully",
-      });
-    } else {
-      res.status(400).json({
-        success: false,
-        message: "Failed to Update",
-      });
-    }
+    res.status(200).json({
+      success: true,
+      message: "Organization Updated Successfully",
+    });
   } catch (err) {
     console.log(err);
     res.status(404).json({

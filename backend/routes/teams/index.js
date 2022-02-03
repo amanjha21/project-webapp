@@ -1,12 +1,10 @@
 const router = require("express").Router();
-const Schemas = require("../../models/index");
-const mongoose = require("mongoose");
 const getTeamById = require("./getTeamById");
 const getTeams = require("./getTeams");
 const getTeamsByOrganizationId = require("./getTeamsByOrganizationId");
 const addTeams = require("./addTeams");
 const updateTeams = require("./updateTeams");
-const deleteTeams = require("./deleteTeams");
+const deleteTeamById = require("./deleteTeamById");
 const validation = require("../../middlewares/validation");
 const validationSchema = require("./@validationSchema");
 
@@ -44,8 +42,8 @@ router.post(
 //Delete Team
 router.delete(
   "/:id",
-  validation(validationSchema.deleteTeamsValidation),
-  deleteTeams
+  validation(validationSchema.deleteTeamByIdValidation),
+  deleteTeamById
 );
 
 module.exports = router;
