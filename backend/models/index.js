@@ -6,6 +6,7 @@ const Team = require("./Teams");
 const Notice = require("./Notices");
 const Notice_Reaction = require("./Notice_Reactions");
 const User_Credential = require("./User_Credentials");
+const Logger = require("./Logger");
 module.exports = {
   User,
   Organization,
@@ -14,6 +15,6 @@ module.exports = {
   Team,
   Notice,
   Notice_Reaction,
-  User_Credential
-
+  User_Credential,
+  Logger,
 };
