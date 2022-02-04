@@ -25,6 +25,7 @@ module.exports = async (req, res) => {
     const userDetails = await Schemas.User.aggregate(pipeline.userDetails(userId));
 
     await deleteUser(userDetails[0]);
+
     res.status(200).json({
       success: true,
       message: "User deleted successfully",
@@ -56,6 +57,10 @@ const deleteUser = async (userId) => {
     //delete user
     const user = userDetails._id;
     await Schemas.User.deleteOne({
+      _id: user
+    });
+    //delete User Credentials
+    await Schemas.User_Credential.deleteOne({
       _id: user
     });
   } catch (err) {
