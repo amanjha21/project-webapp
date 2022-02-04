@@ -1,10 +1,17 @@
 const Schemas = require("../../../models/index");
+const bcrypt = require("bcrypt");
+const dotenv = require("dotenv");
+dotenv.config();
 module.exports = async (req, res) => {
-    const password = req.body.password;
+    const unhashedPassword = req.body.password;
+
+    const salt = await bcrypt.genSalt(dotenv.SALT);
+
+    const hashedPassword = await bcrypt.hash(unhashedPassword, salt);
+    const password = hashedPassword;
     const email = res.locals.user.email;
     const userId = res.locals.user._id;
 
-    console.log(password, email, userId);
     const newUserCred = new Schemas.User_Credential({
         email,
         password,
