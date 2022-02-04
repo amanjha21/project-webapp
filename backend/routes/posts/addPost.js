@@ -1,9 +1,11 @@
 const Schemas = require("../../models/index");
 const uploader = require("../../helpers/uploader");
+const logger = require("../../helpers/logger");
 module.exports = async (req, res) => {
   const userId = req.body.userId || "61eaeee6ef856a79a71d19b9";
   const content = req.body.content || "abcd";
   const imageData = req.body.imageData;
+  const ip = req.header("x-forwarded-for") || req.connection.remoteAddress;
   try {
     const post = new Schemas.Post({
       content,
@@ -20,13 +22,17 @@ module.exports = async (req, res) => {
       post.image_link = imageUrl;
     }
 
-    await post.save();
+    const newPost = await post.save();
+    logger({
+      userId: userId,
+      message: `New Post Created with postId: ${newPost._id} by user with userId: ${userId} `,
+      ip,
+    });
     res.status(201).json({
       success: true,
       message: "Post Created Successfully",
     });
   } catch (err) {
-    console.log(err);
     res.status(404).json({
       success: false,
       message: err.message,
