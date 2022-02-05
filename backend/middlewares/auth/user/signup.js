@@ -6,7 +6,7 @@ module.exports = async (req, res) => {
 
     const unhashedPassword = req.body.password;
 
-    const salt = process.env.SALT;
+    const salt = await bcrypt.genSalt(process.env.SALT);
 
     const hashedPassword = await bcrypt.hash(unhashedPassword, salt);
     const password = hashedPassword;

@@ -23,6 +23,7 @@ module.exports = async (req, res) => {
 
             });
         }
+
         const isEqual = await bcrypt.compare(oldPassword, userCredential.password);
         if (!isEqual) {
             return res.status(404).json({
@@ -30,7 +31,8 @@ module.exports = async (req, res) => {
                 message: "Incorrect Password!"
             });
         }
-        const newHashedPassword = await bcrypt.hash(newPassword, process.env.SALT);
+        const salt = await bcrypt.genSalt(process.env.SALT);
+        const newHashedPassword = await bcrypt.hash(newPassword, salt);
 
         userCredential.password = newHashedPassword;
         await userCredential.save();
