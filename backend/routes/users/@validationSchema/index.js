@@ -3,7 +3,7 @@ const Joi = require("@hapi/joi");
 const addUserValidation = Joi.object({
     name: Joi.string().required(),
     email: Joi.string().email().required(),
-    password: Joi.string().min(8).required(),
+    password: Joi.string().regex(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/).required(),
 
 });
 const updateUserPasswordValidation = Joi.object({
