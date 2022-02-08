@@ -11,7 +11,7 @@ const getUsersByOrganizationId = require("./getUsersByOrganizationId");
 const getUsersByTeamId = require("./getUsersByTeamId");
 const validation = require("../../middlewares/validation");
 const validationSchema = require("./@validationSchema");
-const signUp = require("../../middlewares/auth/user/signup");
+const signUp = require("../auth/user/signup");
 const updateUserPassword = require("./updateUserPassword");
 const verifyToken = require("../../middlewares/verifyToken");
 
