@@ -4,7 +4,7 @@ const organizations = require("./organizations/index");
 const users = require("./users/index");
 const teams = require("./teams/index");
 const notices = require("./notices/index");
-const logger = require("./logger/index");
+const logger = require("../helpers/logger");
 
 router.use("/post", posts);
 router.use("/organization", organizations);

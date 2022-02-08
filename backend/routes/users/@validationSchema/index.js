@@ -18,6 +18,7 @@ const updateUserValidation = Joi.object({
     name: Joi.string().optional(),
     email: Joi.string().email().optional(),
     teams: Joi.array().items(Joi.string().length(24)),
+    newAdminId: Joi.string().email().optional(),
 });
 
 const getUserValidation = Joi.object({

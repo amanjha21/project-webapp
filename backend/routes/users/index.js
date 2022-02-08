@@ -13,7 +13,7 @@ const validation = require("../../middlewares/validation");
 const validationSchema = require("./@validationSchema");
 const signUp = require("../../middlewares/auth/user/signup");
 const updateUserPassword = require("./updateUserPassword");
-
+const logger = require("../../helpers/logger");
 // get user route
 router.get("/:id", validation(validationSchema.getUserValidation, "query"), getUserById);
 
