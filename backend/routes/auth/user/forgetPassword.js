@@ -29,11 +29,11 @@ module.exports = async (req, res) => {
     //create a link to resetpassword
     const resetLink = `${fullUrl}/${resetToken}`;
     //send email with reset link
-    // await mailer({
-    //   email: user.email,
-    //   reason: "Password Reset",
-    //   link: resetLink,
-    // });
+    await mailer({
+      email: user.email,
+      reason: "Password Reset",
+      link: resetLink,
+    });
     console.log(user, resetLink);
     res.status(200).json({
       success: true,
