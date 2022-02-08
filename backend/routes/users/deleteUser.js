@@ -112,13 +112,13 @@ module.exports = async (req, res) => {
     });
   }
 };
-const deleteUser = async (userId) => {
+const deleteUser = async (userDetails) => {
   try {
     //delete userReactions
     const userReactionArray = userDetails.reactions;
     await Schemas.Reaction.deleteMany({
       _id: {
-        $in: noticeIdArray
+        $in: userReactionArray
       },
     });
     //delete userPosts
