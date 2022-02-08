@@ -23,6 +23,17 @@ module.exports = async (req, res) => {
     const teamName = team.name;
     const adminId = team.admin;
 
+    const noticeIdArray = await Schemas.Notice.find(
+      { team: team._id },
+      { _id: 1 }
+    );
+
+    await Schemas.Notice_Reaction.deleteMany({
+      notice: { $in: noticeIdArray },
+    });
+
+    await Schemas.Notice.deleteMany({ _id: { $in: noticeIdArray } });
+
     await Schemas.User.updateMany(
       { teams: teamId },
       { $pull: { teams: teamId } }

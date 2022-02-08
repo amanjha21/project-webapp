@@ -45,10 +45,8 @@ module.exports = async (req, res) => {
 
     await team.save();
     logger({
-      userId: ObjectId(admin),
-      message: `New Team Created With TeamID: ${
-        team._id
-      } by User with userID: ${ObjectId(admin)}`,
+      userId: admin,
+      message: `New Team Created With TeamID: ${team._id} by User with userID: ${admin}`,
       ip,
     });
     res.status(201).json({
