@@ -1,6 +1,7 @@
 const Schemas = require("../../models/index");
 
 module.exports = async (req, res, next) => {
+
   const userName = req.body.name;
   const userEmail = req.body.email;
   const email_format = userEmail.split("@").pop();
@@ -45,6 +46,7 @@ module.exports = async (req, res, next) => {
       res.locals.user = newUser;
 
       next();
+
     }
   } catch (err) {
     res.status(400).json({

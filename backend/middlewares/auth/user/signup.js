@@ -1,11 +1,13 @@
 const Schemas = require("../../../models/index");
 const bcrypt = require("bcrypt");
+const logger = require("../../../helpers/logger");
 require("dotenv").config();
 
 module.exports = async (req, res) => {
+  const ip = req.header("x-forwarded-for") || req.connection.remoteAddress;
   const unhashedPassword = req.body.password;
 
-  const salt = process.env.SALT;
+  const salt = await bcrypt.genSalt(parseInt(process.env.SALT));
 
   const hashedPassword = await bcrypt.hash(unhashedPassword, salt);
   const password = hashedPassword;
@@ -18,6 +20,7 @@ module.exports = async (req, res) => {
     password,
     _id: userId,
   });
+
   const result = await newUserCred.save();
 
   if (!result._id) {
@@ -27,6 +30,11 @@ module.exports = async (req, res) => {
     res.status(404).json({
       success: false,
       message: "Failed to create User!!",
+    });
+    logger({
+      userId: result._id,
+      message: `User created successfully with userId: ${result._id} `,
+      ip,
     });
   }
   res.status(200).json({
