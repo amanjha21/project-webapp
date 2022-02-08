@@ -1,10 +1,12 @@
 const Schemas = require("../../../models/index");
+const logger = require("../../../helpers/logger");
 module.exports = async (req, res) => {
   const type = req.body.type;
   const user = req.body.userId;
   const notice = req.body.noticeId;
 
   try {
+    const ip = req.header("x-forwarded-for") || req.connection.remoteAddress;
     const reaction = await Schemas.Notice_Reaction.findOne({
       notice: notice,
       user: user,
@@ -21,6 +23,11 @@ module.exports = async (req, res) => {
       });
 
       await newReaction.save();
+      logger({
+        userId: user,
+        message: `Reaction with reactionId:${newReaction._id} updated successfully by userId: ${user} `,
+        ip,
+      });
       return res.status(201).json({
         success: true,
         message: "Reaction added successfully",
