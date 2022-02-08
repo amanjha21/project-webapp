@@ -11,12 +11,14 @@ module.exports = async (req, res) => {
       message: "Invalid Request",
     });
   }
+
   if (!name) {
     return res.status(403).json({
       success: false,
       message: "Nothing to update",
     });
   }
+
   try {
     const organization = await Schemas.Organization.findOne({
       _id: organizationId,
@@ -29,15 +31,16 @@ module.exports = async (req, res) => {
       });
     }
 
-    const team = await Schemas.Team.findOne({
-      name: organization.name,
-      organization: organizationId,
-    });
-
     if (name && name != organization.name) {
       organization.name = name;
       await organization.save();
     }
+
+    //To get AdminID For Logger
+    const team = await Schemas.Team.findOne({
+      name: organization.name,
+      organization: organizationId,
+    });
 
     logger({
       userId: team.admin,

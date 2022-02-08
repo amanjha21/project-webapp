@@ -15,9 +15,10 @@ module.exports = async (req, res) => {
     if (organization.length == 0 || !organization) {
       return res.status(400).json({
         success: false,
-        message: "Organization doesn't exist",
+        message: "No Organization To Show",
       });
     }
+
     res.status(200).json(organization);
   } catch (err) {
     res.status(404).json({
