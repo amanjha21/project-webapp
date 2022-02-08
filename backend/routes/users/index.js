@@ -13,21 +13,55 @@ const validation = require("../../middlewares/validation");
 const validationSchema = require("./@validationSchema");
 const signUp = require("../../middlewares/auth/user/signup");
 const updateUserPassword = require("./updateUserPassword");
+const verifyToken = require("../../middlewares/verifyToken");
 
 // get user route
-router.get("/:id", validation(validationSchema.getUserValidation, "query"), getUserById);
+router.get(
+  "/:id",
+  validation(validationSchema.getUserValidation, "query"),
+  getUserById
+);
 
-router.post("/updatePassword/:id", validation(validationSchema.updateUserPasswordValidation), updateUserPassword);
+router.post(
+  "/updatePassword/:id",
+  validation(validationSchema.updateUserPasswordValidation),
+  verifyToken,
+  updateUserPassword
+);
 // create user route
-router.post("/register", validation(validationSchema.addUserValidation), addUser, signUp);
+router.post(
+  "/register",
+  validation(validationSchema.addUserValidation),
+  addUser,
+  signUp
+);
 // update user route
-router.post("/update/:id", validation(validationSchema.updateUserValidation), updateUser);
+router.post(
+  "/update/:id",
+  validation(validationSchema.updateUserValidation),
+  verifyToken,
+  updateUser
+);
 // delete user route
-router.delete("/:id", validation(validationSchema.deleteUserValidation, "query"), deleteUser);
+router.delete(
+  "/:id",
+  validation(validationSchema.deleteUserValidation, "query"),
+  verifyToken,
+  deleteUser
+);
 // get user by TeamId route
-router.get("/team/:id", validation(validationSchema.getUsersByTeamId), getUsersByTeamId);
+router.get(
+  "/team/:id",
+  validation(validationSchema.getUsersByTeamId),
+  verifyToken,
+  getUsersByTeamId
+);
 // get user by OrganizationId router
-router.get("/organization/:id", validation(validationSchema.getUsersByOrgainzationId), getUsersByOrganizationId);
-
+router.get(
+  "/organization/:id",
+  validation(validationSchema.getUsersByOrgainzationId),
+  verifyToken,
+  getUsersByOrganizationId
+);
 
 module.exports = router;

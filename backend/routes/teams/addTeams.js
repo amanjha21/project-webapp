@@ -1,12 +1,14 @@
 const Schemas = require("../../models/index");
 const mongoose = require("mongoose");
 const ObjectId = mongoose.Types.ObjectId;
+const logger = require("../../helpers/logger");
 
 module.exports = async (req, res) => {
   const name = req.body.name;
   const organization = req.body.organization;
   const admin = req.body.admin;
   const moderator = req.body.moderator || [];
+  const ip = req.header("x-forwarded-for") || req.connection.remoteAddress;
 
   try {
     //Check if the Admin belongs to the user
@@ -14,12 +16,14 @@ module.exports = async (req, res) => {
       _id: ObjectId(admin),
       organization: ObjectId(organization),
     });
+
     if (!adminDetails) {
       return res.status(404).json({
         success: false,
         message: "Invalid Request",
       });
     }
+
     //Check if Team already exists
     const result = await Schemas.Team.findOne({
       organization: ObjectId(organization),
@@ -40,6 +44,13 @@ module.exports = async (req, res) => {
     });
 
     await team.save();
+    logger({
+      userId: ObjectId(admin),
+      message: `New Team Created With TeamID: ${
+        team._id
+      } by User with userID: ${ObjectId(admin)}`,
+      ip,
+    });
     res.status(201).json({
       success: true,
       message: "Team added successfully",

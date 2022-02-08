@@ -23,11 +23,10 @@ const addTeamsValidation = Joi.object({
 });
 
 const updateTeamsValidation = Joi.object({
-  teamId: Joi.string().length(24).required(),
   name: Joi.string().optional(),
   organization: Joi.string().optional(),
   admin: Joi.string().length(24).optional(),
-  moderator: Joi.string().length(24).optional(),
+  moderator: Joi.array().items(Joi.string().length(24)).optional(),
 });
 
 const deleteTeamByIdValidation = Joi.object({

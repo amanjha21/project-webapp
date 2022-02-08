@@ -9,6 +9,7 @@ const deletePostsByUserId = require("./deletePostsByUserId");
 const validation = require("../../middlewares/validation");
 const validationSchema = require("./@validationSchema");
 const reactions = require("./reactions/index");
+const verifyToken = require("../../middlewares/verifyToken");
 //get post route
 router.get("/", validation(validationSchema.getPosts, "query"), getPosts);
 //get post by postid route
@@ -21,12 +22,18 @@ router.get(
 );
 
 //add post route
-router.post("/", validation(validationSchema.addPostValidation), addPost);
+router.post(
+  "/",
+  validation(validationSchema.addPostValidation),
+  verifyToken,
+  addPost
+);
 
 //update post route
 router.post(
   "/update",
   validation(validationSchema.updatePostValidation),
+  verifyToken,
   updatePost
 );
 
@@ -34,12 +41,14 @@ router.post(
 router.delete(
   "/:id",
   validation(validationSchema.deletePostByIdValidation),
+  verifyToken,
   deletePostById
 );
 //delete all post for user
 router.delete(
   "/user/delete-all",
   validation(validationSchema.deletePostsByUserIdValidation),
+  verifyToken,
   deletePostsByUserId
 );
 router.use("/reaction", reactions);

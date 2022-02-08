@@ -5,7 +5,12 @@ const users = require("./users/index");
 const teams = require("./teams/index");
 const notices = require("./notices/index");
 const logger = require("./logger/index");
+const login = require("./auth/user/login");
+const logout = require("./auth/user/logout");
+const verifyToken = require("../middlewares/verifyToken");
 
+router.post("/login", login);
+router.post("/logout", verifyToken, logout);
 router.use("/post", posts);
 router.use("/organization", organizations);
 router.use("/user", users);
