@@ -25,7 +25,7 @@ module.exports = async (req, res) => {
 
   const token = jwt.sign(
     { _id: user._id, email: user.email },
-    process.env.TOKEN_SECRET,
+    process.env.USER_TOKEN_SECRET,
     { expiresIn: "1d" }
   );
   user.token = token;
