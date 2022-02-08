@@ -6,11 +6,12 @@ const updateOrganizations = require("./updateOrganizations");
 const deleteOrganizations = require("./deleteOrganizations");
 const validation = require("../../middlewares/validation");
 const validationSchema = require("./@validationSchema");
+const verifyToken = require("../../middlewares/verifyToken");
 
 //Get Organization By Id
 router.get(
   "/:id",
-  validation(validationSchema.getOrganizationByIdValidation),
+  validation(validationSchema.getOrganizationByIdValidation, "query"),
   getOrganizationById
 );
 
@@ -25,6 +26,7 @@ router.get(
 router.post(
   "/",
   validation(validationSchema.addOrganizationsValidation),
+  verifyToken,
   addOrganizations
 );
 
@@ -32,13 +34,15 @@ router.post(
 router.post(
   "/update/:id",
   validation(validationSchema.updateOrganizationsValidation),
+  verifyToken,
   updateOrganizations
 );
 
 //Delete Organization
 router.delete(
   "/:id",
-  validation(validationSchema.deleteOrganizationsValidation),
+  validation(validationSchema.deleteOrganizationsValidation, "query"),
+  verifyToken,
   deleteOrganizations
 );
 

@@ -1,9 +1,11 @@
 const Schemas = require("../../models/index");
+const logger = require("../../helpers/logger");
 
 module.exports = async (req, res) => {
   const name = req.body.name;
   const adminName = req.body.adminName;
   const adminEmail = req.body.adminEmail;
+  const ip = req.header("x-forwarded-for") || req.connection.remoteAddress;
 
   const email_format = adminEmail.split("@").pop();
   try {
@@ -43,6 +45,12 @@ module.exports = async (req, res) => {
 
     newAdmin.teams = [newTeam];
     await newAdmin.save();
+
+    logger({
+      userId: newAdmin._id,
+      message: `New Organization Created With OrganizationID: ${newOrganization._id} And Also A New Team Created with TeamID: ${newTeam._id} By User With UserID: ${newAdmin._id}`,
+      ip,
+    });
 
     res.status(201).json({
       success: true,

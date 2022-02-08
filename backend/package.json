@@ -12,8 +12,10 @@
   "dependencies": {
     "@hapi/joi": "^17.1.1",
     "@trycourier/courier": "^3.4.0",
+    "bcrypt": "^5.0.1",
     "dotenv": "^14.2.0",
     "express": "^4.17.2",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.1.7"
   },
   "devDependencies": {

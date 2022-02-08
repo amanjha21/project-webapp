@@ -1,11 +1,13 @@
 const Schemas = require("../../models/index");
+const logger = require("../../helpers/logger");
 
 module.exports = async (req, res) => {
   const teamId = req.params.id;
   const name = req.body.name;
-  const organization = req.body.organization;
+  //const organization = req.body.organization;
   const admin = req.body.admin;
   const moderator = req.body.moderator;
+  const ip = req.header("x-forwarded-for") || req.connection.remoteAddress;
 
   if (teamId.length != 24) {
     return res.status(400).json({
@@ -13,7 +15,7 @@ module.exports = async (req, res) => {
       message: "Invalid Request",
     });
   }
-  if (!name && !organization && !admin && !moderator) {
+  if (!name && !admin && !moderator) {
     return res.status(403).json({
       success: false,
       message: "Nothing to update",
@@ -36,10 +38,10 @@ module.exports = async (req, res) => {
       await team.save();
     }
 
-    if (organization && organization != team.organization) {
-      team.organization = organization;
-      await team.save();
-    }
+    // if (organization && organization != team.organization) {
+    //   team.organization = organization;
+    //   await team.save();
+    // }
 
     if (admin && admin != team.admin) {
       team.admin = admin;
@@ -56,6 +58,13 @@ module.exports = async (req, res) => {
       }
       await team.save();
     }
+
+    logger({
+      userId: team.admin,
+      message: `${team.name} Team Updated with TeamId: ${teamId} By UserId : ${team.admin}.
+      New Updated Team -> name: ${team.name} , admin: ${team.admin} , moderator: ${team.moderator} `,
+      ip,
+    });
 
     res.status(200).json({
       success: true,
