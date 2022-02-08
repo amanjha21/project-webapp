@@ -18,6 +18,7 @@ module.exports = async (req, res) => {
         message: "Team doesn't exist",
       });
     }
+
     res.status(200).json(team);
   } catch (err) {
     res.status(404).json({

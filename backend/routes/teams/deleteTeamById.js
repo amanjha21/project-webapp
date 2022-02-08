@@ -2,7 +2,7 @@ const Schemas = require("../../models/index");
 const logger = require("../../helpers/logger");
 
 module.exports = async (req, res) => {
-  const teamId = req.params.id || "453eerw189y6yy6422e23";
+  const teamId = req.params.id;
   const ip = req.header("x-forwarded-for") || req.connection.remoteAddress;
 
   if (teamId.length != 24) {
@@ -11,8 +11,10 @@ module.exports = async (req, res) => {
       message: "Invalid Request",
     });
   }
+
   try {
     const team = await Schemas.Team.findOne({ _id: teamId }).exec();
+
     if (!team) {
       return res.status(400).json({
         success: false,
