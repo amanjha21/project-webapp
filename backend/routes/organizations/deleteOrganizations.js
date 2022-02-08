@@ -1,5 +1,6 @@
 const Schemas = require("../../models/index");
 const pipeline = require("../../helpers/pipeline");
+const logger = require("../../helpers/logger");
 
 module.exports = async (req, res) => {
   const organizationId = req.params.id || "453eerw189y6yy6422e23";
@@ -21,11 +22,24 @@ module.exports = async (req, res) => {
       });
     }
 
+    const team = await Schemas.Team.findOne({
+      name: organization.name,
+      organization: organizationId,
+    });
+
     const organizationDetails = await Schemas.Organization.aggregate(
       pipeline.organizationDetails(organizationId)
     );
 
+    const organizationName = organization.name;
+
     await deleteOrganization(organizationDetails[0]);
+
+    logger({
+      userId: team.admin,
+      message: `${organizationName} Organization Deleted With OrganizationId : ${organizationId} By UserId: ${team.admin}`,
+      ip,
+    });
 
     res.status(200).json({
       success: true,

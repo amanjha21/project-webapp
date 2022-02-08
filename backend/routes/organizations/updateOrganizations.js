@@ -1,4 +1,5 @@
 const Schemas = require("../../models/index");
+const logger = require("../../helpers/logger");
 
 module.exports = async (req, res) => {
   const organizationId = req.params.id;
@@ -20,6 +21,7 @@ module.exports = async (req, res) => {
     const organization = await Schemas.Organization.findOne({
       _id: organizationId,
     }).exec();
+
     if (!organization) {
       return res.status(400).json({
         success: false,
@@ -27,10 +29,22 @@ module.exports = async (req, res) => {
       });
     }
 
+    const team = await Schemas.Team.findOne({
+      name: organization.name,
+      organization: organizationId,
+    });
+
     if (name && name != organization.name) {
       organization.name = name;
       await organization.save();
     }
+
+    logger({
+      userId: team.admin,
+      message: `${organizationName} Organization Updated With OrganizationId : ${organizationId} By UserId: ${team.admin}.
+      New Updated Organization -> name: ${organization.name}`,
+      ip,
+    });
 
     res.status(200).json({
       success: true,
