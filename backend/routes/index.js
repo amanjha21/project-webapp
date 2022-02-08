@@ -8,9 +8,19 @@ const logger = require("./logger/index");
 const login = require("./auth/user/login");
 const logout = require("./auth/user/logout");
 const verifyToken = require("../middlewares/verifyToken");
+const forgetPassword = require("./auth/user/forgetPassword");
+const resetPasswordByToken = require("./auth/user/resetPasswordByToken");
+const validation = require("../middlewares/validation");
+const validationSchema = require("../routes/users/@validationSchema");
 
 router.post("/login", login);
 router.post("/logout", verifyToken, logout);
+router.post("/forgetPassword", forgetPassword);
+router.get(
+  "/forgetPassword/:token",
+  validation(validationSchema.resetUserPasswordValidation),
+  resetPasswordByToken
+);
 router.use("/post", posts);
 router.use("/organization", organizations);
 router.use("/user", users);
