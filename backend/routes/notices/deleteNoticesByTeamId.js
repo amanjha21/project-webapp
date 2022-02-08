@@ -1,8 +1,11 @@
 const mongoose = require("mongoose");
 const ObjectId = mongoose.Types.ObjectId;
 const Schemas = require("../../models/index");
+const logger = require("../../helpers/logger");
 module.exports = async (req, res) => {
   const teamId = req.body.teamId || "61f2df2099088e5c1c0cb5f3";
+  const userId = req.user._id;
+  const ip = req.header("x-forwarded-for") || req.connection.remoteAddress;
   try {
     //find all notices by this teamId and get a array of noticeId
     const result = await Schemas.Notice.aggregate([
@@ -33,6 +36,11 @@ module.exports = async (req, res) => {
     } else {
       const noticeIdArray = result[0].notices;
       await deleteNoticeByTeamId(noticeIdArray);
+      logger({
+        userId: userId,
+        message: `All Notices with teamId: ${teamId} deleted by user with userId: ${userId} `,
+        ip,
+      });
       res.status(200).json({
         success: true,
         message: "Notice/s deleted successfully",

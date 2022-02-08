@@ -1,8 +1,10 @@
 const Schemas = require("../../models/index");
 const uploader = require("../../helpers/uploader");
+const logger = require("../../helpers/logger");
 module.exports = async (req, res) => {
   const userId = req.body.userId || "61eaeee6ef856a79a71d19b9";
   const noticeId = req.body.noticeId || "61eb01253b5a09f2341e84b0";
+  const ip = req.header("x-forwarded-for") || req.connection.remoteAddress;
   const content = req.body.content;
   const imageData = req.body.imageData;
 
@@ -42,6 +44,11 @@ module.exports = async (req, res) => {
       notice.image_link = imageUrl;
     }
     await notice.save();
+    logger({
+      userId: userId,
+      message: `Notice with noticeId: ${noticeId} deleted by user with userId: ${userId} `,
+      ip,
+    });
     res.status(200).json({
       success: true,
       message: "Notice Updated Successfully",

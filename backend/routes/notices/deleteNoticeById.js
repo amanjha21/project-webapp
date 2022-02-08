@@ -1,7 +1,9 @@
 const Schemas = require("../../models/index");
+const logger = require("../../helpers/logger");
 module.exports = async (req, res) => {
   const userId = req.body.userId || "61eaeee6ef856a79a71d19b9";
   const noticeId = req.params.id || "61eb01802628524805be0d4b";
+  const ip = req.header("x-forwarded-for") || req.connection.remoteAddress;
   try {
     //check if this notice exists and belongs to this user
     const notice = await Schemas.Notice.findOne({ _id: noticeId }).exec();
@@ -22,6 +24,11 @@ module.exports = async (req, res) => {
     //delete notice itself
     const result = await Schemas.Notice.deleteOne({ _id: noticeId }).exec();
     if (result.deletedCount == 1) {
+      logger({
+        userId: userId,
+        message: `Notice Deleted with noticeId: ${noticeId} by user with userId: ${userId} from team with teamId:${notice.team} `,
+        ip,
+      });
       res.status(200).json({
         success: true,
         message: "Notice deleted successfully",

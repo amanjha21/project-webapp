@@ -1,7 +1,9 @@
 const Schemas = require("../../models/index");
+const logger = require("../../helpers/logger");
 module.exports = async (req, res) => {
   const userId = req.body.userId || "61eaeee6ef856a79a71d19b9";
   const postId = req.params.id || "61eb01802628524805be0d4b";
+  const ip = req.header("x-forwarded-for") || req.connection.remoteAddress;
   if (postId.length != 24) {
     return res.status(400).json({
       success: false,
@@ -31,6 +33,11 @@ module.exports = async (req, res) => {
       res.status(200).json({
         success: true,
         message: "Post deleted successfully",
+      });
+      logger({
+        userId: userId,
+        message: `Post Deleted with postId: ${post._id} by user with userId: ${userId} `,
+        ip,
       });
     } else {
       res.status(400).json({

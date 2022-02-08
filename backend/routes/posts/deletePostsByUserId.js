@@ -1,11 +1,13 @@
 const mongoose = require("mongoose");
 const ObjectId = mongoose.Types.ObjectId;
 const Schemas = require("../../models/index");
+const logger = require("../../helpers/logger");
 module.exports = async (req, res) => {
   const userId = req.body.userId || "61f2df2099088e5c1c0cb5f3";
+  const ip = req.header("x-forwarded-for") || req.connection.remoteAddress;
   try {
     //find all posts by this userId and get a array of postId
-    const result = await Schemas.Podt.aggregate([
+    const result = await Schemas.Post.aggregate([
       {
         $match: {
           user: new ObjectId(userId),
@@ -33,6 +35,11 @@ module.exports = async (req, res) => {
     } else {
       const postIdArray = result[0].posts;
       await deletePostsByUserId(postIdArray);
+      logger({
+        userId: userId,
+        message: `All Posts by user with userId: ${userId} Deleted `,
+        ip,
+      });
       res.status(200).json({
         success: true,
         message: "Post/s deleted successfully",
