@@ -1,6 +1,7 @@
 const Schemas = require("../../models/index");
-
+const logger = require("../../helpers/logger");
 module.exports = async (req, res) => {
+  const ip = req.header("x-forwarded-for") || req.connection.remoteAddress;
   const userId = req.params.id;
   const name = req.body.name;
   const email_id = req.body.email;
@@ -57,6 +58,11 @@ module.exports = async (req, res) => {
       res.status(200).json({
         success: true,
         message: "User updated",
+      });
+      logger({
+        userId: user._id,
+        message: `User updated successfully by user with userId: ${user._id}`,
+        ip,
       });
     } else {
       res.status(400).json({
