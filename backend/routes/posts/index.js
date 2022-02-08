@@ -18,6 +18,7 @@ router.get("/:id", getPostById);
 router.get(
   "/user/:id",
   validation(validationSchema.getPosts, "query"),
+  verifyToken,
   getPostsByUserId
 );
 
@@ -38,18 +39,8 @@ router.post(
 );
 
 //delete post
-router.delete(
-  "/:id",
-  validation(validationSchema.deletePostByIdValidation),
-  verifyToken,
-  deletePostById
-);
+router.delete("/:id", verifyToken, deletePostById);
 //delete all post for user
-router.delete(
-  "/user/delete-all",
-  validation(validationSchema.deletePostsByUserIdValidation),
-  verifyToken,
-  deletePostsByUserId
-);
+router.delete("/user/delete-all", verifyToken, deletePostsByUserId);
 router.use("/reaction", reactions);
 module.exports = router;

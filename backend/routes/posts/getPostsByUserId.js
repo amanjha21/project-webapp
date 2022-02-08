@@ -3,8 +3,8 @@ const pipeline = require("../../helpers/pipeline");
 
 module.exports = async (req, res) => {
   //get user id from req.params
-  const userId = req.params.id || "61eaeee6ef856a79a71d19b9";
-  const currentUserId = "61eaeee6ef856a79a71d19b9";
+  const userId = req.params.id;
+  const currentUserId = req.user._id;
   const page = parseInt(req.query.page);
   const noOfPosts = parseInt(req.query.limit);
   if (userId.length != 24) {

@@ -1,7 +1,7 @@
 const Schemas = require("../../models/index");
 const logger = require("../../helpers/logger");
 module.exports = async (req, res) => {
-  const userId = req.body.userId || "61eaeee6ef856a79a71d19b9";
+  const userId = req.user._id;
   const postId = req.params.id || "61eb01802628524805be0d4b";
   const ip = req.header("x-forwarded-for") || req.connection.remoteAddress;
   if (postId.length != 24) {

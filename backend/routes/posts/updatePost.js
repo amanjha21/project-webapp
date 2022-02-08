@@ -2,8 +2,8 @@ const Schemas = require("../../models/index");
 const uploader = require("../../helpers/uploader");
 const logger = require("../../helpers/logger");
 module.exports = async (req, res) => {
-  const userId = req.body.userId || "61eaeee6ef856a79a71d19b9";
-  const postId = req.body.postId || "61eb01253b5a09f2341e84b0";
+  const userId = req.user._id;
+  const postId = req.body.postId;
   const content = req.body.content;
   const imageData = req.body.imageData;
   const ip = req.header("x-forwarded-for") || req.connection.remoteAddress;
