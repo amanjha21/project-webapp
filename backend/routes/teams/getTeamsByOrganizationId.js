@@ -12,6 +12,7 @@ module.exports = async (req, res) => {
       message: "Invalid Request",
     });
   }
+
   try {
     const team = await Schemas.Team.find({
       organization: organizationId,
@@ -27,6 +28,7 @@ module.exports = async (req, res) => {
         message: "Team doesn't exist",
       });
     }
+
     res.status(200).json(team);
   } catch (err) {
     res.status(404).json({
