@@ -1,7 +1,7 @@
 require("dotenv").config();
 require("./helpers/dbconnect");
 const express = require("express");
-require("./helpers/logger");
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 const routes = require("./routes/index");
