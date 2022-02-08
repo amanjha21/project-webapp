@@ -29,6 +29,7 @@ module.exports = async (req, res) => {
       organization: ObjectId(organization),
       name,
     }).exec();
+
     if (result) {
       return res.status(400).json({
         success: false,
@@ -44,17 +45,18 @@ module.exports = async (req, res) => {
     });
 
     await team.save();
+
     logger({
       userId: admin,
-      message: `New Team Created With TeamID: ${team._id} by User with userID: ${admin}`,
+      message: `New Team ${team.name} Created With TeamID: ${team._id} by User with userID: ${admin}`,
       ip,
     });
+
     res.status(201).json({
       success: true,
       message: "Team added successfully",
     });
   } catch (err) {
-    console.log(err);
     res.status(404).json({
       success: false,
       message: err.message,

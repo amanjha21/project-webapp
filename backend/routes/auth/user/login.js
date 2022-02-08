@@ -8,6 +8,7 @@ module.exports = async (req, res) => {
   const password = req.body.password;
 
   const user = await Schemas.User_Credential.findOne({ email }).exec();
+
   if (!user) {
     return res.status(400).json({
       success: false,
@@ -16,6 +17,7 @@ module.exports = async (req, res) => {
   }
 
   const validPassword = await bcrypt.compare(password, user.password);
+
   if (!validPassword) {
     return res.status(400).json({
       success: false,
@@ -28,6 +30,7 @@ module.exports = async (req, res) => {
     process.env.USER_TOKEN_SECRET,
     { expiresIn: "1d" }
   );
+
   user.token = token;
   await user.save();
 
