@@ -10,8 +10,11 @@ const getOrganizationsValidation = Joi.object({
 });
 
 const addOrganizationsValidation = Joi.object({
-  name: Joi.string().required(),
-  adminName: Joi.string().required(),
+  name: Joi.string().min(3).required(),
+  password: Joi.string()
+    .regex(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/)
+    .required(),
+  adminName: Joi.string().min(3).required(),
   adminEmail: Joi.string()
     .email({ minDomainSegments: 3, tlds: { allow: ["in"] } })
     .required(),

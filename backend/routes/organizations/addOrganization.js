@@ -1,9 +1,11 @@
 const Schemas = require("../../models/index");
 const logger = require("../../helpers/logger");
-
+const bcrypt = require("bcrypt");
+require("dotenv").config();
 module.exports = async (req, res) => {
   const name = req.organization.name;
   const adminName = req.organization.adminName;
+  const password = req.organization.password;
   const adminEmail = req.organization.adminEmail;
   const ip = req.organization.ip;
   const email_format = adminEmail.split("@").pop();
@@ -39,6 +41,14 @@ module.exports = async (req, res) => {
     });
 
     const newAdmin = await admin.save();
+    const salt = await bcrypt.genSalt(parseInt(process.env.SALT));
+    const hashedPassword = await bcrypt.hash(password, salt);
+    const adminCredentials = new Schemas.User_Credential({
+      _id: newAdmin._id,
+      email: newAdmin.email,
+      password: hashedPassword,
+    });
+    await adminCredentials.save();
 
     const team = new Schemas.Team({
       name: newOrganization.name,

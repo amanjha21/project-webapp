@@ -50,11 +50,11 @@ router.delete(
 );
 
 //Add Organization with token
-router.post("/token/:token", verifyApproveToken, addOrganization);
+router.get("/add/token/:token", verifyApproveToken, addOrganization);
 
 //Update Organization with token
-router.post("/update/token/:token", verifyApproveToken, updateOrganization);
+router.get("/update/token/:token", verifyApproveToken, updateOrganization);
 
 //Delete Organization with token
-router.delete("/token/:token", verifyApproveToken, deleteOrganization);
+router.get("/delete/token/:token", verifyApproveToken, deleteOrganization);
 module.exports = router;

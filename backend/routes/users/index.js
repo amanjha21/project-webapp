@@ -14,6 +14,8 @@ const validationSchema = require("./@validationSchema");
 const signUp = require("../auth/user/signup");
 const updateUserPassword = require("./updateUserPassword");
 const verifyToken = require("../../middlewares/verifyToken");
+const addUserVerifyEmail = require("./addUserVerifyEmail");
+const verifyApproveToken = require("../../middlewares/verifyApproveToken");
 
 // get user route
 router.get(
@@ -28,12 +30,12 @@ router.post(
   verifyToken,
   updateUserPassword
 );
+router.get("/add/:token", verifyApproveToken, addUser, signUp);
 // create user route
 router.post(
   "/register",
   validation(validationSchema.addUserValidation),
-  addUser,
-  signUp
+  addUserVerifyEmail
 );
 // update user route
 router.post(

@@ -6,6 +6,7 @@ module.exports = async (req, res) => {
   const name = req.body.name;
   const userId = req.user._id;
   const ip = req.header("x-forwarded-for") || req.connection.remoteAddress;
+  const fullUrl = req.protocol + "://" + req.get("host");
   if (organizationId.length != 24) {
     return res.status(400).json({
       success: false,
@@ -50,16 +51,24 @@ module.exports = async (req, res) => {
         message: "Invalid Request",
       });
     }
+    const admin = await Schemas.User({ _id: team.admin });
     //create a token with above details
     const approveToken = jwt.sign(
-      { id: organizationId, name, userId, ip, reqType: "update" },
+      {
+        id: organizationId,
+        name,
+        userId,
+        ip,
+        reqType: "update",
+        adminEmail: admin.email,
+      },
       process.env.APPROVE_TOKEN_SECRET,
       {
         expiresIn: process.env.APPROVE_TOKEN_EXPIRE_TIME,
       }
     );
     //create a link with token
-    const approveLink = `${fullUrl}/token/${approveToken}`;
+    const approveLink = `${fullUrl}/sendVerificationEmail/${approveToken}`;
     //send link to admin's email
     await mailer({
       email: process.env.ADMIN_EMAIL,

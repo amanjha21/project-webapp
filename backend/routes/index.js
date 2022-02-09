@@ -9,11 +9,13 @@ const login = require("./auth/user/login");
 const logout = require("./auth/user/logout");
 const verifyToken = require("../middlewares/verifyToken");
 const forgotPassword = require("./auth/user/forgotPassword");
+const sendOrganizationVerificationEmail = require("./auth/user/sendOrganizationVerificationEmail");
 const resetPasswordByToken = require("./auth/user/resetPasswordByToken");
 const validation = require("../middlewares/validation");
 const validationSchema = require("../routes/users/@validationSchema");
 
 router.post("/login", login);
+router.get("/sendVerificationEmail/:token", sendOrganizationVerificationEmail);
 router.post("/logout", verifyToken, logout);
 router.post("/forgotPassword", forgotPassword);
 router.get(

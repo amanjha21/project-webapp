@@ -4,8 +4,8 @@ const logger = require("../../../helpers/logger");
 require("dotenv").config();
 
 module.exports = async (req, res) => {
-  const ip = req.header("x-forwarded-for") || req.connection.remoteAddress;
-  const unhashedPassword = req.body.password;
+  const ip = req.organization.ip;
+  const unhashedPassword = req.organization.password;
 
   const salt = await bcrypt.genSalt(parseInt(process.env.SALT));
 
