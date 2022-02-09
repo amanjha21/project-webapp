@@ -10,8 +10,12 @@ const addUserValidation = Joi.object({
     .required(),
 });
 const updateUserPasswordValidation = Joi.object({
-  oldPassword: Joi.string().min(8).required(),
-  newPassword: Joi.string().min(8).required(),
+  oldPassword: Joi.string()
+    .regex(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/)
+    .required(),
+  newPassword: Joi.string()
+    .regex(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/)
+    .required(),
 });
 
 const deleteUserValidation = Joi.object({
@@ -19,7 +23,6 @@ const deleteUserValidation = Joi.object({
 });
 const updateUserValidation = Joi.object({
   name: Joi.string().optional(),
-  email: Joi.string().email().optional(),
   teams: Joi.array().items(Joi.string().length(24)),
   newAdminId: Joi.string().email().optional(),
 });
