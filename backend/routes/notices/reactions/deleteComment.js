@@ -2,7 +2,7 @@ const Schemas = require("../../../models/index");
 const logger = require("../../../helpers/logger");
 module.exports = async (req, res) => {
   const userId = req.user._id;
-  const notice = req.body.notice;
+  const notice = req.body.noticeId;
   const comment = req.body.comment;
 
   try {
