@@ -54,7 +54,7 @@ router.delete(
 // get user by TeamId route
 router.get(
   "/team/:id",
-  validation(validationSchema.getUsersByTeamId),
+  validation(validationSchema.getUsersByTeamId, "query"),
   verifyToken,
   getUsersByTeamId
 );
