@@ -14,7 +14,6 @@ module.exports = async (req, res) => {
       message: "Logged Out Successfully",
     });
   } catch (error) {
-    console.log(error);
     res.status(400).json({
       success: false,
       message: error.message,

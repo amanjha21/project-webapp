@@ -34,7 +34,7 @@ module.exports = async (req, res) => {
       reason: "Password Reset",
       link: resetLink,
     });
-    console.log(user, resetLink);
+
     res.status(200).json({
       success: true,
       message: "reset link sent to email successfully",

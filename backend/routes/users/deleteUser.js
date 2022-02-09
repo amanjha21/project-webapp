@@ -101,7 +101,6 @@ module.exports = async (req, res) => {
       message: "User deleted successfully",
     });
   } catch (err) {
-    console.log(err);
     res.status(404).json({
       success: false,
       message: "Invalid Request",

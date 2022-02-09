@@ -5,12 +5,12 @@ module.exports = async (req, res) => {
   const post = req.body.postId;
   try {
     const dbPost = await Schemas.Post.findOne({
-      _id: post
+      _id: post,
     });
     if (!dbPost) {
       return res.status(404).json({
         success: false,
-        message: "Post doesnt exist"
+        message: "Post doesnt exist",
       });
     }
     const reaction = Schemas.Reaction({
@@ -26,7 +26,6 @@ module.exports = async (req, res) => {
       message: "Reaction added successfully",
     });
   } catch (err) {
-
     res.status(404).json({
       success: false,
       message: err.message,

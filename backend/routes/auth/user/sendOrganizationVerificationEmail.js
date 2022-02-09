@@ -11,7 +11,7 @@ module.exports = async (req, res) => {
   try {
     //check if token is still valid
     const result = jwt.verify(token, process.env.APPROVE_TOKEN_SECRET);
-    console.log(result.reqType);
+
     if (!result.reqType)
       return res.status(400).json({
         success: false,
