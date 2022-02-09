@@ -1,13 +1,15 @@
 const Schemas = require("../../../models/index");
 const logger = require("../../../helpers/logger");
 module.exports = async (req, res) => {
-  const userId = req.body.userId;
+  const userId = req.user._id;
+  const notice = req.body.notice;
   const comment = req.body.comment;
 
   try {
     const ip = req.header("x-forwarded-for") || req.connection.remoteAddress;
     const reaction = await Schemas.Notice_Reaction.findOne({
       user: userId,
+      notice,
       comment: comment,
     }).exec();
     if (!reaction) {
