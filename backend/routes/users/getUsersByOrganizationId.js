@@ -11,10 +11,9 @@ module.exports = async (req, res) => {
     });
   }
   const reqUser = req.user._id;
-  console.log(reqUser);
   try {
     const dbUser = await Schemas.User.findOne({ _id: reqUser });
-    if (dbUser.organization !== organizationId)
+    if (dbUser.organization != organizationId)
       return res.status(400).json({ success: false, message: "access denied" });
     const user = await Schemas.User.find({
       organization: organizationId,

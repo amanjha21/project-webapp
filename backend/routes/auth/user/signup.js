@@ -31,12 +31,12 @@ module.exports = async (req, res) => {
       success: false,
       message: "Failed to create User!!",
     });
-    logger({
-      userId: result._id,
-      message: `User created successfully with userId: ${result._id} `,
-      ip,
-    });
   }
+  logger({
+    userId: result._id,
+    message: `User created successfully with userId: ${result._id} `,
+    ip,
+  });
   res.status(200).json({
     success: true,
     message: "User created successfully",
