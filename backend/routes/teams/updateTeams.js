@@ -39,14 +39,14 @@ module.exports = async (req, res) => {
       _id: team.organization,
     });
 
-    if (userId !== team.admin) {
+    if (userId != team.admin) {
       return res.status(400).json({
         success: false,
         message: "Invalid Request",
       });
     }
 
-    if (team.name === organization.name && name != team.name) {
+    if (team.name == organization.name && name != team.name) {
       return res.status(400).json({
         success: false,
         message: "Invalid Request",

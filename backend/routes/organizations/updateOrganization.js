@@ -46,7 +46,6 @@ module.exports = async (req, res) => {
       message: "Organization Updated Successfully",
     });
   } catch (err) {
-    console.log(err);
     res.status(404).json({
       success: false,
       message: err.message,

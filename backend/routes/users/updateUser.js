@@ -23,7 +23,7 @@ module.exports = async (req, res) => {
   }
   try {
     const user = await Schemas.User.findOne({
-      _id: userId
+      _id: userId,
     }).exec();
     // checking if the user exists in the model users
     if (!user) {
@@ -33,7 +33,7 @@ module.exports = async (req, res) => {
       });
     }
     // checking if name exists and if it needs to be updated in the Database
-    if (name && name !== user.name) {
+    if (name && name != user.name) {
       user.name = name;
       await user.save();
     }
@@ -42,7 +42,6 @@ module.exports = async (req, res) => {
     if (teams && user.teams.includes(teams)) {
       user.teams.push(teams);
       await user.save();
-
     }
     // checkin if the changes were made successfully
     if (name == user.name || teams == user.teams) {
@@ -61,13 +60,10 @@ module.exports = async (req, res) => {
         message: "Failed to Update!!",
       });
     }
-
   } catch (err) {
-    console.log(err);
     res.status(404).json({
       success: false,
       message: err.message,
     });
   }
-
 };

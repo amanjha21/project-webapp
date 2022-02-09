@@ -54,7 +54,6 @@ module.exports = async (req, res) => {
       message: "Post Updated Successfully",
     });
   } catch (err) {
-    console.log(err);
     res.status(404).json({
       success: false,
       message: err.message,

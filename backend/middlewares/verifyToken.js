@@ -17,7 +17,7 @@ module.exports = async (req, res, next) => {
     const dbUser = await Schemas.User_Credential.findOne({ _id: user._id });
     const dbToken = dbUser.token;
 
-    if (!dbToken || dbToken !== token) {
+    if (!dbToken || dbToken != token) {
       return res.status(400).json({
         success: false,
         message: "Access Denied",

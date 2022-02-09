@@ -56,7 +56,6 @@ module.exports = async (req, res) => {
         user: user,
         type: type,
       }).exec();
-      console.log(result);
 
       if (result.deletedCount == 1) {
         res.status(200).json({
