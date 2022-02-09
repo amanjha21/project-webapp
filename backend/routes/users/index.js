@@ -43,8 +43,18 @@ router.post(
 // delete user route
 router.delete("/:id", verifyToken, deleteUser);
 // get user by TeamId route
-router.get("/team/:id", verifyToken, getUsersByTeamId);
+router.get(
+  "/team/:id",
+  validation(validationSchema.getUsersByTeamIdValidation),
+  verifyToken,
+  getUsersByTeamId
+);
 // get user by OrganizationId router
-router.get("/organization/:id", verifyToken, getUsersByOrganizationId);
+router.get(
+  "/organization/:id",
+  validation(validationSchema.getUsersByOrganizationIdValidation),
+  verifyToken,
+  getUsersByOrganizationId
+);
 
 module.exports = router;

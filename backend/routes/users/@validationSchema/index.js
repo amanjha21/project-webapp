@@ -27,9 +27,19 @@ const updateUserValidation = Joi.object({
 const resetUserPasswordValidation = Joi.object({
   newPassword: Joi.string().min(8).required(),
 });
+const getUsersByOrganizationIdValidation = Joi.object({
+  page: Joi.number().min(1).optional(),
+  limit: Joi.number().min(10).optional(),
+});
+const getUsersByTeamIdValidation = Joi.object({
+  page: Joi.number().min(1).optional(),
+  limit: Joi.number().min(10).optional(),
+});
 module.exports = {
   addUserValidation,
   updateUserValidation,
   updateUserPasswordValidation,
   resetUserPasswordValidation,
+  getUsersByOrganizationIdValidation,
+  getUsersByTeamIdValidation,
 };
