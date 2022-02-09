@@ -25,7 +25,7 @@ const mailer = async ({ email, name, reason, link }) => {
   }
 
   logger({
-    userId: "mailer",
+    userId: "",
     message: `Email sent to ${recipientName} for ${reason} with email ${email}`,
     ip: 0,
   });
