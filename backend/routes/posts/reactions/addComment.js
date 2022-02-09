@@ -1,23 +1,32 @@
 const Schemas = require("../../../models/index");
 module.exports = async (req, res) => {
-  const comment = req.body.comment || "";
-  const user = req.body.userId;
-  const post = req.body.postId || "61ee718fd7fc519c375e7eca";
+  const comment = req.body.comment;
+  const user = req.user._id;
+  const post = req.body.postId;
   try {
+    const dbPost = await Schemas.Post.findOne({
+      _id: post
+    });
+    if (!dbPost) {
+      return res.status(404).json({
+        success: false,
+        message: "Post doesnt exist"
+      });
+    }
     const reaction = Schemas.Reaction({
       type: "comment",
       comment: comment,
       post: post,
       user: user,
     });
-    console.log(reaction);
+
     await reaction.save();
     res.status(201).json({
       success: true,
       message: "Reaction added successfully",
     });
   } catch (err) {
-    console.log(err);
+
     res.status(404).json({
       success: false,
       message: err.message,

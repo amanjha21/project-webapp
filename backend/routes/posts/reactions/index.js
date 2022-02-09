@@ -14,13 +14,13 @@ router.post(
 );
 router.post(
   "/update",
-  validation(validationSchema.updateReactionValidation),
+  validation(validationSchema.updateCommentValidation),
   verifyToken,
   updateReaction
 );
 router.delete(
   "/",
-  validation(validationSchema.deleteReactionValidation),
+  validation(validationSchema.deleteCommentValidation),
   verifyToken,
   deleteComment
 );

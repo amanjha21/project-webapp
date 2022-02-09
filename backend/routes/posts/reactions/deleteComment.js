@@ -1,12 +1,13 @@
 const Schemas = require("../../../models/index");
 module.exports = async (req, res) => {
-  const userId = req.body.userId;
+  const userId = req.user._id;
   const comment = req.body.comment;
-
+  const postId = req.body.postId;
   try {
     const reaction = await Schemas.Reaction.findOne({
       user: userId,
       comment: comment,
+      post: postId
     }).exec();
     if (!reaction) {
       return res.status(400).json({
@@ -23,6 +24,7 @@ module.exports = async (req, res) => {
     const result = await Schemas.Reaction.deleteOne({
       user: userId,
       comment: comment,
+      post: postId
     }).exec();
     if (result.deletedCount == 1) {
       res.status(200).json({
