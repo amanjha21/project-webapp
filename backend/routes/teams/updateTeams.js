@@ -6,6 +6,7 @@ module.exports = async (req, res) => {
   const name = req.body.name;
   const admin = req.body.admin;
   const moderator = req.body.moderator;
+  const userId = req.user._id;
   const ip = req.header("x-forwarded-for") || req.connection.remoteAddress;
 
   if (teamId.length != 24) {
@@ -34,9 +35,27 @@ module.exports = async (req, res) => {
       });
     }
 
-    if (name && name != team.name) {
-      team.name = name;
-      await team.save();
+    const organization = await Schemas.Organization.findOne({
+      _id: team.organization,
+    });
+
+    if (user !== team.admin) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid Request",
+      });
+    }
+
+    if (team.name === organization.name && name != team.name) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid Request",
+      });
+    } else {
+      if (name && name != team.name) {
+        team.name = name;
+        await team.save();
+      }
     }
 
     if (admin && admin != team.admin) {

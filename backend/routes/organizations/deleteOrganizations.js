@@ -4,6 +4,7 @@ const logger = require("../../helpers/logger");
 
 module.exports = async (req, res) => {
   const organizationId = req.params.id;
+  const userId = req.user._id;
 
   if (organizationId.length != 24) {
     return res.status(400).json({
@@ -21,6 +22,19 @@ module.exports = async (req, res) => {
       return res.status(400).json({
         success: false,
         message: "Organization Doesn't Exist",
+      });
+    }
+
+    //To get AdminID For Logger
+    const team = await Schemas.Team.findOne({
+      name: organization.name,
+      organization: organizationId,
+    });
+
+    if (userId != team.admin) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid Request",
       });
     }
 

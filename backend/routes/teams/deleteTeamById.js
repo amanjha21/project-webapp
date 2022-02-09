@@ -3,6 +3,7 @@ const logger = require("../../helpers/logger");
 
 module.exports = async (req, res) => {
   const teamId = req.params.id;
+  const userId = req.user._id;
   const ip = req.header("x-forwarded-for") || req.connection.remoteAddress;
 
   if (teamId.length != 24) {
@@ -19,6 +20,23 @@ module.exports = async (req, res) => {
       return res.status(400).json({
         success: false,
         message: "Team doesn't exist",
+      });
+    }
+    const organization = await Schemas.Organization.findOne({
+      _id: team.organization,
+    });
+
+    if (team.name == organization.name) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid Request",
+      });
+    }
+
+    if (userId !== team.admin) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid Request",
       });
     }
 
