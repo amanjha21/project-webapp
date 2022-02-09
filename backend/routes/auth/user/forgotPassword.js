@@ -23,7 +23,7 @@ module.exports = async (req, res) => {
       { _id: user._id, email: user.email },
       process.env.PASSWORD_RESET_TOKEN_SECRET,
       {
-        expiresIn: "10m",
+        expiresIn: process.env.PASSWORD_RESET_TOKEN_EXPIRE_TIME,
       }
     );
     //create a link to resetpassword
