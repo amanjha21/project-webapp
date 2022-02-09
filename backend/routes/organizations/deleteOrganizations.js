@@ -42,12 +42,6 @@ module.exports = async (req, res) => {
       pipeline.organizationDetails(organizationId)
     );
 
-    //To get AdminID For Logger
-    const team = await Schemas.Team.findOne({
-      name: organization.name,
-      organization: organizationId,
-    });
-
     const organizationName = organization.name;
 
     await deleteOrganization(organizationDetails[0]);
