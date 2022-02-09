@@ -10,11 +10,7 @@ const validationSchema = require("./@validationSchema");
 const verifyToken = require("../../middlewares/verifyToken");
 
 //Get Team By Id
-router.get(
-  "/:id",
-  validation(validationSchema.getTeamByIdValidation, "query"),
-  getTeamById
-);
+router.get("/:id", getTeamById);
 
 //Get all Teams
 router.get(
@@ -24,11 +20,7 @@ router.get(
 );
 
 //Get Teams By OrganizationId
-router.get(
-  "/organization/:id",
-  validation(validationSchema.getTeamsByOrganizationIdValidation, "query"),
-  getTeamsByOrganizationId
-);
+router.get("/organization/:id", getTeamsByOrganizationId);
 
 //Add Team
 router.post(
@@ -47,11 +39,6 @@ router.post(
 );
 
 //Delete Team
-router.delete(
-  "/:id",
-  validation(validationSchema.deleteTeamByIdValidation, "query"),
-  verifyToken,
-  deleteTeamById
-);
+router.delete("/:id", verifyToken, deleteTeamById);
 
 module.exports = router;

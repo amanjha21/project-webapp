@@ -13,7 +13,7 @@ module.exports = async (req, res, next) => {
   }
 
   try {
-    const user = jwt.verify(token, process.env.TOKEN_SECRET);
+    const user = jwt.verify(token, process.env.USER_TOKEN_SECRET);
     const dbUser = await Schemas.User_Credential.findOne({ _id: user._id });
     const dbToken = dbUser.token;
 

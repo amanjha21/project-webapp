@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-
+const mailer = require("../../../helpers/mailer");
 module.exports = async (req, res) => {
   const token = req.params.token;
   const fullUrl = req.protocol + "://" + req.get("host");

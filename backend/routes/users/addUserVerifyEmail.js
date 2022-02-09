@@ -6,7 +6,7 @@ module.exports = async (req, res) => {
   const password = req.body.password;
   const email = req.body.email;
   const ip = req.header("x-forwarded-for") || req.connection.remoteAddress;
-  const email_format = adminEmail.split("@").pop();
+  const email_format = email.split("@").pop();
   const fullUrl = req.protocol + "://" + req.get("host");
   try {
     //check if organization exists
@@ -22,7 +22,7 @@ module.exports = async (req, res) => {
     }
     //check if user already exists
     const user = await Schemas.User.findOne({
-      email: userEmail,
+      email: email,
     }).exec();
 
     if (user) {
