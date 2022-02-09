@@ -1,5 +1,6 @@
 const mailer = async ({ email, name, reason, link }) => {
   const { CourierClient } = require("@trycourier/courier");
+  const logger = require("./logger");
 
   const courier = CourierClient({
     authorizationToken: "pk_prod_26DY38GMJ1M5W9QVD17QEB21VBHR",
@@ -23,11 +24,10 @@ const mailer = async ({ email, name, reason, link }) => {
     return console.log("failed to send email");
   }
 
-  console.log(`email sent to ${recipientName}.`);
+  logger({
+    userId: "mailer",
+    message: `Email sent to ${recipientName} for ${reason} with email ${email}`,
+    ip: 0,
+  });
 };
 module.exports = mailer;
-// mailer({
-//   email: "vaibhavkedia24@gail",
-//   reason: "testing purpose",
-//   link: "gmail.com",
-// });
