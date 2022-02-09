@@ -2,10 +2,19 @@ const mongoose = require("mongoose");
 const ObjectId = mongoose.Types.ObjectId;
 const Schemas = require("../../models/index");
 const logger = require("../../helpers/logger");
+const auth = require("../../helpers/auth/index");
 module.exports = async (req, res) => {
-  const teamId = req.body.teamId || "61f2df2099088e5c1c0cb5f3";
+  const teamId = req.body.teamId;
   const userId = req.user._id;
   const ip = req.header("x-forwarded-for") || req.connection.remoteAddress;
+  const hasAuth =
+    (await auth.isAdminOfTeam(userId, teamId)) ||
+    (await auth.isModeratorOfTeam(userId, teamId));
+  if (!hasAuth)
+    return res.status(401).json({
+      success: false,
+      message: "you donot have auth to access this resource",
+    });
   try {
     //find all notices by this teamId and get a array of noticeId
     const result = await Schemas.Notice.aggregate([

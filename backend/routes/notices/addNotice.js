@@ -1,12 +1,21 @@
 const Schemas = require("../../models/index");
 const uploader = require("../../helpers/uploader");
 const logger = require("../../helpers/logger");
+const auth = require("../../helpers/auth/index");
 module.exports = async (req, res) => {
-  const userId = req.body.userId || "61eaeee6ef856a79a71d19b9";
-  const teamId = req.body.teamId || "61f2de8599088e5c1c0cb5ea";
-  const content = req.body.content || "abloj";
+  const userId = req.user._id;
+  const teamId = req.body.teamId;
+  const content = req.body.content;
   const imageData = req.body.imageData;
   const ip = req.header("x-forwarded-for") || req.connection.remoteAddress;
+  const hasAuth =
+    (await auth.isAdminOfTeam(userId, teamId)) ||
+    (await auth.isModeratorOfTeam(userId, teamId));
+  if (!hasAuth)
+    return res.status(401).json({
+      success: false,
+      message: "you donot have auth to access this resource",
+    });
   try {
     const notice = new Schemas.Notice({
       content,

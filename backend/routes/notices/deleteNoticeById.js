@@ -1,9 +1,11 @@
 const Schemas = require("../../models/index");
 const logger = require("../../helpers/logger");
+const auth = require("../../helpers/auth/index");
 module.exports = async (req, res) => {
-  const userId = req.body.userId || "61eaeee6ef856a79a71d19b9";
-  const noticeId = req.params.id || "61eb01802628524805be0d4b";
+  const userId = req.user._id;
+  const noticeId = req.params.id;
   const ip = req.header("x-forwarded-for") || req.connection.remoteAddress;
+
   try {
     //check if this notice exists and belongs to this user
     const notice = await Schemas.Notice.findOne({ _id: noticeId }).exec();

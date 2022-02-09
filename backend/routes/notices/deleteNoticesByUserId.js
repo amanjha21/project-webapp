@@ -3,7 +3,7 @@ const ObjectId = mongoose.Types.ObjectId;
 const Schemas = require("../../models/index");
 const logger = require("../../helpers/logger");
 module.exports = async (req, res) => {
-  const userId = req.body.userId || "61f2df2099088e5c1c0cb5f3";
+  const userId = req.user._id;
   const ip = req.header("x-forwarded-for") || req.connection.remoteAddress;
   try {
     //find all notices by this userId and get a array of noticeId
