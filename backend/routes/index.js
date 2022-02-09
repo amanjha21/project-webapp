@@ -13,8 +13,9 @@ const sendOrganizationVerificationEmail = require("./auth/user/sendOrganizationV
 const resetPasswordByToken = require("./auth/user/resetPasswordByToken");
 const validation = require("../middlewares/validation");
 const validationSchema = require("../routes/users/@validationSchema");
+const loginSchema = require("./auth/user/@validationSchema");
 
-router.post("/login", login);
+router.post("/login", validation(loginSchema.login), login);
 router.get("/sendVerificationEmail/:token", sendOrganizationVerificationEmail);
 router.post("/logout", verifyToken, logout);
 router.post("/forgotPassword", forgotPassword);
