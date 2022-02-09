@@ -26,7 +26,6 @@ router.get(
 router.post(
   "/",
   validation(validationSchema.addOrganizationsValidation),
-  verifyToken,
   addOrganizations
 );
 

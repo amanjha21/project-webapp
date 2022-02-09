@@ -18,6 +18,7 @@ router.get("/:id", getPostById);
 router.get(
   "/user/:id",
   validation(validationSchema.getPosts, "query"),
+  verifyToken,
   getPostsByUserId
 );
 

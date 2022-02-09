@@ -24,7 +24,6 @@ const addTeamsValidation = Joi.object({
 
 const updateTeamsValidation = Joi.object({
   name: Joi.string().optional(),
-  organization: Joi.string().optional(),
   admin: Joi.string().length(24).optional(),
   moderator: Joi.string().length(24).optional(),
 });
