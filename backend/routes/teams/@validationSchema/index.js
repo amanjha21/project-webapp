@@ -28,15 +28,10 @@ const updateTeamsValidation = Joi.object({
   moderator: Joi.string().length(24).optional(),
 });
 
-const deleteTeamByIdValidation = Joi.object({
-  teamId: Joi.string().length(24).required(),
-});
-
 module.exports = {
   getTeamByIdValidation,
   getTeamsValidation,
   getTeamsByOrganizationIdValidation,
   addTeamsValidation,
   updateTeamsValidation,
-  deleteTeamByIdValidation,
 };

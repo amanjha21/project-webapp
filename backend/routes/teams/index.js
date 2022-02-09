@@ -47,11 +47,6 @@ router.post(
 );
 
 //Delete Team
-router.delete(
-  "/:id",
-  validation(validationSchema.deleteTeamByIdValidation, "query"),
-  verifyToken,
-  deleteTeamById
-);
+router.delete("/:id", verifyToken, deleteTeamById);
 
 module.exports = router;
