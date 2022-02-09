@@ -1,10 +1,19 @@
 const Schemas = require("../../../models/index");
 module.exports = async (req, res) => {
   const type = req.body.type;
-  const user = req.body.userId;
+  const user = req.user._id;
   const post = req.body.postId;
 
   try {
+    const dbPost = await Schemas.Post.findOne({
+      _id: post
+    });
+    if (!dbPost) {
+      return res.status(404).json({
+        success: false,
+        message: "Post doesnt exist"
+      });
+    }
     const reaction = await Schemas.Reaction.findOne({
       post: post,
       user: user,
