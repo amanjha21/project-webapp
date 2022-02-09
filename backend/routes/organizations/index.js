@@ -1,12 +1,16 @@
 const router = require("express").Router();
 const getOrganizationById = require("./getOrganizationById");
 const getOrganizations = require("./getOrganizations");
-const addOrganizations = require("./addOrganizations");
-const updateOrganizations = require("./updateOrganizations");
-const deleteOrganizations = require("./deleteOrganizations");
+const addOrganization = require("./addOrganization");
+const updateOrganization = require("./updateOrganization");
+const deleteOrganization = require("./deleteOrganization");
+const addOrganizationRequest = require("./addOrganizationRequest");
+const updateOrganizationRequest = require("./updateOrganizationRequest");
+const deleteOrganizationRequest = require("./deleteOrganizationRequest");
 const validation = require("../../middlewares/validation");
 const validationSchema = require("./@validationSchema");
 const verifyToken = require("../../middlewares/verifyToken");
+const verifyApproveToken = require("../../middlewares/verifyApproveToken");
 
 //Get Organization By Id
 router.get(
@@ -22,27 +26,35 @@ router.get(
   getOrganizations
 );
 
-//Add Organization
+//Add Organization request
 router.post(
   "/",
   validation(validationSchema.addOrganizationsValidation),
-  addOrganizations
+  addOrganizationRequest
 );
 
-//Update Organization
+//Update Organization request
 router.post(
   "/update/:id",
   validation(validationSchema.updateOrganizationsValidation),
   verifyToken,
-  updateOrganizations
+  updateOrganizationRequest
 );
 
-//Delete Organization
+//Delete Organization request
 router.delete(
   "/:id",
   validation(validationSchema.deleteOrganizationsValidation, "query"),
   verifyToken,
-  deleteOrganizations
+  deleteOrganizationRequest
 );
 
+//Add Organization with token
+router.post("/token/:token", verifyApproveToken, addOrganization);
+
+//Update Organization with token
+router.post("/update/token/:token", verifyApproveToken, updateOrganization);
+
+//Delete Organization with token
+router.delete("/token/:token", verifyApproveToken, deleteOrganization);
 module.exports = router;

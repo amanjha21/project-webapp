@@ -3,15 +3,16 @@ const pipeline = require("../../helpers/pipeline");
 const logger = require("../../helpers/logger");
 
 module.exports = async (req, res) => {
-  const organizationId = req.params.id;
-  const userId = req.user._id;
+  const organizationId = req.organization.id;
+  const userId = req.organization.userId;
+  const ip = req.organization.ip;
+  const reqType = req.organization.reqType;
 
-  if (organizationId.length != 24) {
-    return res.status(400).json({
+  if (reqType != "delete")
+    return res.status(403).json({
       success: false,
       message: "Invalid Request",
     });
-  }
 
   try {
     const organization = await Schemas.Organization.findOne({
@@ -31,13 +32,6 @@ module.exports = async (req, res) => {
       organization: organizationId,
     });
 
-    if (userId != team.admin) {
-      return res.status(400).json({
-        success: false,
-        message: "Invalid Request",
-      });
-    }
-
     const organizationDetails = await Schemas.Organization.aggregate(
       pipeline.organizationDetails(organizationId)
     );
@@ -47,8 +41,8 @@ module.exports = async (req, res) => {
     await deleteOrganization(organizationDetails[0]);
 
     logger({
-      userId: team.admin,
-      message: `${organizationName} Organization Deleted With OrganizationId : ${organizationId} By UserId: ${team.admin}`,
+      userId: userId,
+      message: `${organizationName} Organization Deleted With OrganizationId : ${organizationId} By UserId: ${userId}`,
       ip,
     });
 

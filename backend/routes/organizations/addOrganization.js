@@ -2,15 +2,21 @@ const Schemas = require("../../models/index");
 const logger = require("../../helpers/logger");
 
 module.exports = async (req, res) => {
-  const name = req.body.name;
-  const adminName = req.body.adminName;
-  const adminEmail = req.body.adminEmail;
-  const ip = req.header("x-forwarded-for") || req.connection.remoteAddress;
-
+  const name = req.organization.name;
+  const adminName = req.organization.adminName;
+  const adminEmail = req.organization.adminEmail;
+  const ip = req.organization.ip;
   const email_format = adminEmail.split("@").pop();
+  const reqType = req.organization.reqType;
+
+  if (reqType != "add")
+    return res.status(403).json({
+      success: false,
+      message: "Invalid Request",
+    });
 
   try {
-    //Check if Organization already exists
+    //check if organization already exists in database
     const result = await Schemas.Organization.findOne({ email_format }).exec();
     if (result) {
       return res.status(400).json({
@@ -18,7 +24,6 @@ module.exports = async (req, res) => {
         message: "Organization Already Exists",
       });
     }
-
     const organization = new Schemas.Organization({
       name,
       email_format,
@@ -49,7 +54,7 @@ module.exports = async (req, res) => {
 
     logger({
       userId: newAdmin._id,
-      message: `New Organization ${name} Created With OrganizationID: ${newOrganization._id} And Also A New Team ${newTeam.name} Created with TeamID: ${newTeam._id} By User With UserID: ${newAdmin._id}`,
+      message: `New Organization ${name} Created With OrganizationID: ${newOrganization._id} And Also A New Team ${newTeam.name} Created with TeamID: ${newTeam._id} By a newly created User With UserID: ${newAdmin._id} as Admin`,
       ip,
     });
 
