@@ -26,14 +26,7 @@ module.exports = async (req, res) => {
       _id: team.organization,
     });
 
-    if (team.name == organization.name) {
-      return res.status(400).json({
-        success: false,
-        message: "Invalid Request",
-      });
-    }
-
-    if (userId !== team.admin) {
+    if (team.name == organization.name || userId !== team.admin) {
       return res.status(400).json({
         success: false,
         message: "Invalid Request",
@@ -74,7 +67,6 @@ module.exports = async (req, res) => {
       });
     }
   } catch (err) {
-    console.log(err);
     res.status(404).json({
       success: false,
       message: err.message,
