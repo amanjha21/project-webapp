@@ -22,7 +22,7 @@ module.exports = async (req, res) => {
     }
     //check if user already exists
     const user = await Schemas.User.findOne({
-      email: userEmail,
+      email: email,
     }).exec();
 
     if (user) {
