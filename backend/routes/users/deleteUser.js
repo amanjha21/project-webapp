@@ -4,14 +4,9 @@ const logger = require("../../helpers/logger");
 module.exports = async (req, res) => {
   const ip = req.header("x-forwarded-for") || req.connection.remoteAddress;
 
-  const userId = req.params.id;
+  const userId = req.user._id;
   const newAdminId = req.body.newadmin;
-  if (userId.length != 24) {
-    return res.status(400).json({
-      success: false,
-      message: "Invalid Request",
-    });
-  }
+
   try {
     const user = await Schemas.User.findOne({
       _id: userId,
