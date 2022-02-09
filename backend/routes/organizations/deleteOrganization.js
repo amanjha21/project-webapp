@@ -27,9 +27,8 @@ module.exports = async (req, res) => {
     }
 
     //To get AdminID For Logger
-    const team = await Schemas.Team.findOne({
-      name: organization.name,
-      organization: organizationId,
+    const user = await Schemas.User.findOne({
+      _id: userId,
     });
 
     const organizationDetails = await Schemas.Organization.aggregate(
@@ -41,7 +40,7 @@ module.exports = async (req, res) => {
     await deleteOrganization(organizationDetails[0]);
 
     logger({
-      userId: userId,
+      email: user.email,
       message: `${organizationName} Organization Deleted With OrganizationId : ${organizationId} By UserId: ${userId}`,
       ip,
     });

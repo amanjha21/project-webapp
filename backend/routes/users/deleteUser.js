@@ -3,7 +3,6 @@ pipeline = require("../../helpers/pipeline");
 const logger = require("../../helpers/logger");
 module.exports = async (req, res) => {
   const ip = req.header("x-forwarded-for") || req.connection.remoteAddress;
-
   const userId = req.user._id;
   const newAdminId = req.body.newadmin;
 
@@ -86,7 +85,7 @@ module.exports = async (req, res) => {
 
     await deleteUser(userDetails[0]);
     logger({
-      userId: userId,
+      email: user.email,
       message: `User deleted successfully with userId: ${userId} `,
       ip,
     });
