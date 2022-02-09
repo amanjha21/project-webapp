@@ -41,7 +41,7 @@ router.post(
   updateUser
 );
 // delete user route
-router.delete("/:id", verifyToken, deleteUser);
+router.delete("/", verifyToken, deleteUser);
 // get user by TeamId route
 router.get(
   "/team/:id",
