@@ -13,11 +13,7 @@ const verifyToken = require("../../middlewares/verifyToken");
 const verifyApproveToken = require("../../middlewares/verifyApproveToken");
 
 //Get Organization By Id
-router.get(
-  "/:id",
-  validation(validationSchema.getOrganizationByIdValidation, "query"),
-  getOrganizationById
-);
+router.get("/:id", getOrganizationById);
 
 //Get all Organizations
 router.get(
@@ -42,12 +38,7 @@ router.post(
 );
 
 //Delete Organization request
-router.delete(
-  "/:id",
-  validation(validationSchema.deleteOrganizationsValidation, "query"),
-  verifyToken,
-  deleteOrganizationRequest
-);
+router.delete("/:id", verifyToken, deleteOrganizationRequest);
 
 //Add Organization with token
 router.get("/add/token/:token", verifyApproveToken, addOrganization);

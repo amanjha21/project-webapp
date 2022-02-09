@@ -1,9 +1,5 @@
 const Joi = require("@hapi/joi");
 
-const getOrganizationByIdValidation = Joi.object({
-  organizationId: Joi.string().length(24).required(),
-});
-
 const getOrganizationsValidation = Joi.object({
   page: Joi.number().min(1).optional(),
   limit: Joi.number().min(10).optional(),
@@ -24,14 +20,8 @@ const updateOrganizationsValidation = Joi.object({
   name: Joi.string().optional(),
 });
 
-const deleteOrganizationsValidation = Joi.object({
-  organizationId: Joi.string().length(24).required(),
-});
-
 module.exports = {
-  getOrganizationByIdValidation,
   getOrganizationsValidation,
   addOrganizationsValidation,
   updateOrganizationsValidation,
-  deleteOrganizationsValidation,
 };

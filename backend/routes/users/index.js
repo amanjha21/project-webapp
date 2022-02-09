@@ -18,11 +18,7 @@ const addUserVerifyEmail = require("./addUserVerifyEmail");
 const verifyApproveToken = require("../../middlewares/verifyApproveToken");
 
 // get user route
-router.get(
-  "/:id",
-  validation(validationSchema.getUserValidation, "query"),
-  getUserById
-);
+router.get("/:id", getUserById);
 
 router.post(
   "/updatePassword/:id",
@@ -45,25 +41,10 @@ router.post(
   updateUser
 );
 // delete user route
-router.delete(
-  "/:id",
-  validation(validationSchema.deleteUserValidation, "query"),
-  verifyToken,
-  deleteUser
-);
+router.delete("/:id", verifyToken, deleteUser);
 // get user by TeamId route
-router.get(
-  "/team/:id",
-  validation(validationSchema.getUsersByTeamId, "query"),
-  verifyToken,
-  getUsersByTeamId
-);
+router.get("/team/:id", verifyToken, getUsersByTeamId);
 // get user by OrganizationId router
-router.get(
-  "/organization/:id",
-  validation(validationSchema.getUsersByOrgainzationId),
-  verifyToken,
-  getUsersByOrganizationId
-);
+router.get("/organization/:id", verifyToken, getUsersByOrganizationId);
 
 module.exports = router;
