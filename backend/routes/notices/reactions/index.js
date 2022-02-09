@@ -3,8 +3,9 @@ const addComment = require("./addComment");
 const deleteComment = require("./deleteComment");
 const updateReaction = require("./updateReaction");
 const verifyToken = require("../../../middlewares/verifyToken");
-
-router.post("/", verifyToken, addComment);
-router.post("/update", verifyToken, updateReaction);
-router.delete("/", verifyToken, deleteComment);
+const validation = require("../../../middlewares/validation");
+const validationSchema = require("./@validationSchema");
+router.post("/", validation(validationSchema.addCommentValidation), verifyToken, addComment);
+router.post("/update", validation(validationSchema.updateCommentValidation), verifyToken, updateReaction);
+router.delete("/", validation(validationSchema.deleteCommentValidation), verifyToken, deleteComment);
 module.exports = router;
