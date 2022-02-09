@@ -32,7 +32,6 @@ module.exports = async (req, res) => {
       });
     }
 
-    //To get AdminID For Logger
     const team = await Schemas.Team.findOne({
       name: organization.name,
       organization: organizationId,
@@ -47,6 +46,7 @@ module.exports = async (req, res) => {
 
     if (name && name != organization.name) {
       organization.name = name;
+      team.name = name;
       await organization.save();
     }
 
