@@ -39,7 +39,7 @@ module.exports = async (req, res) => {
       _id: team.organization,
     });
 
-    if (user !== team.admin) {
+    if (userId !== team.admin) {
       return res.status(400).json({
         success: false,
         message: "Invalid Request",
