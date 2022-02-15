@@ -1,9 +1,12 @@
 import "./App.css";
+import Post from "./components/Post/Post";
+import UserProfile from "./components/Profile/UserProfile";
 
 function App() {
   return (
     <div className="App">
-      <p>Hello</p>
+      <Post />
+      {/* <UserProfile /> */}
     </div>
   );
 }

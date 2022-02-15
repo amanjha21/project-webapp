@@ -1,13 +1,45 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat:400,800");
+:root {
+  --main-color1: #19697e;
+  --main-color2: red;
+  --sec-color1: #28a6c5;
+  --sec-color2: #999;
+  --background-color: white;
+  --border-color: #e1e2e3;
+  --font-color: black;
+  --placeholder-font-color: #bbb;
+  --default-border-radius: 10px;
+}
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: "Montserrat", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+html {
+  font-size: 62.5%;
+}
+.circle {
+  border-radius: 50% !important;
+}
+.rounded-corner {
+  border-radius: var(--default-border-radius) !important;
+  overflow: hidden !important;
+}
+/* input placeholder color */
+::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: var(--placeholder-font-color);
+  opacity: 1; /* Firefox */
+}
+
+:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: var(--placeholder-font-color);
+}
+
+::-ms-input-placeholder {
+  /* Microsoft Edge */
+  color: var(--placeholder-font-color);
 }

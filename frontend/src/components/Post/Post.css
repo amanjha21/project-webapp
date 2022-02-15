@@ -1,0 +1,211 @@
+@import "~react-image-gallery/styles/css/image-gallery.css";
+.post-container {
+  width: 500px;
+  background-color: var(--background-color);
+  margin: 50px 50px;
+  border: 2px solid var(--border-color);
+}
+.creator {
+  position: relative;
+}
+.creator img {
+  width: 40px;
+  height: 40px;
+  background-image: url(http://cp91279.biography.com/1000509261001/1000509261001_1822909398001_BIO-Biography-29-Innovators-Mark-Zuckerberg-115956-SF.jpg);
+  background-size: cover;
+  background-position: center;
+  margin: 12px 0 0 12px;
+  position: absolute;
+}
+.creator div {
+  display: inline-block;
+  margin-left: 60px;
+}
+.creator div p {
+  font-size: 1.4rem;
+}
+.creator div p:first-of-type {
+  cursor: pointer;
+  font-weight: bold;
+  color: var(--main-color1);
+}
+.creator div p:first-of-type:hover {
+  text-decoration: underline;
+}
+.creator div p:last-of-type {
+  font-size: 1.2rem;
+  color: var(--sec-color2);
+  margin-top: -10px;
+}
+
+.post-message {
+  font-size: 1.6rem;
+  margin-top: 8px;
+  padding: 0 12px;
+  line-height: 18px;
+  color: var(--font-color);
+}
+
+.single-comment {
+  padding: 5px 10px;
+  margin: 0;
+}
+.single-comment:first-of-type {
+  border-top: 1px solid var(--border-color);
+  padding-top: 12px;
+}
+
+.single-comment img {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  background-image: url(https://heatherchristenaschmidt.files.wordpress.com/2011/09/facebook_no_profile_pic2-jpg.gif);
+  background-size: cover;
+  background-position: center;
+  border: none;
+}
+.single-comment .single-container {
+  padding-left: 40px;
+  padding-right: 20px;
+}
+.single-comment .single-container span {
+  margin-left: 5px;
+}
+.single-comment .single-container div {
+  font-size: 1.4rem;
+  margin-left: 5px;
+  color: var(--font-color);
+}
+.single-comment .single-container span:first-of-type {
+  cursor: pointer;
+  font-weight: bold;
+  color: var(--main-color1);
+  margin: 0;
+  font-size: 1.2rem;
+}
+.single-comment .single-container span:nth-child(2) {
+  font-size: 1rem;
+  color: var(--sec-color2);
+}
+.single-comment .single-container span:first-of-type:hover {
+  text-decoration: underline;
+}
+
+.comment-section {
+  background-color: var(--background-color);
+  margin: 0;
+}
+
+.input {
+  margin-top: 0;
+  background-color: var(--background-color);
+  padding: 4px 12px 8px 12px;
+  color: var(--font-color);
+}
+.input img {
+  width: 32px;
+  height: 32px;
+  background-image: url(https://heatherchristenaschmidt.files.wordpress.com/2011/09/facebook_no_profile_pic2-jpg.gif);
+  background-size: cover;
+  background-position: center;
+  border: none;
+  position: absolute;
+}
+.input textarea {
+  background: var(--background-color);
+  border: 1px solid var(--border-color);
+  color: var(--font-color);
+  box-sizing: border-box;
+  cursor: text;
+  width: calc(100% - 40px);
+  margin-left: 40px;
+  padding: 7px;
+  font-family: helvetica;
+  outline: none;
+  resize: none;
+  overflow: hidden;
+  height: 32px;
+}
+
+.post-image {
+  height: 500px;
+  overflow: hidden;
+}
+#viewmore {
+  text-align: right;
+  margin: 0px 5px;
+  font-weight: bold;
+  font-size: 0.8em;
+  cursor: pointer;
+  color: var(--sec-color1);
+}
+#viewmore:hover {
+  text-decoration: underline;
+}
+.reaction-count {
+  font-size: 1.2em;
+  margin-left: 10px;
+  color: var(--sec-color2);
+}
+.bar {
+  width: calc(100% - 24px);
+  margin: 5px 12px;
+  display: flex;
+  justify-content: space-around;
+}
+.bar .action-button {
+  text-align: center;
+  width: 100px;
+  font-size: 1.9rem;
+  cursor: pointer;
+  padding: 10px 0;
+  stroke: var(--font-color);
+  stroke-width: 1.5px;
+  fill: none;
+}
+.bar .action-button:hover {
+  text-shadow: 2px 2px #666;
+}
+.bar .action-button path:first-of-type {
+  display: none;
+}
+.bar .action-button path:last-of-type {
+  display: block;
+}
+.active-reaction {
+  stroke: none !important;
+  stroke-width: 0 !important;
+  fill: var(--sec-color1) !important;
+}
+.image-gallery-slides {
+  display: flex;
+}
+.image-gallery-slide {
+  display: flex;
+  justify-content: center;
+  height: 500px;
+}
+.image-gallery-left-nav .image-gallery-svg,
+.image-gallery-right-nav .image-gallery-svg {
+  height: 32px;
+  width: 16px;
+}
+.image-gallery-fullscreen-button {
+  height: 70px;
+}
+.image-gallery-bullets .image-gallery-bullet {
+  margin: 0 3px;
+  padding: 3px;
+}
+.image-gallery-bullet:hover {
+  color: var(--sec-color1);
+}
+.image-gallery-icon:focus {
+  outline: none;
+}
+.image-gallery-icon:hover {
+  color: var(--sec-color1);
+}
+.reaction-count span {
+  margin: 0 5px;
+}
