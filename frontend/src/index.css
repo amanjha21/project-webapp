@@ -1,10 +1,16 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat:400,800");
+
 :root {
   --main-color1: #19697e;
   --main-color2: red;
   --sec-color1: #28a6c5;
   --sec-color2: #999;
+  --button-font-color-light: white;
+  --button-font-color-dark: black;
+  --button-background-color-light: white;
+  --button-background-color-dark: rgb(150, 150, 150);
   --background-color: white;
+  --popup-background-color: rgba(0, 0, 0, 0.288);
   --border-color: #e1e2e3;
   --font-color: black;
   --placeholder-font-color: #bbb;

@@ -10,10 +10,14 @@ const Comment = ({ name, time, text, imgUrl, defaultTextLength }) => {
 
   return (
     <div className="single-comment">
-      <img src={imgUrl} className="circle" />
+      <div className="comment-user">
+        <img src={imgUrl} className="circle" />
+        <div className="comment-user-details">
+          <div className="comment-user-name">{name}</div>
+          <div className="comment-time">{time} ago</div>
+        </div>
+      </div>
       <div className="single-container">
-        <span>{name}</span>
-        <span>{time} ago</span>
         <div>
           {message}
           {text.length > defaultTextLength &&

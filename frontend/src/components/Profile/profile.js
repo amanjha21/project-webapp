@@ -1,4 +1,4 @@
-import "./profile.css";
+// import "./profile.css";
 
 const UserProfile = () => {
   return (
@@ -16,7 +16,7 @@ const UserProfile = () => {
             <div className="profile-card__name">Muhammed Erdem</div>
             <div className="profile-card__txt">
               <strong className="description">
-                National Institute Of Technology Jamshedpur
+                National Institute Of Technology Jamshedpur lorem*50
               </strong>
             </div>
 

@@ -2,6 +2,8 @@ import "./Post.css";
 import { useState } from "react";
 import ReactionBar from "./ReactionBar";
 import MediaCarousel from "./MediaCarousel";
+import Popup from "../Popup";
+import UserReaction from "./UserReaction/UserReaction";
 
 const Post = () => {
   const defaultTextLength = 150;
@@ -25,7 +27,7 @@ const Post = () => {
   `;
   const images = [
     {
-      original: "https://source.unsplash.com/random/600x600",
+      original: "https://source.unsplash.com/random/1920x1080",
       thumbnail: "https://picsum.photos/id/1018/250/150/",
     },
     {
@@ -95,6 +97,113 @@ const Post = () => {
         "http://cp91279.biography.com/1000509261001/1000509261001_1822909398001_BIO-Biography-29-Innovators-Mark-Zuckerberg-115956-SF.jpg",
     },
   ]);
+  const [reactions, setReactions] = useState([
+    {
+      name: "Aman",
+      createdAt: "3h",
+      type: "like",
+      userImageUrl:
+        "http://cp91279.biography.com/1000509261001/1000509261001_1822909398001_BIO-Biography-29-Innovators-Mark-Zuckerberg-115956-SF.jpg",
+    },
+    {
+      name: "User 2",
+      createdAt: "2h",
+      type: "like",
+      userImageUrl:
+        "http://cp91279.biography.com/1000509261001/1000509261001_1822909398001_BIO-Biography-29-Innovators-Mark-Zuckerberg-115956-SF.jpg",
+    },
+    {
+      name: "User 3",
+      createdAt: "1min",
+      type: "dislike",
+      userImageUrl:
+        "http://cp91279.biography.com/1000509261001/1000509261001_1822909398001_BIO-Biography-29-Innovators-Mark-Zuckerberg-115956-SF.jpg",
+    },
+    {
+      name: "Aman",
+      createdAt: "3h",
+      type: "like",
+      userImageUrl:
+        "http://cp91279.biography.com/1000509261001/1000509261001_1822909398001_BIO-Biography-29-Innovators-Mark-Zuckerberg-115956-SF.jpg",
+    },
+    {
+      name: "User 2",
+      createdAt: "2h",
+      type: "like",
+      userImageUrl:
+        "http://cp91279.biography.com/1000509261001/1000509261001_1822909398001_BIO-Biography-29-Innovators-Mark-Zuckerberg-115956-SF.jpg",
+    },
+    {
+      name: "User 3",
+      createdAt: "1min",
+      type: "dislike",
+      userImageUrl:
+        "http://cp91279.biography.com/1000509261001/1000509261001_1822909398001_BIO-Biography-29-Innovators-Mark-Zuckerberg-115956-SF.jpg",
+    },
+    {
+      name: "Aman",
+      createdAt: "3h",
+      type: "like",
+      userImageUrl:
+        "http://cp91279.biography.com/1000509261001/1000509261001_1822909398001_BIO-Biography-29-Innovators-Mark-Zuckerberg-115956-SF.jpg",
+    },
+    {
+      name: "User 2",
+      createdAt: "2h",
+      type: "like",
+      userImageUrl:
+        "http://cp91279.biography.com/1000509261001/1000509261001_1822909398001_BIO-Biography-29-Innovators-Mark-Zuckerberg-115956-SF.jpg",
+    },
+    {
+      name: "User 3",
+      createdAt: "1min",
+      type: "dislike",
+      userImageUrl:
+        "http://cp91279.biography.com/1000509261001/1000509261001_1822909398001_BIO-Biography-29-Innovators-Mark-Zuckerberg-115956-SF.jpg",
+    },
+    {
+      name: "Aman",
+      createdAt: "3h",
+      type: "like",
+      userImageUrl:
+        "http://cp91279.biography.com/1000509261001/1000509261001_1822909398001_BIO-Biography-29-Innovators-Mark-Zuckerberg-115956-SF.jpg",
+    },
+    {
+      name: "User 2",
+      createdAt: "2h",
+      type: "like",
+      userImageUrl:
+        "http://cp91279.biography.com/1000509261001/1000509261001_1822909398001_BIO-Biography-29-Innovators-Mark-Zuckerberg-115956-SF.jpg",
+    },
+    {
+      name: "User 3",
+      createdAt: "1min",
+      type: "dislike",
+      userImageUrl:
+        "http://cp91279.biography.com/1000509261001/1000509261001_1822909398001_BIO-Biography-29-Innovators-Mark-Zuckerberg-115956-SF.jpg",
+    },
+    {
+      name: "Aman",
+      createdAt: "3h",
+      type: "like",
+      userImageUrl:
+        "http://cp91279.biography.com/1000509261001/1000509261001_1822909398001_BIO-Biography-29-Innovators-Mark-Zuckerberg-115956-SF.jpg",
+    },
+    {
+      name: "User 2",
+      createdAt: "2h",
+      type: "like",
+      userImageUrl:
+        "http://cp91279.biography.com/1000509261001/1000509261001_1822909398001_BIO-Biography-29-Innovators-Mark-Zuckerberg-115956-SF.jpg",
+    },
+    {
+      name: "User 3",
+      createdAt: "1min",
+      type: "dislike",
+      userImageUrl:
+        "http://cp91279.biography.com/1000509261001/1000509261001_1822909398001_BIO-Biography-29-Innovators-Mark-Zuckerberg-115956-SF.jpg",
+    },
+  ]);
   const [message, setMessage] = useState(text.slice(0, 150));
   const handleViewMore = () => {
     setMessage(text);
@@ -102,7 +211,7 @@ const Post = () => {
   const handleViewLess = () => {
     setMessage(text.slice(0, defaultTextLength));
   };
-
+  const [viewReactions, setViewReactions] = useState(false);
   return (
     <div className="post-container rounded-corner">
       <div className="creator">
@@ -133,7 +242,12 @@ const Post = () => {
         defaultTextLength={defaultTextLength}
         comments={comments}
         setComments={setComments}
+        setViewReactions={setViewReactions}
       />
+      <Popup visible={viewReactions} setVisible={setViewReactions}>
+        <UserReaction reactions={reactions} setReactions={setReactions} />
+      </Popup>
+      )
     </div>
   );
 };

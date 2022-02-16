@@ -55,8 +55,7 @@
   padding-top: 12px;
 }
 
-.single-comment img {
-  position: absolute;
+.single-comment .comment-user img {
   width: 32px;
   height: 32px;
   background-image: url(https://heatherchristenaschmidt.files.wordpress.com/2011/09/facebook_no_profile_pic2-jpg.gif);
@@ -68,26 +67,30 @@
   padding-left: 40px;
   padding-right: 20px;
 }
-.single-comment .single-container span {
-  margin-left: 5px;
-}
 .single-comment .single-container div {
   font-size: 1.4rem;
   margin-left: 5px;
   color: var(--font-color);
 }
-.single-comment .single-container span:first-of-type {
+
+.single-comment .comment-user {
+  display: flex;
+  align-items: center;
+}
+.single-comment .comment-user-details {
+  margin-left: 10px;
+}
+.single-comment .comment-user .comment-user-name {
   cursor: pointer;
   font-weight: bold;
   color: var(--main-color1);
-  margin: 0;
   font-size: 1.2rem;
 }
-.single-comment .single-container span:nth-child(2) {
+.single-comment .comment-user .comment-time {
   font-size: 1rem;
   color: var(--sec-color2);
 }
-.single-comment .single-container span:first-of-type:hover {
+.single-comment .comment-user .comment-user-name:hover {
   text-decoration: underline;
 }
 
@@ -96,29 +99,29 @@
   margin: 0;
 }
 
-.input {
+.comment-input {
   margin-top: 0;
   background-color: var(--background-color);
   padding: 4px 12px 8px 12px;
   color: var(--font-color);
+  display: flex;
 }
-.input img {
+.comment-input img {
   width: 32px;
   height: 32px;
   background-image: url(https://heatherchristenaschmidt.files.wordpress.com/2011/09/facebook_no_profile_pic2-jpg.gif);
   background-size: cover;
   background-position: center;
   border: none;
-  position: absolute;
 }
-.input textarea {
+.comment-input textarea {
   background: var(--background-color);
   border: 1px solid var(--border-color);
   color: var(--font-color);
   box-sizing: border-box;
   cursor: text;
   width: calc(100% - 40px);
-  margin-left: 40px;
+  margin-left: 10px;
   padding: 7px;
   font-family: helvetica;
   outline: none;
@@ -146,6 +149,10 @@
   font-size: 1.2em;
   margin-left: 10px;
   color: var(--sec-color2);
+  cursor: pointer;
+}
+.reaction-count:hover {
+  color: var(--sec-color1);
 }
 .bar {
   width: calc(100% - 24px);
@@ -179,11 +186,18 @@
 }
 .image-gallery-slides {
   display: flex;
+  height: 100%;
 }
 .image-gallery-slide {
   display: flex;
   justify-content: center;
-  height: 500px;
+  height: 100%;
+}
+.image-gallery-swipe {
+  height: 100%;
+}
+.image-gallery-slide-wrapper {
+  height: 100%;
 }
 .image-gallery-left-nav .image-gallery-svg,
 .image-gallery-right-nav .image-gallery-svg {
@@ -206,6 +220,22 @@
 .image-gallery-icon:hover {
   color: var(--sec-color1);
 }
+.image-gallery-content.fullscreen {
+  background: rgba(0, 0, 0, 0.007);
+  height: 100%;
+}
 .reaction-count span {
   margin: 0 5px;
+}
+.image-gallery-right-download {
+  top: 15px;
+  right: 0;
+  font-size: 2rem;
+  display: none;
+}
+.image-gallery-content {
+  height: 500px;
+}
+.image-gallery.fullscreen-modal {
+  background: #000000e3;
 }
