@@ -1,0 +1,29 @@
+.popup-fullscreen-container {
+  height: 100vh;
+  width: 100vw;
+  background-color: var(--popup-background-color);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: auto;
+}
+.popup-fullscreen-container .popup-container {
+  max-height: 100%;
+  margin: 10px, 0;
+}
+.popup-close {
+  position: absolute;
+  top: 5vh;
+  right: 2vw;
+  z-index: 1001;
+  font-size: 30px;
+  cursor: pointer;
+}
+.popup-close:hover {
+  -webkit-filter: invert(100%);
+  filter: invert(100%);
+}

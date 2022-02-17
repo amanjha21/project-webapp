@@ -48,7 +48,7 @@ const CommentSection = ({ defaultTextLength, comments, setComments }) => {
           View More
         </p>
       )}
-      <div className="input">
+      <div className="comment-input">
         <img className="circle" />
         <textarea
           className="rounded-corner"

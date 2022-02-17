@@ -1,0 +1,75 @@
+.profile-navbar {
+  width: 100%;
+  background: #26293b;
+  box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.03);
+}
+
+.profile-navbar .profile-nav {
+  display: table;
+  margin: 0 auto;
+  color: #fff;
+  font-family: "Nunito", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 18px;
+  font-weight: 300;
+  list-style-type: none;
+  padding: 0;
+}
+
+.profile-nav li {
+  display: inline-block;
+  padding: 15px 120px;
+}
+
+.profile-navbar .profile-nav li.active {
+  color: #069df5;
+}
+
+.profile-navbar .profile-nav li:after {
+  content: "";
+  position: relative;
+  display: block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50px;
+  background: #d9d9d9;
+  transform-origin: 50% 50%;
+  bottom: -10px;
+  left: 48%;
+  transition: all 0.2s ease-out;
+  transform: translate(-50%, -50%);
+}
+
+.profile-navbar .profile-nav li.active:after {
+  content: "";
+  position: relative;
+  display: block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50px;
+  background: #069df5;
+  transform-origin: 50% 50%;
+  bottom: -10px;
+  left: 50%;
+  transition: all 0.2s ease-out;
+  transform: translate(-50%, -50%);
+}
+
+.profile-navbar .profile-nav li:hover:after {
+  width: 60px;
+  height: 2px;
+  background: #069df5;
+  border-radius: 50px;
+}
+
+.profile-navbar .profile-nav li.active:hover:after {
+  width: 6px;
+  height: 6px;
+  background: #069df5;
+  border-radius: 50px;
+}
+
+.profile-navbar .profile-nav li:hover {
+  cursor: pointer;
+}
