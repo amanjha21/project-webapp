@@ -1,0 +1,123 @@
+.login-page-wrapper .sign-panels {
+  width: 90%;
+  max-width: 600px;
+  background: var(--sec-background-color);
+  padding: 40px 60px;
+  margin: 40px auto;
+  border: 1px solid var(--border-color);
+  border-radius: var(--default-border-radius);
+  text-align: center;
+}
+.login,
+.signup {
+  position: relative;
+}
+
+.login-page-wrapper .title {
+  color: var(--font-color);
+}
+
+.title span {
+  display: block;
+  font-size: 4.6rem;
+  font-weight: bold;
+  color: var(--main-color1);
+}
+
+.title p {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.login-page-wrapper .sign-panels input {
+  width: 100%;
+  display: block;
+  height: 50px;
+  border-radius: 50px;
+  border: none;
+  background: var(--text-area-background-color);
+  border: 1px solid var(--border-color);
+  text-align: center;
+  padding: 10px;
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin: 10px 0;
+}
+
+.login-page-wrapper .sign-panels input:focus {
+  outline: none;
+}
+
+.btn-signin {
+  display: inline-block;
+  width: 50%;
+  margin-top: 10px;
+  height: 50px;
+  background: var(--sec-color1);
+  border-radius: 50px;
+  padding: 11px;
+  font-size: 20px;
+  color: var(--button-font-color-light);
+  text-decoration: none;
+  font-weight: 500;
+  border: none;
+  box-shadow: none;
+  cursor: pointer;
+}
+
+.btn-reset,
+.btn-member,
+.btn-fade {
+  font-size: 19px;
+  font-weight: 500;
+  color: var(--sec-color2);
+  display: block;
+  /*width: 210px;*/
+  margin: 30px auto 0;
+  text-decoration: none;
+}
+.btn-member {
+  margin-top: 15px;
+}
+
+.btn-reset .fa,
+.btn-member .fa {
+  margin-left: 6px;
+}
+
+.notification p {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--sec-color2);
+}
+
+.notification span {
+  color: var(--sec-color1);
+}
+
+.error {
+  display: block;
+  color: var(--error-color);
+  font-size: 1.2rem;
+  text-align: left;
+  padding-left: 25px;
+}
+
+@media screen and (max-width: 768px) {
+  .login-page-wrapper .sign-panels {
+    width: 90%;
+    padding: 40px;
+  }
+}
+
+@media screen and (max-width: 570px) {
+  .login-page-wrapper .sign-panels {
+    padding: 40px 20px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .login-page-wrapper .sign-panels input[type="checkbox"] + label {
+    width: 100%;
+  }
+}
