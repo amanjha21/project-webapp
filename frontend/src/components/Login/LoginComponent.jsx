@@ -10,23 +10,33 @@ const Login = () => {
     const data = new FormData(e.target);
     return Object.fromEntries(data.entries());
   };
+  const resetForm = (e) => {
+    e.target.reset();
+    const inputs = e.target.getElementsByTagName("input");
+    for (let input of inputs) {
+      console.log(input);
+      input.setAttribute("focused", "false");
+    }
+  };
   const loginHandler = (e) => {
     e.preventDefault();
     const data = getFormData(e);
     console.log("login", data);
-    e.target.reset();
+    resetForm(e);
   };
   const signupHandler = (e) => {
     e.preventDefault();
     const data = getFormData(e);
     console.log("signup", data);
     setShowResetNotification("fadeIn");
+    resetForm(e);
   };
   const forgotPasswordHandler = (e) => {
     e.preventDefault();
     const data = getFormData(e);
     console.log("forgot password", data);
     setShowResetNotification("fadeIn");
+    resetForm(e);
   };
   const [formInputs, setFormInputs] = useState({
     username: "",
