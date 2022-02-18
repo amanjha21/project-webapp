@@ -205,7 +205,7 @@ const Login = () => {
                   setShowResetNotification("fadeOut");
                 }}
               >
-                Cancel and go back to Login page
+                Go Back
               </div>
             </form>
             <div className={`notification ${showResetNotification}`}>
