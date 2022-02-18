@@ -247,7 +247,6 @@ const Post = () => {
       <Popup visible={viewReactions} setVisible={setViewReactions}>
         <UserReaction reactions={reactions} setReactions={setReactions} />
       </Popup>
-      )
     </div>
   );
 };

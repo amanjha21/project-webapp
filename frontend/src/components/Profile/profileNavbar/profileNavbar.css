@@ -22,7 +22,7 @@
   padding: 15px 120px;
 }
 
-.profile-navbar .profile-nav li.active {
+.profile-navbar .profile-nav li.profile-navbar__active {
   color: #069df5;
 }
 
@@ -36,12 +36,12 @@
   background: #d9d9d9;
   transform-origin: 50% 50%;
   bottom: -10px;
-  left: 48%;
+  left: 50%;
   transition: all 0.2s ease-out;
   transform: translate(-50%, -50%);
 }
 
-.profile-navbar .profile-nav li.active:after {
+.profile-navbar .profile-nav li.profile-navbar__active:after {
   content: "";
   position: relative;
   display: block;
@@ -57,13 +57,13 @@
 }
 
 .profile-navbar .profile-nav li:hover:after {
-  width: 60px;
-  height: 2px;
+  width: 50px;
+  height: 6px;
   background: #069df5;
   border-radius: 50px;
 }
 
-.profile-navbar .profile-nav li.active:hover:after {
+.profile-navbar .profile-nav li .profile-navbar__active:hover:after {
   width: 6px;
   height: 6px;
   background: #069df5;

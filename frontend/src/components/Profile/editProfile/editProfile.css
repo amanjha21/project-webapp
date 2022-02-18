@@ -1,0 +1,140 @@
+.new-input:focus {
+  outline: 0px !important;
+  -webkit-appearance: none !important;
+  -webkit-box-shadow: none;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+.settings-container {
+  background-color: white;
+  border-radius: 0.25rem;
+  display: flex;
+  min-height: 350px;
+  overflow: hidden;
+  box-shadow: 0px 2px 12px -4px rgba(0, 0, 0, 0.1);
+}
+.settings-container .left-column {
+  width: 30%;
+}
+.settings-container .left-column ul {
+  margin: 0;
+  height: 100%;
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  padding: 0;
+}
+.settings-container .left-column ul li {
+  flex: auto;
+  padding: 20px;
+  cursor: pointer;
+  color: #363b6d;
+  transition: all 0.2s ease-out;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+}
+.settings-container .left-column ul li:hover {
+  background-color: #363b6d;
+  color: white;
+}
+.settings-container .left-column ul li i {
+  margin-right: 10px;
+  color: #363b6d;
+  text-align: center;
+}
+
+.settings-container .settings-tab {
+  width: 70%;
+  padding: 20px;
+  border-left: 3px solid #363b6d;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.settings-container .settings-tab form {
+  /* width: 100%; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.settings-container .settings-tab .input-group {
+  width: 220px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: stretch;
+  margin: 10px 0;
+}
+.settings-container .settings-tab .input-group input {
+  padding-left: 0 !important;
+  font-family: inherit;
+  line-height: 1.2;
+  color: #363b6d;
+  font-size: 20px;
+  background: transparent;
+  padding: 0 5px;
+  border: none;
+  border-bottom: 1px solid #ced4da;
+}
+.settings-container .settings-tab .input-group label {
+  font-size: 15px;
+  color: #363b6d;
+  opacity: 0.5;
+}
+
+.settings-container .settings-tab h1 {
+  font-size: 16px;
+  margin-top: 0;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #363b6d;
+  opacity: 0.5;
+}
+.settings-container .settings-tab h2 {
+  color: #e83114;
+  font-size: 16px;
+  font-weight: normal;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.button-save-changes {
+  background: linear-gradient(45deg, #66ff66, #23a523);
+  box-shadow: 0px 4px 30px rgba(9, 131, 25, 0.4);
+}
+
+.button-save-changes:hover {
+  box-shadow: 0px 7px 30px rgba(18, 109, 6, 0.75);
+}
+
+.button-confirm {
+  background: linear-gradient(45deg, #d5135a, #f05924);
+  box-shadow: 0px 4px 30px rgba(223, 45, 70, 0.35);
+}
+
+.button-confirm:hover {
+  box-shadow: 0px 7px 30px rgba(223, 45, 70, 0.75);
+}
+
+@media screen and (max-width: 576px) {
+  .settings-container {
+    flex-direction: column;
+  }
+  .settings-container .left-column {
+    width: 100%;
+  }
+
+  .settings-container .settings-tab {
+    width: 90%;
+    border-left: 0;
+  }
+  .new-input {
+    width: 90%;
+  }
+}
