@@ -1,0 +1,58 @@
+.user-team-container {
+  width: 40vw;
+  max-width: 400px;
+  min-width: 300px;
+  height: 40vh;
+  min-height: 500px;
+  background-color: var(--background-color);
+  overflow: auto !important;
+  padding: 10px 5px;
+  border: 2px solid var(--border-color);
+}
+.team-single {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-color);
+  padding: 5px 10px;
+  margin: 5px 0;
+}
+.team-user {
+  display: flex;
+  align-items: center;
+}
+.team-user img {
+  width: 40px;
+  height: 40px;
+}
+.team-user-details {
+  margin-left: 10px;
+}
+.team-user-details .team-user-name {
+  cursor: pointer;
+  font-weight: bold;
+  color: var(--main-color1);
+  font-size: 1.2rem;
+}
+.team-user-details .team-user-name:hover {
+  text-decoration: underline;
+}
+
+.team-user-details .team-time {
+  font-size: 1rem;
+  color: var(--sec-color2);
+}
+.team-single .team-type {
+  font-weight: bolder;
+  background-color: var(--button-background-color-dark);
+  height: 30px;
+  width: 100px;
+  font-size: 1.2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--button-font-color-light);
+}
+.team-single .team-type span {
+  margin-left: 5px;
+}

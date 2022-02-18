@@ -29,16 +29,19 @@
   list-style: none;
   padding: 0 15px;
 }
-.navbar-main nav .nav-items li a {
+.navbar-main nav .nav-items li a,
+.navbar-main nav .nav-items li div {
   color: #fff;
   font-size: 18px;
   font-weight: 500;
   text-decoration: none;
+  cursor: pointer;
 }
 .navbar-main nav .nav-items li .dropdown a {
   color: #000;
 }
-.navbar-main nav .nav-items li a:hover {
+.navbar-main nav .nav-items li a:hover,
+.navbar-main nav .nav-items li div:hover {
   color: #ff3d00;
 }
 .navbar-main nav form {
@@ -84,11 +87,6 @@ nav .search-icon {
   font-size: 18px;
   color: #fff;
   cursor: pointer;
-  display: none;
-}
-.navbar-main nav .menu-icon span,
-nav .cancel-icon,
-nav .search-icon {
   display: none;
 }
 
@@ -199,45 +197,34 @@ nav .search-icon {
   color: red;
   padding: 0 5px 0 0;
 }
+.user-settings-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+  width: 40vw;
+  max-width: 400px;
+  min-width: 300px;
+  height: 70vh;
+  min-height: 500px;
+  background-color: var(--background-color);
+  overflow: auto !important;
+  padding: 10px 5px;
+  border: 2px solid var(--border-color);
+}
+.user-settings-option {
+  font-size: 2rem;
+  color: var(--sec-color2);
 
-/* Dropdown Button */
-.dropbtn {
-  background-color: #4caf50;
-  color: white;
-  padding: 16px;
-  font-size: 16px;
-  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid var(--border-color);
+  padding: 5px 10px;
+  margin: 5px 0;
   cursor: pointer;
 }
-.dropbtn:hover,
-.dropbtn:focus {
-  background-color: #3e8e41;
-}
-
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f9f9f9;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-  z-index: 1;
-  right: 0;
-}
-.dropdown-content a {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-}
-
-.dropdown-content a:hover {
-  background-color: #f1f1f1;
-}
-
-.show-dropdown-contents {
-  display: block;
+.user-settings-option:hover {
+  color: var(--sec-color1);
+  border-bottom: 2px solid var(--border-color);
 }
