@@ -7,32 +7,32 @@ const About = () => {
     {
       name: "Vaibhav",
       imgUrl: "http://i.pravatar.cc/150?img=53",
-      role: "Admin",
+      role: "admin",
     },
     {
       name: "Vaibhav",
       imgUrl: "http://i.pravatar.cc/150?img=53",
-      role: "Admin",
+      role: "moderator",
     },
     {
       name: "Vaibhav",
       imgUrl: "http://i.pravatar.cc/150?img=53",
-      role: "Admin",
+      role: "moderator",
     },
     {
       name: "Vaibhav",
       imgUrl: "http://i.pravatar.cc/150?img=53",
-      role: "Admin",
+      role: "member",
     },
     {
       name: "Vaibhav",
       imgUrl: "http://i.pravatar.cc/150?img=53",
-      role: "Admin",
+      role: "member",
     },
     {
       name: "Vaibhav",
       imgUrl: "http://i.pravatar.cc/150?img=53",
-      role: "Admin",
+      role: "member",
     },
   ];
 
@@ -43,31 +43,31 @@ const About = () => {
 
   return (
     <>
-      <div>
-        <h1 className="team-head">Team Members</h1>
+      <div className="about-container">
+        <div className="about-team-head">Team Members</div>
+        {memberList.map((member, i) => {
+          if (i < limit)
+            return (
+              <Member
+                name={member.name}
+                imgUrl={member.imgUrl}
+                role={member.role}
+                key={i}
+              />
+            );
+          else return "";
+        })}
+        {memberList.length > 5 && limit < memberList.length && (
+          <div className="about-view-container">
+            <button
+              className="default--btn about-button-view-more"
+              onClick={viewMoreHandler}
+            >
+              view more
+            </button>
+          </div>
+        )}
       </div>
-      {memberList.map((member, i) => {
-        if (i < limit)
-          return (
-            <Member
-              name={member.name}
-              imgUrl={member.imgUrl}
-              role={member.role}
-              key={i}
-            />
-          );
-        else return "";
-      })}
-      {memberList.length > 5 && limit < memberList.length && (
-        <div className="view-container">
-          <button
-            className="default--btn button-view-more"
-            onClick={viewMoreHandler}
-          >
-            view more
-          </button>
-        </div>
-      )}
     </>
   );
 };

@@ -24,13 +24,13 @@ const ProfileNavbar = () => {
       <div className="profile-navbar">
         <ul className="profile-nav">
           <li
-            className={isPost ? "profile-navbar__active" : "null"}
+            className={isPost ? "profile-navbar__active" : ""}
             onClick={handlePost}
           >
             Post
           </li>
           <li
-            className={isAbout ? "profile-navbar__active" : "null"}
+            className={isAbout ? "profile-navbar__active" : ""}
             onClick={handleAbout}
           >
             About
@@ -38,7 +38,7 @@ const ProfileNavbar = () => {
         </ul>
       </div>
       <div>
-        <div className={isShow ? "null" : "hidden"}>
+        <div className={isShow ? "" : "hidden"}>
           <About />
         </div>
       </div>

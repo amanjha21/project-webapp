@@ -1,15 +1,16 @@
 const Member = ({ name, imgUrl, role = "member" }) => {
   return (
     <>
-      <div className="container">
+      <section className="has-top-border"></section>
+      <div className="member-list-container">
         <div className="main--team">
-          <section>
-            <ul className="numbers admin">
+          <section className="member-container">
+            <ul className={`member-list ${role.toLowerCase()}`}>
               <li>
-                <div className="number-avatar">
+                <div className="member-avatar">
                   <img className="circle" src={imgUrl} alt="" />
                 </div>
-                <div className="number-meta">
+                <div className="member-meta">
                   <span className="name">{name}</span>
                   <span className="role">{role}</span>
                 </div>
