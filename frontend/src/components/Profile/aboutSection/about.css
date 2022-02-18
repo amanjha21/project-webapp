@@ -1,0 +1,106 @@
+.about-container {
+  background: #fff;
+}
+
+.about-team-head {
+  text-align: center;
+  margin: 0;
+  font-size: 3rem;
+  font-weight: 800;
+  color: var(--font-color);
+}
+
+.about-view-container {
+  text-align: center;
+  background-color: #fff;
+}
+
+.about-button-view-more {
+  text-align: center;
+  background: gray;
+  min-width: 10px;
+  min-height: 2px;
+  font-size: 15px;
+  padding: 0;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 0;
+}
+
+.has-top-border {
+  border-top: 1px solid #e3edf2;
+}
+
+.member-list-container {
+  display: flex;
+  max-width: 100%;
+  font-size: 1.5rem;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.member-list-container .main--team {
+  background-color: #fff;
+  width: 100%;
+}
+
+.member-list-container .member-container {
+  padding: 1.875em;
+  background-color: #fff;
+}
+
+.member-list-container .member-list {
+  display: flex;
+  flex-direction: column;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.member-list-container .member-list li {
+  display: flex;
+  padding: 0 0 1em;
+}
+.member-list-container .member-list li:last-child {
+  padding-bottom: 0;
+}
+
+.member-list-container .member-avatar img {
+  display: block;
+  max-width: 50px;
+  height: auto;
+}
+
+.member-list-container .admin .member-avatar img {
+  max-width: 80px;
+}
+
+.member-list-container .moderator .member-avatar img {
+  max-width: 60px;
+}
+
+.member-list-container .member .member-avatar img {
+  max-width: 50px;
+}
+
+.member-list-container .member-meta {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 3em;
+}
+
+.member-list-container .name,
+.member-list-container .role {
+  display: block;
+  line-height: 1.5;
+}
+
+.member-list-container .name {
+  color: #2d325f;
+  font-weight: 600;
+}
+
+.member-list-container .role {
+  color: #8b91b3;
+  font-size: 0.875em;
+}

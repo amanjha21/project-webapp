@@ -1,0 +1,23 @@
+.post-option-container {
+  margin-left: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  transition: all 0.5s;
+}
+.post-option {
+  font-size: 2rem;
+  cursor: pointer;
+  color: var(--font-color);
+}
+.post-edit-option:hover {
+  color: var(--success-color);
+}
+.post-delete-option:hover {
+  color: var(--error-color);
+}
+.hide-post-options {
+  transform: translateX(10px);
+  opacity: 0;
+}

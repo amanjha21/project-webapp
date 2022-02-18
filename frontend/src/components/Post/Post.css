@@ -6,18 +6,19 @@
   border: 2px solid var(--border-color);
 }
 .creator {
-  position: relative;
+  /* position: relative; */
+  display: flex;
+  align-items: center;
 }
 .creator img {
   width: 40px;
   height: 40px;
-  background-image: url(http://cp91279.biography.com/1000509261001/1000509261001_1822909398001_BIO-Biography-29-Innovators-Mark-Zuckerberg-115956-SF.jpg);
   background-size: cover;
   background-position: center;
-  margin: 12px 0 0 12px;
+  margin: 0 0 0 12px;
   position: absolute;
 }
-.creator div {
+.creator .post-user-details {
   display: inline-block;
   margin-left: 60px;
 }
@@ -37,7 +38,19 @@
   color: var(--sec-color2);
   margin-top: -10px;
 }
-
+.creator .post-options {
+  margin-left: auto;
+  margin-right: 10px;
+  display: flex;
+  font-size: 2.5rem;
+}
+.creator .post-options .post-option-toggle {
+  cursor: pointer;
+  color: var(--sec-color2);
+}
+.creator .post-options .post-option-toggle:hover {
+  color: var(--sec-color1);
+}
 .post-message {
   font-size: 1.6rem;
   margin-top: 8px;
@@ -58,7 +71,6 @@
 .single-comment .comment-user img {
   width: 32px;
   height: 32px;
-  background-image: url(https://heatherchristenaschmidt.files.wordpress.com/2011/09/facebook_no_profile_pic2-jpg.gif);
   background-size: cover;
   background-position: center;
   border: none;
@@ -109,13 +121,12 @@
 .comment-input img {
   width: 32px;
   height: 32px;
-  background-image: url(https://heatherchristenaschmidt.files.wordpress.com/2011/09/facebook_no_profile_pic2-jpg.gif);
   background-size: cover;
   background-position: center;
   border: none;
 }
 .comment-input textarea {
-  background: var(--background-color);
+  background: var(--text-area-background-color);
   border: 1px solid var(--border-color);
   color: var(--font-color);
   box-sizing: border-box;
@@ -156,7 +167,7 @@
 }
 .bar {
   width: calc(100% - 24px);
-  margin: 5px 12px;
+  margin: 15px 12px;
   display: flex;
   justify-content: space-around;
 }
@@ -165,7 +176,6 @@
   width: 100px;
   font-size: 1.9rem;
   cursor: pointer;
-  padding: 10px 0;
   stroke: var(--font-color);
   stroke-width: 1.5px;
   fill: none;
@@ -211,8 +221,9 @@
   margin: 0 3px;
   padding: 3px;
 }
-.image-gallery-bullet:hover {
-  color: var(--sec-color1);
+.image-gallery-bullets .image-gallery-bullet:hover,
+.image-gallery-bullets .image-gallery-bullet.active:hover {
+  background-color: var(--sec-color1);
 }
 .image-gallery-icon:focus {
   outline: none;

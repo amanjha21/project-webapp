@@ -21,6 +21,7 @@
   right: 2vw;
   z-index: 1001;
   font-size: 30px;
+  color: var(--font-color);
   cursor: pointer;
 }
 .popup-close:hover {

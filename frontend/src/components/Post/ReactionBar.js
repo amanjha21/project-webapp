@@ -6,6 +6,7 @@ const ReactionBar = ({
   comments,
   setComments,
   setViewReactions,
+  currentUser,
 }) => {
   const [showComments, setShowComments] = useState(false);
   const [liked, setLiked] = useState(false);
@@ -64,6 +65,7 @@ const ReactionBar = ({
       </div>
       {showComments && (
         <CommentSection
+          currentUser={currentUser}
           comments={comments}
           setComments={setComments}
           defaultTextLength={defaultTextLength}
