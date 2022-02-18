@@ -1,4 +1,5 @@
 import LoginComponent from "../components/Login/LoginComponent";
+import "./Login.css";
 const Login = () => {
   return (
     <>

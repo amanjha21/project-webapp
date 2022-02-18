@@ -1,12 +1,33 @@
 .login-page-wrapper .sign-panels {
-  width: 90%;
-  max-width: 600px;
+  width: 60%;
+  height: 700px;
   background: var(--sec-background-color);
   padding: 40px 60px;
-  margin: 40px auto;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.login-section-image-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  font-size: 3rem;
+  color: var(--font-color-light);
+  font-weight: 700;
+  width: 40%;
+  overflow: hidden;
+  background-color: var(--main-color1);
+}
+.signin-container {
   border: 1px solid var(--border-color);
   border-radius: var(--default-border-radius);
-  text-align: center;
+  display: flex;
+  height: 700px;
+  width: 90%;
+  max-width: 900px;
+  overflow: hidden;
 }
 .login,
 .signup {
@@ -109,10 +130,14 @@
 .sign-panels input:invalid[focused="true"] {
   border: 1px solid var(--error-color);
 }
+
 @media screen and (max-width: 768px) {
   .login-page-wrapper .sign-panels {
-    width: 90%;
+    width: 100%;
     padding: 40px;
+  }
+  .login-section-image-container {
+    display: none;
   }
 }
 
