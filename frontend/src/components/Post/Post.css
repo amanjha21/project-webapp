@@ -6,17 +6,19 @@
   border: 2px solid var(--border-color);
 }
 .creator {
-  position: relative;
+  /* position: relative; */
+  display: flex;
+  align-items: center;
 }
 .creator img {
   width: 40px;
   height: 40px;
   background-size: cover;
   background-position: center;
-  margin: 12px 0 0 12px;
+  margin: 0 0 0 12px;
   position: absolute;
 }
-.creator div {
+.creator .post-user-details {
   display: inline-block;
   margin-left: 60px;
 }
@@ -36,7 +38,19 @@
   color: var(--sec-color2);
   margin-top: -10px;
 }
-
+.creator .post-options {
+  margin-left: auto;
+  margin-right: 10px;
+  display: flex;
+  font-size: 2.5rem;
+}
+.creator .post-options .post-option-toggle {
+  cursor: pointer;
+  color: var(--sec-color2);
+}
+.creator .post-options .post-option-toggle:hover {
+  color: var(--sec-color1);
+}
 .post-message {
   font-size: 1.6rem;
   margin-top: 8px;

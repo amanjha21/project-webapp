@@ -4,6 +4,7 @@ import ReactionBar from "./ReactionBar";
 import MediaCarousel from "./MediaCarousel";
 import Popup from "../Popup";
 import UserReaction from "./UserReaction/UserReaction";
+import PostOptions from "./PostOptions";
 
 const Post = () => {
   const defaultTextLength = 150;
@@ -227,10 +228,11 @@ const Post = () => {
             "http://cp91279.biography.com/1000509261001/1000509261001_1822909398001_BIO-Biography-29-Innovators-Mark-Zuckerberg-115956-SF.jpg"
           }
         />
-        <div>
+        <div className="post-user-details">
           <p>Aman Jha</p>
           <p>3h ago</p>
         </div>
+        <PostOptions />
       </div>
       <p className="post-message">
         {message}
