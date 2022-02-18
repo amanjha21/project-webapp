@@ -1,0 +1,105 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto");
+
+html {
+  box-sizing: border-box;
+  font-size: 100%;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.container {
+  box-shadow: rgba(29, 29, 31, 0.25) 0 10px 60px;
+  display: flex;
+  max-width: 100%;
+}
+
+.main--team {
+  background-color: #fff;
+  width: 100%;
+}
+
+section {
+  padding: 1.875em;
+}
+
+.has-top-border {
+  border-top: 1px solid #e3edf2;
+}
+
+.numbers {
+  display: flex;
+  flex-direction: column;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.numbers li {
+  display: flex;
+  padding: 0 0 1em;
+}
+.numbers li:last-child {
+  padding-bottom: 0;
+}
+
+.number-avatar img {
+  display: block;
+  max-width: 50px;
+  height: auto;
+}
+
+.admin .number-avatar img {
+  max-width: 80px;
+}
+
+.moderator .number-avatar img {
+  max-width: 60px;
+}
+
+.member .number-avatar img {
+  max-width: 50px;
+}
+
+.number-meta {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 3em;
+}
+
+.name,
+.role {
+  display: block;
+  line-height: 1.5;
+}
+
+.name {
+  color: #2d325f;
+}
+
+.role {
+  color: #8b91b3;
+  font-size: 0.875em;
+}
+
+.team-head {
+  text-align: center;
+  background: #fff;
+  margin: 0;
+}
+
+.view-container {
+  text-align: center;
+  background-color: #fff;
+}
+
+.button-view-more {
+  text-align: center;
+  background: gray;
+  min-width: 10px;
+  min-height: 2px;
+  font-size: 15px;
+  padding: 0;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 0;
+}
