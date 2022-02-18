@@ -5,7 +5,7 @@ const Member = ({ name, imgUrl, role = "member" }) => {
       <div className="member-list-container">
         <div className="main--team">
           <section className="member-container">
-            <ul className={`member-list ${role}`}>
+            <ul className={`member-list ${role.toLowerCase()}`}>
               <li>
                 <div className="member-avatar">
                   <img className="circle" src={imgUrl} alt="" />
