@@ -7,7 +7,12 @@ import UserReaction from "./UserReaction/UserReaction";
 
 const Post = () => {
   const defaultTextLength = 150;
-
+  const defaultNotFoundImgProfile =
+    "https://heatherchristenaschmidt.files.wordpress.com/2011/09/facebook_no_profile_pic2-jpg.gif";
+  const currentUser = {
+    username: "Aman Jha",
+    imgUrl: defaultNotFoundImgProfile,
+  };
   const text = `
     Omg it's snowing outside! Lorem ipsum dolor sit amet, consectetur
     adipisicing elit. Eaque unde corporis numquam aspernatur, reiciendis
@@ -215,7 +220,13 @@ const Post = () => {
   return (
     <div className="post-container rounded-corner">
       <div className="creator">
-        <img className="circle" />
+        <img
+          className="circle"
+          alt="user profile"
+          src={
+            "http://cp91279.biography.com/1000509261001/1000509261001_1822909398001_BIO-Biography-29-Innovators-Mark-Zuckerberg-115956-SF.jpg"
+          }
+        />
         <div>
           <p>Aman Jha</p>
           <p>3h ago</p>
@@ -243,6 +254,7 @@ const Post = () => {
         comments={comments}
         setComments={setComments}
         setViewReactions={setViewReactions}
+        currentUser={currentUser}
       />
       <Popup visible={viewReactions} setVisible={setViewReactions}>
         <UserReaction reactions={reactions} setReactions={setReactions} />

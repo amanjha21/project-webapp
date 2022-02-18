@@ -1,23 +1,34 @@
-@import url("https://fonts.googleapis.com/css?family=Montserrat:400,800");
+@import url("https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700,800");
 
 :root {
   --main-color1: #19697e;
-  --main-color2: red;
+  --main-color2: #ff416c;
   --sec-color1: #28a6c5;
   --sec-color2: #999;
+  --background-color: white;
+  --sec-background-color: #fff;
+  --font-color: black;
+  --font-color-light: white;
+  --border-color: #e1e2e3;
+  --default-border-radius: 10px;
+  --button-border-white: white;
   --button-font-color-light: white;
   --button-font-color-dark: black;
   --button-background-color-light: white;
   --button-background-color-dark: rgb(150, 150, 150);
-  --background-color: white;
-  --popup-background-color: rgba(0, 0, 0, 0.288);
-  --border-color: #e1e2e3;
-  --font-color: black;
+  --text-area-background-color: #fff;
   --placeholder-font-color: #bbb;
   --default-border-radius: 10px;
   --default-profile-box-shawdow: 0px 5px 30px 0px rgb(108, 68, 252),
     0px 0px 0px 6px rgba(107, 74, 255, 0.5);
   --default-btn-txt-colour: #fff;
+  --scroll-bar-color: #ddd;
+  --popup-background-color: rgba(0, 0, 0, 0.288);
+  --error-color: #f32354;
+  --success-color: rgb(10, 218, 138);
+}
+* {
+  box-sizing: border-box;
 }
 body {
   margin: 0;
@@ -51,10 +62,6 @@ html {
 ::-ms-input-placeholder {
   /* Microsoft Edge */
   color: var(--placeholder-font-color);
-}
-
-.hidden {
-  display: none;
 }
 
 .cursor {
@@ -100,5 +107,79 @@ html {
   .default--btn:focus {
     min-width: 170px;
     margin: 15px 25px;
+
+::-webkit-scrollbar {
+  width: 12px;
+  background-color: #f5f5f5;
+}
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 20px;
+  background-color: var(--background-color);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  border-radius: 20px;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: var(--scroll-bar-color);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--sec-color1);
+}
+.hidden {
+  display: none !important;
+}
+.fadeIn {
+  -webkit-animation: fadein 1s linear 1 forwards;
+  animation: fadein 1s linear 1 forwards;
+  display: block;
+}
+.fadeOut {
+  -webkit-animation: fadeout 1s linear 1 forwards;
+  animation: fadeout 1s linear 1 forwards;
+  display: none !important;
+}
+
+@-webkit-keyframes fadein {
+  0% {
+    display: block;
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes fadein {
+  0% {
+    display: block;
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@-webkit-keyframes fadeout {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    display: none !important;
+  }
+}
+@keyframes fadeout {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    display: none !important;
+
   }
 }

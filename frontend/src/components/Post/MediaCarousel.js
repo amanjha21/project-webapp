@@ -50,10 +50,14 @@ const MediaCarousel = ({ images }) => {
       </button>
     );
   };
+  const closeCarouselHandler = () => {
+    getCurrentIndex.current.toggleFullScreen();
+  };
   return (
     <>
       <ImageGallery
         showPlayButton={false}
+        showFullscreenButton={false}
         useBrowserFullscreen={false}
         lazyLoad={true}
         showThumbnails={false}
@@ -65,6 +69,8 @@ const MediaCarousel = ({ images }) => {
         onMouseLeave={hideDownload}
         renderCustomControls={downloadController}
         ref={getCurrentIndex}
+        originalAlt="Post Media"
+        onClick={closeCarouselHandler}
       />
     </>
   );
