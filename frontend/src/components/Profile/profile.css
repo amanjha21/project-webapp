@@ -6,8 +6,7 @@
   margin: auto;
   box-shadow: 0px 8px 60px -10px rgba(13, 28, 39, 0.6);
   background: #fff;
-  /* border-radius: 12px; */
-  max-width: 700px;
+  max-width: 900px;
   position: relative;
 }
 
@@ -17,12 +16,10 @@
   margin-left: auto;
   margin-right: auto;
   transform: translateY(18%);
-  border-radius: 50%;
   overflow: hidden;
   position: relative;
   z-index: 4;
-  box-shadow: 0px 5px 30px 0px rgb(108, 68, 252),
-    0px 0px 0px 6px rgba(107, 74, 255, 0.5);
+  box-shadow: var(--default-profile-box-shawdow);
 }
 
 .profile__img {
@@ -45,7 +42,15 @@
   font-weight: 700;
   font-size: 24px;
   color: #6944ff;
+  margin-bottom: 2px;
+}
+
+.profile-card__roll {
+  font-weight: 500;
+  font-size: 21px;
   margin-bottom: 3px;
+  text-transform: uppercase;
+  color: #803cce;
 }
 
 .profile-card__txt {
@@ -60,7 +65,7 @@
   font-weight: 700;
 }
 
-.profile-card__button {
+/* .profile-card__button {
   background: none;
   border: none;
   font-family: "Quicksand", sans-serif;
@@ -83,21 +88,22 @@
 
 .profile-card__button:focus {
   outline: none !important;
-}
+} */
 
 /* .button--blue {
-  background: linear-gradient(45deg, #1da1f2, #0e71c8);
-  box-shadow: 0px 4px 30px rgba(19, 127, 212, 0.4);
+  background: linear-gradient(45deg, #66ff66, #23a523);
+  box-shadow: 0px 4px 30px rgba(9, 131, 25, 0.4);
 }
 
 .button--blue:hover {
-  box-shadow: 0px 7px 30px rgba(19, 127, 212, 0.75);
+  box-shadow: 0px 7px 30px rgba(18, 109, 6, 0.75);
 } */
 
 .button--orange {
   background: linear-gradient(45deg, #d5135a, #f05924);
   box-shadow: 0px 4px 30px rgba(223, 45, 70, 0.35);
 }
+
 .button--orange:hover {
   box-shadow: 0px 7px 30px rgba(223, 45, 70, 0.75);
 }
@@ -107,23 +113,18 @@
     width: 120px;
     height: 120px;
   }
-  .profile-card__button {
+  /* .profile-card__button {
     min-width: inherit;
     margin: 0;
     margin-bottom: 16px;
     width: 100%;
     max-width: 300px;
-  }
+  } */
 }
 
-@media screen and (max-width: 768px) {
-  .wrapper {
-    height: auto;
-    min-height: 100vh;
-    padding-top: 100px;
-  }
+/* @media screen and (max-width: 768px) {
   .profile-card__button {
     min-width: 170px;
     margin: 15px 25px;
   }
-}
+} */

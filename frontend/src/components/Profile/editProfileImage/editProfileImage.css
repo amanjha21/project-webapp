@@ -1,0 +1,128 @@
+.card {
+  width: 310px;
+  margin-top: 15px;
+  border-radius: var(--default-border-radius);
+  display: flex;
+  justify-content: center;
+  box-shadow: 15px 10px 25px 0px #3fa1a9;
+  background-color: var(--background-color);
+}
+
+.card-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#photo-upload[type="file"] {
+  display: none;
+}
+
+.custom-file-upload {
+  display: inline-block;
+  position: relative;
+  padding: 6px;
+  box-shadow: var(--default-profile-box-shawdow);
+  margin-bottom: 25px;
+}
+
+.img-wrap {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.img-upload:before {
+  content: "\2191";
+  font-size: 70px;
+  position: absolute;
+  padding-top: 80px;
+  top: 80%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: #883bb4;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  opacity: 1;
+  transition: 0.5s ease;
+  font-weight: 700;
+}
+
+/* .img-upload:hover:before {
+  opacity: 1;
+} */
+
+.upload-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+#photo-upload {
+  border-radius: 15px;
+  border: 1px solid #b7b7b7;
+  padding: 5px 5px 5px 10px;
+  font-size: 18px;
+  transition: 0.2s;
+}
+
+#photo-upload:focus {
+  outline: none;
+  border: 1px solid #64d488;
+}
+
+#photo-upload::placeholder {
+  color: #bebebe;
+}
+
+.button--delete {
+  min-width: 61px;
+  margin-bottom: 0px;
+  background: linear-gradient(45deg, #d5135a, #f05924);
+  box-shadow: 0px 4px 30px rgba(223, 45, 70, 0.35);
+}
+
+.button--delete:hover {
+  box-shadow: 0px 7px 30px rgba(223, 45, 70, 0.75);
+}
+
+.button--save {
+  background: linear-gradient(45deg, #66ff66, #23a523);
+  box-shadow: 0px 4px 30px rgba(9, 131, 25, 0.4);
+}
+
+.button--save:hover {
+  box-shadow: 0px 7px 30px rgba(18, 109, 6, 0.75);
+}
+
+/* button {
+  position: relative;
+  color: #054231;
+  letter-spacing: 1px;
+  margin: 20px;
+  font-size: 18px;
+  padding: 10px;
+  text-align: center;
+  transition: 0.5s;
+  border-radius: 10px;
+  cursor: pointer;
+  border-radius: 25px;
+  border: none;
+  background: #64d488;
+} */
+
+/* .button--save {
+  font-weight: 600;
+  left: -20px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  width: 20px;
+  box-shadow: 20px 0px 40px 0px #63d3a6;
+} */
