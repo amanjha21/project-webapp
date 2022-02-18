@@ -37,6 +37,7 @@
   font-weight: bold;
   display: flex;
   align-items: center;
+  font-size: 1.5rem;
 }
 .settings-container .left-column ul li:hover {
   background-color: #363b6d;
