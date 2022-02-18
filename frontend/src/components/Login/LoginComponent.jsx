@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import FormInput from "./FormInput";
 import "./Login.css";
 const Login = () => {
@@ -6,33 +6,94 @@ const Login = () => {
   const [showSignup, setShowSignup] = useState("fadeOut");
   const [showResetPassword, setShowResetPassword] = useState("fadeOut");
   const [showResetNotification, setShowResetNotification] = useState("fadeOut");
-
-  const loginHandler = () => {
-    console.log("login");
+  const getFormData = (e) => {
+    const data = new FormData(e.target);
+    return Object.fromEntries(data.entries());
   };
-  const signupHandler = () => {
-    console.log("signup");
+  const loginHandler = (e) => {
+    e.preventDefault();
+    const data = getFormData(e);
+    console.log("login", data);
+    e.target.reset();
   };
-  const forgotPasswordHandler = () => {
-    console.log("forgot password");
+  const signupHandler = (e) => {
+    e.preventDefault();
+    const data = getFormData(e);
+    console.log("signup", data);
     setShowResetNotification("fadeIn");
   };
+  const forgotPasswordHandler = (e) => {
+    e.preventDefault();
+    const data = getFormData(e);
+    console.log("forgot password", data);
+    setShowResetNotification("fadeIn");
+  };
+  const [formInputs, setFormInputs] = useState({
+    username: "",
+    email: "",
+    password: "",
+    repeatPassword: "",
+  });
+
+  const formInputChangeHandler = (e) => {
+    setFormInputs((prevInputs) => ({
+      ...prevInputs,
+      [e.target.name]: e.target.value,
+    }));
+  };
   const logInFormInputs = [
-    { name: "email", type: "text", placeholder: "Email Address" },
-    { name: "password", type: "password", placeholder: "Password" },
+    {
+      name: "email",
+      type: "email",
+      placeholder: "Email Address",
+      errorMessage: "Email Address must be a valid email",
+    },
+    {
+      name: "password",
+      type: "password",
+      placeholder: "Password",
+      errorMessage:
+        "Password must be 8 to 16 digits and must contain atleast one capital letter, number and special character",
+      pattern: "^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,16}$",
+    },
   ];
   const signUpFormInputs = [
-    { name: "username", type: "text", placeholder: "Username" },
-    { name: "email", type: "text", placeholder: "Email Address" },
-    { name: "password", type: "password", placeholder: "Password" },
+    {
+      name: "username",
+      type: "text",
+      placeholder: "Username",
+      errorMessage: "Username must be atleast 3 characters",
+      pattern: "[A-Za-z ]{3,100}",
+    },
+    {
+      name: "email",
+      type: "email",
+      placeholder: "Email Address",
+      errorMessage: "Email Address must be a valid email",
+    },
+    {
+      name: "password",
+      type: "password",
+      placeholder: "Password",
+      errorMessage:
+        "Password must be 8 to 16 digits and must contain atleast one capital letter, number and special character",
+      pattern: "^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,16}$",
+    },
     {
       name: "repeatPassword",
       type: "password",
       placeholder: "Repeat Password",
+      errorMessage: "Both passwords must be same",
+      pattern: formInputs.password,
     },
   ];
   const forgotPasswordFormInputs = [
-    { name: "email", type: "text", placeholder: "Email Address" },
+    {
+      name: "email",
+      type: "email",
+      placeholder: "Email Address",
+      errorMessage: "Email Address must be a valid email",
+    },
   ];
   return (
     <>
@@ -42,26 +103,23 @@ const Login = () => {
             <span>Login</span>
             <p>Welcome back, please login to your account. </p>
           </div>
-          <form action="">
+          <form onSubmit={loginHandler}>
             {logInFormInputs.map((input, i) => (
-              <FormInput key={i} {...input} />
+              <FormInput key={i} {...input} onChange={formInputChangeHandler} />
             ))}
-            <a href="#" className="btn-signin" onClick={loginHandler}>
-              Login
-            </a>
+            <button className="btn-signin">Login</button>
 
-            <a
-              href="#"
+            <div
               className="btn-reset btn-fade"
               onClick={() => {
                 setShowLogin("fadeOut");
+                setShowResetNotification("fadeOut");
                 setShowResetPassword("fadeIn");
               }}
             >
               Forgot password?
-            </a>
-            <a
-              href="#"
+            </div>
+            <div
               className="btn-member btn-fade"
               onClick={() => {
                 setShowLogin("fadeOut");
@@ -69,7 +127,7 @@ const Login = () => {
               }}
             >
               Not a member yet? Sign Up
-            </a>
+            </div>
           </form>
         </div>
         <div className={`signup ${showSignup}`}>
@@ -77,17 +135,20 @@ const Login = () => {
             <span>Sign Up</span>
             <p>Create a new account.</p>
           </div>
-
-          <form action="">
+          <div className={`notification ${showResetNotification}`}>
+            <p>
+              A confirmation email has been sent to your email address. Please
+              follow the instruction in that email to complete sign up process.
+              Thanks!
+            </p>
+          </div>
+          <form onSubmit={signupHandler}>
             {signUpFormInputs.map((input, i) => (
-              <FormInput key={i} {...input} />
+              <FormInput key={i} {...input} onChange={formInputChangeHandler} />
             ))}
 
-            <a href="#" className="btn-signin" onClick={signupHandler}>
-              Sign Up
-            </a>
-            <a
-              href="#"
+            <button className="btn-signin">Sign Up</button>
+            <div
               className="btn-login btn-fade"
               onClick={() => {
                 setShowLogin("fadeIn");
@@ -95,7 +156,7 @@ const Login = () => {
               }}
             >
               Already have an account, Login
-            </a>
+            </div>
           </form>
         </div>
 
@@ -105,20 +166,13 @@ const Login = () => {
             <p>Enter in the email associated with your account</p>
           </div>
 
-          <form action="">
+          <form onSubmit={forgotPasswordHandler}>
             {forgotPasswordFormInputs.map((input, i) => (
-              <FormInput key={i} {...input} />
+              <FormInput key={i} {...input} onChange={formInputChangeHandler} />
             ))}
 
-            <a
-              href="#"
-              className="btn-signin btn-password"
-              onClick={forgotPasswordHandler}
-            >
-              Submit Reset
-            </a>
-            <a
-              href="#"
+            <button className="btn-signin btn-password">Submit Reset</button>
+            <div
               className="btn-login btn-fade"
               onClick={() => {
                 setShowLogin("fadeIn");
@@ -127,7 +181,7 @@ const Login = () => {
               }}
             >
               Cancel and go back to Login page
-            </a>
+            </div>
           </form>
           <div className={`notification ${showResetNotification}`}>
             <p>

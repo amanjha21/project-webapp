@@ -72,7 +72,7 @@
   font-weight: 500;
   color: var(--sec-color2);
   display: block;
-  /*width: 210px;*/
+  cursor: pointer;
   margin: 30px auto 0;
   text-decoration: none;
 }
@@ -95,14 +95,20 @@
   color: var(--sec-color1);
 }
 
-.error {
-  display: block;
+.login-form-error {
+  display: none;
   color: var(--error-color);
   font-size: 1.2rem;
   text-align: left;
   padding-left: 25px;
 }
 
+.sign-panels input:invalid[focused="true"] ~ span {
+  display: block;
+}
+.sign-panels input:invalid[focused="true"] {
+  border: 1px solid var(--error-color);
+}
 @media screen and (max-width: 768px) {
   .login-page-wrapper .sign-panels {
     width: 90%;

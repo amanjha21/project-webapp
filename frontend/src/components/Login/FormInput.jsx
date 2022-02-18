@@ -1,9 +1,17 @@
-const FormInput = ({ error, ...otherProps }) => {
+import { useState } from "react";
+
+const FormInput = ({ errorMessage, ...otherProps }) => {
+  const [focused, setFocused] = useState(false);
   return (
-    <>
-      <input {...otherProps} />
-      {error && <span className="error">*{error}</span>}
-    </>
+    <div>
+      <input
+        {...otherProps}
+        onBlur={() => setFocused(true)}
+        focused={focused.toString()}
+        required
+      />
+      <span className="login-form-error">*{errorMessage}</span>
+    </div>
   );
 };
 
