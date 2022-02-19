@@ -9,6 +9,7 @@
   --sec-background-color: #fff;
   --font-color: black;
   --font-color-light: white;
+  --font-color-disabled: #ddd;
   --border-color: #e1e2e3;
   --default-border-radius: 10px;
   --button-border-white: white;
@@ -26,6 +27,7 @@
   --popup-background-color: rgba(0, 0, 0, 0.288);
   --error-color: #f32354;
   --success-color: rgb(10, 218, 138);
+  --default-font-family: "Montserrat", sans-serif;
 }
 * {
   box-sizing: border-box;

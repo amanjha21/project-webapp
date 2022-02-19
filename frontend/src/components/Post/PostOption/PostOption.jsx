@@ -3,7 +3,8 @@ import { MdEdit, MdDelete } from "react-icons/md";
 import Popup from "../../Popup";
 import DeletePost from "./DeletePost";
 import { useState } from "react";
-const PostOption = ({ postOptionsVisible }) => {
+import CreatePost from "../CreatePost/CreatePost";
+const PostOption = ({ postOptionsVisible, postText, imgUrl }) => {
   const [showDelete, setShowDelete] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
   return (
@@ -23,10 +24,10 @@ const PostOption = ({ postOptionsVisible }) => {
         />
       </div>
       <Popup visible={showEdit} setVisible={setShowEdit}>
-        <DeletePost />
+        <CreatePost postText={postText} imgUrl={imgUrl} />
       </Popup>
       <Popup visible={showDelete} setVisible={setShowDelete}>
-        <DeletePost />
+        <DeletePost setShowDelete={setShowDelete} />
       </Popup>
     </>
   );
