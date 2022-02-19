@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { MdOutlineSearch } from "react-icons/md";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { AiOutlineClose } from "react-icons/ai";
+import { BiDotsVerticalRounded } from "react-icons/bi";
 import "./Navbar.css";
 import UserSettings from "./UserSettings";
 import Popup from "../Popup";
@@ -76,10 +77,21 @@ const Navbar = () => {
         </form>
         <div className="nav-items">
           <li>
-            <a href="/">Home</a>
+            <a href="/">
+              <div className="nav-profile">
+                <img
+                  src="http://cp91279.biography.com/1000509261001/1000509261001_1822909398001_BIO-Biography-29-Innovators-Mark-Zuckerberg-115956-SF.jpg"
+                  alt=""
+                />{" "}
+              </div>
+            </a>
           </li>
           <li>
-            <div onClick={() => setShowUserSettings(true)}>Dropdown</div>
+            <div onClick={() => setShowUserSettings(true)}>
+              <div className="nav-dropdown">
+                <BiDotsVerticalRounded />
+              </div>
+            </div>
           </li>
         </div>
         <div className="search-icon">

@@ -8,11 +8,11 @@ import UserTeams from "./components/UserTeams/UserTeams";
 function App() {
   return (
     <div className="App">
-      {/* <Navbar />
-      <Post />
+      <Navbar />
+      {/* <Post /> */}
       <UserTeams />
-      <Profile /> */}
-      <Login />
+      {/* <Profile /> */}
+      {/* <Login /> */}
     </div>
   );
 }

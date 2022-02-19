@@ -1,9 +1,9 @@
 .user-team-container {
-  width: 40vw;
-  max-width: 400px;
-  min-width: 300px;
-  height: 40vh;
-  min-height: 500px;
+  width: 20vw;
+
+  min-width: 100px;
+  height: 30vh;
+  min-height: 200px;
   background-color: var(--background-color);
   overflow: auto !important;
   padding: 10px 5px;
