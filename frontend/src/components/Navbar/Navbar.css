@@ -206,11 +206,11 @@ nav .search-icon {
   justify-content: center;
   align-items: center;
   flex-flow: column;
-  width: 40vw;
-  max-width: 400px;
-  min-width: 300px;
-  height: 70vh;
-  min-height: 500px;
+  width: 15vw;
+
+  min-width: 200px;
+  height: 35vh;
+  min-height: 200px;
   background-color: var(--background-color);
   overflow: auto !important;
   padding: 10px 5px;
@@ -231,4 +231,10 @@ nav .search-icon {
 .user-settings-option:hover {
   color: var(--sec-color1);
   border-bottom: 2px solid var(--border-color);
+}
+
+img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
 }
