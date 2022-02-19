@@ -7,7 +7,7 @@ const About = () => {
     {
       name: "Vaibhav",
       imgUrl: "http://i.pravatar.cc/150?img=53",
-      role: "admin",
+      role: "Admin",
     },
     {
       name: "Vaibhav",
@@ -59,10 +59,7 @@ const About = () => {
         })}
         {memberList.length > 5 && limit < memberList.length && (
           <div className="about-view-container">
-            <button
-              className="default--btn about-button-view-more"
-              onClick={viewMoreHandler}
-            >
+            <button className="button-view" onClick={viewMoreHandler}>
               view more
             </button>
           </div>

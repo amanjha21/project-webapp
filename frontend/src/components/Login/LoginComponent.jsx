@@ -184,7 +184,7 @@ const Login = () => {
           <div className={`recover-password ${showResetPassword}`}>
             <div className="title">
               <span>Recover Password</span>
-              <p>Enter in the email associated with your account</p>
+              <p>Enter the email associated with your account</p>
             </div>
 
             <form onSubmit={forgotPasswordHandler}>

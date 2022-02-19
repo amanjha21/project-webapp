@@ -1,6 +1,6 @@
 .login-page-wrapper .sign-panels {
   width: 60%;
-  height: 700px;
+  height: 100%;
   background: var(--sec-background-color);
   padding: 40px 60px;
   text-align: center;
@@ -24,7 +24,7 @@
   border: 1px solid var(--border-color);
   border-radius: var(--default-border-radius);
   display: flex;
-  height: 700px;
+  height: 650px;
   width: 90%;
   max-width: 900px;
   overflow: hidden;

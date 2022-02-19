@@ -3,10 +3,7 @@ import { useState } from "react";
 import { BsTrash } from "react-icons/bs";
 
 const ImgUpload = ({ onChange, src }) => (
-  <label
-    htmlFor="photo-upload"
-    className="custom-file-upload circle cursor fas"
-  >
+  <label htmlFor="photo-upload" className="custom-file-upload circle cursor">
     <div className="img-wrap img-upload">
       <img className="upload-img" htmlFor="photo-upload" src={src} />
     </div>
@@ -19,10 +16,10 @@ const Edit = ({ onSubmit, children }) => (
     <form className="card-form" onSubmit={onSubmit}>
       <h1>Edit Profile</h1>
       {children}
-      <button type="submit" className="default--btn button--delete">
+      <button type="submit" className="card-form-btn button--delete">
         <BsTrash />
       </button>
-      <button type="submit" className="default--btn button--save">
+      <button type="submit" className="card-form-btn button--save">
         Save
       </button>
     </form>
