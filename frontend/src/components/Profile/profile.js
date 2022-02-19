@@ -32,11 +32,11 @@ const UserProfile = () => {
           </div>
 
           <div className="profile-card-ctr">
-            {/* <button className="default--btn button--blue js-message-btn">
+            {/* <button className="profile-card-btn button--blue js-message-btn">
               Add member
             </button> */}
             <button
-              className="default--btn button--orange"
+              className="profile-card-btn button--orange cursor"
               onClick={() => setViewEditProfile(true)}
             >
               Edit Profile

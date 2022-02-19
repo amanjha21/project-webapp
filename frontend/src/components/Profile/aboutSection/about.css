@@ -1,34 +1,38 @@
 .about-container {
-  background: #fff;
+  background: var(--background-color);
 }
 
-.about-team-head {
+.about-container .about-team-head {
   text-align: center;
   margin: 0;
   font-size: 3rem;
   font-weight: 800;
-  color: var(--font-color);
+  color: var(--font-color-header);
+  opacity: 0.5;
 }
 
-.about-view-container {
+.about-container .about-view-container {
   text-align: center;
-  background-color: #fff;
+  background-color: var(--background-color);
 }
 
-.about-button-view-more {
-  text-align: center;
-  background: gray;
-  min-width: 10px;
-  min-height: 2px;
-  font-size: 15px;
-  padding: 0;
-  padding-left: 5px;
-  padding-right: 5px;
-  margin: 0;
+.about-container .button-view {
+  background: var(--button-background-color-light);
+  border: none;
+  font-family: var(--button-font-family);
+  font-weight: 600;
+  font-size: 1.5rem;
+  min-width: 99px;
+  border-radius: 50px;
+  min-height: 3px;
+  color: var(--button-font-color-light);
+  cursor: pointer;
+  backface-visibility: hidden;
+  transition: all 0.3s;
 }
 
-.has-top-border {
-  border-top: 1px solid #e3edf2;
+.about-container .button-view:hover {
+  box-shadow: var(--button-hover-box-shadow);
 }
 
 .member-list-container {
@@ -40,13 +44,17 @@
 }
 
 .member-list-container .main--team {
-  background-color: #fff;
+  background-color: var(--background-color);
   width: 100%;
+}
+
+.member-list-container .has-top-border {
+  border-top: 1px solid #e3edf2;
 }
 
 .member-list-container .member-container {
   padding: 1.875em;
-  background-color: #fff;
+  background-color: var(--background-color);
 }
 
 .member-list-container .member-list {
@@ -96,11 +104,11 @@
 }
 
 .member-list-container .name {
-  color: #2d325f;
+  color: var(--font-color);
   font-weight: 600;
 }
 
 .member-list-container .role {
-  color: #8b91b3;
+  color: var(--font-color-light);
   font-size: 0.875em;
 }

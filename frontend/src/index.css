@@ -5,26 +5,29 @@
   --main-color2: #ff416c;
   --sec-color1: #28a6c5;
   --sec-color2: #999;
-  --background-color: white;
-  --sec-background-color: #fff;
-  --font-color: black;
-  --font-color-light: white;
+  --background-color: rgb(255, 255, 255);
+  --sec-background-color: rgb(255, 255, 255);
+  --font-color: #000000;
+  --font-color-light: #cdbde0;
+  --font-color-desc: #291c38;
+  --font-color-header: #363b6d;
   --border-color: #e1e2e3;
   --default-border-radius: 10px;
   --button-border-white: white;
+  --button-font-family: "Quicksand", sans-serif;
   --button-font-color-light: white;
   --button-font-color-dark: black;
-  --button-background-color-light: white;
+  --button-background-color-light: #d89352;
   --button-background-color-dark: rgb(150, 150, 150);
+  --button-hover-box-shadow: 0px 7px 30px rgba(243, 118, 35, 0.75);
   --text-area-background-color: #fff;
   --placeholder-font-color: #bbb;
   --default-border-radius: 10px;
-  --default-profile-box-shawdow: 0px 5px 30px 0px rgb(108, 68, 252),
-    0px 0px 0px 6px rgba(107, 74, 255, 0.5);
-  --default-btn-txt-colour: #fff;
+  --default-profile-box-border: 0px 0px 0px 6px rgba(107, 74, 255, 0.5);
+  --default-container-box-shadow: 0px 8px 60px -10px rgba(13, 28, 39, 0.6);
   --scroll-bar-color: #ddd;
   --popup-background-color: rgba(0, 0, 0, 0.288);
-  --error-color: #f32354;
+  --error-color: #e83114;
   --success-color: rgb(10, 218, 138);
 }
 * {
@@ -68,47 +71,6 @@ html {
   cursor: pointer;
 }
 
-.default--btn {
-  background: none;
-  border: none;
-  font-family: "Quicksand", sans-serif;
-  font-weight: 700;
-  font-size: 19px;
-  margin: 20px 10px;
-  padding: 10px 3px;
-  min-width: 201px;
-  border-radius: 80px;
-  min-height: 40px;
-  color: var(--default-btn-txt-colour);
-  cursor: pointer;
-  backface-visibility: hidden;
-  transition: all 0.3s;
-}
-
-.default--btn:hover {
-  transform: translateY(-5px);
-}
-
-.default--btn:focus {
-  outline: none !important;
-}
-
-@media screen and (max-width: 576px) {
-  .default--btn:focus {
-    min-width: inherit;
-    margin: 0;
-    margin-bottom: 16px;
-    width: 100%;
-    max-width: 300px;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .default--btn:focus {
-    min-width: 170px;
-    margin: 15px 25px;
-  }
-}
 ::-webkit-scrollbar {
   width: 12px;
   background-color: #f5f5f5;
