@@ -1,19 +1,11 @@
-.new-input:focus {
-  outline: 0px !important;
-  -webkit-appearance: none !important;
-  -webkit-box-shadow: none;
-  box-shadow: none !important;
-  outline: none !important;
-}
-
 .settings-container {
-  background-color: white;
+  background-color: var(--sec-background-color);
   border-radius: 0.25rem;
   display: flex;
   min-height: 350px;
   overflow: hidden;
-  box-shadow: 0px 2px 12px -4px rgba(0, 0, 0, 0.1);
 }
+
 .settings-container .left-column {
   width: 30%;
 }
@@ -30,7 +22,7 @@
   flex: auto;
   padding: 20px;
   cursor: pointer;
-  color: #363b6d;
+  color: var(--font-color);
   transition: all 0.2s ease-out;
   text-transform: uppercase;
   letter-spacing: 1.5px;
@@ -40,25 +32,19 @@
   font-size: 1.5rem;
 }
 .settings-container .left-column ul li:hover {
-  background-color: #363b6d;
-  color: white;
-}
-.settings-container .left-column ul li i {
-  margin-right: 10px;
-  color: #363b6d;
-  text-align: center;
+  background-color: var(--main-color1);
+  color: var(--font-color-light);
 }
 
 .settings-container .settings-tab {
   width: 70%;
   padding: 20px;
-  border-left: 3px solid #363b6d;
+  border-left: 3px solid var(--main-color1);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 .settings-container .settings-tab form {
-  /* width: 100%; */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -71,52 +57,85 @@
   align-items: stretch;
   margin: 10px 0;
 }
-.settings-container .settings-tab .input-group input {
+.settings-container .settings-tab .input-group .new-input {
   padding-left: 0 !important;
   font-family: inherit;
   line-height: 1.2;
-  color: #363b6d;
-  font-size: 20px;
+  color: var(--font-color);
+  font-size: 1.8rem;
   background: transparent;
   padding: 0 5px;
+  margin-bottom: 10px;
   border: none;
-  border-bottom: 1px solid #ced4da;
-}
-.settings-container .settings-tab .input-group label {
-  font-size: 15px;
-  color: #363b6d;
-  opacity: 0.5;
+  border-bottom: 0.5px solid #ced4da;
 }
 
+.settings-container .new-input:focus {
+  outline: 0px !important;
+  -webkit-appearance: none !important;
+  -webkit-box-shadow: none;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* .settings-container .settings-tab .input-group label {
+  font-size: 1.5rem;
+  color: var(--placeholder-font-color);
+  text-align: center;
+} */
+
 .settings-container .settings-tab h1 {
-  font-size: 16px;
+  font-size: 1.6rem;
   margin-top: 0;
   margin-bottom: 20px;
   text-transform: uppercase;
   letter-spacing: 1.5px;
-  color: #363b6d;
+  color: var(--font-color-header);
   opacity: 0.5;
 }
 .settings-container .settings-tab h2 {
-  color: #e83114;
-  font-size: 16px;
+  color: var(--error-color);
+  font-size: 1.6rem;
   font-weight: normal;
   text-align: center;
   margin-bottom: 20px;
 }
 
+.settings-container .edit-profile-error {
+  display: none;
+  color: var(--error-color);
+  font-size: 1.2rem;
+}
+
+.input-group input:invalid[focused="true"] ~ span {
+  display: block;
+}
+
+.button-changes {
+  border: none;
+  font-family: var(--button-font-family);
+  font-weight: 600;
+  font-size: 2rem;
+  margin: 30px 10px;
+  min-width: 201px;
+  border-radius: 50px;
+  min-height: 40px;
+  color: var(--button-font-color-light);
+  cursor: pointer;
+  backface-visibility: hidden;
+  transition: all 0.3s;
+}
+
 .button-save-changes {
-  background: linear-gradient(45deg, #66ff66, #23a523);
-  box-shadow: 0px 4px 30px rgba(9, 131, 25, 0.4);
+  background: var(--button-background-color-light);
 }
 
 .button-save-changes:hover {
-  box-shadow: 0px 7px 30px rgba(18, 109, 6, 0.75);
+  box-shadow: var(--button-hover-box-shadow);
 }
 
 .button-confirm {
   background: linear-gradient(45deg, #d5135a, #f05924);
-  box-shadow: 0px 4px 30px rgba(223, 45, 70, 0.35);
 }
 
 .button-confirm:hover {
@@ -132,10 +151,7 @@
   }
 
   .settings-container .settings-tab {
-    width: 90%;
+    width: 100%;
     border-left: 0;
-  }
-  .new-input {
-    width: 90%;
   }
 }
