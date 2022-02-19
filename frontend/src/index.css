@@ -5,12 +5,13 @@
   --main-color2: #ff416c;
   --sec-color1: #28a6c5;
   --sec-color2: #999;
-  --background-color: rgb(255, 255, 255);
-  --sec-background-color: rgb(255, 255, 255);
-  --font-color: #000000;
-  --font-color-light: #cdbde0;
   --font-color-desc: #291c38;
   --font-color-header: #363b6d;
+  --background-color: white;
+  --sec-background-color: #fff;
+  --font-color: black;
+  --font-color-light: white;
+  --font-color-disabled: #ddd;
   --border-color: #e1e2e3;
   --default-border-radius: 10px;
   --button-border-white: white;
@@ -29,6 +30,7 @@
   --popup-background-color: rgba(0, 0, 0, 0.288);
   --error-color: #e83114;
   --success-color: rgb(10, 218, 138);
+  --default-font-family: "Montserrat", sans-serif;
 }
 * {
   box-sizing: border-box;
@@ -41,14 +43,14 @@ body {
 }
 
 html {
-  font-size: 62.5%;
+  font-size: 62.5% !important;
 }
 .circle {
   border-radius: 50% !important;
 }
 .rounded-corner {
   border-radius: var(--default-border-radius) !important;
-  overflow: hidden !important;
+  overflow: hidden;
 }
 /* input placeholder color */
 ::placeholder {

@@ -8,18 +8,36 @@
   text-align: center;
   max-width: 400px;
   min-width: 300px;
-  height: 10vh;
-  min-height: 200px;
+  height: 12vh;
+  min-height: 250px;
   background-color: var(--background-color);
   overflow: auto !important;
   padding: 10px 5px;
   border: 2px solid var(--border-color);
+}
+.delete-post-container div:first-child {
+  margin-bottom: 10px;
 }
 .delete-post-button {
   width: 150px;
   height: 50px;
   margin-top: 10px;
   background: var(--error-color);
+  border-radius: 50px;
+  padding: 11px;
+  font-size: 20px;
+  color: var(--button-font-color-light);
+  text-decoration: none;
+  font-weight: 500;
+  border: none;
+  box-shadow: none;
+  cursor: pointer;
+}
+.post-cancel-button {
+  width: 150px;
+  height: 50px;
+  margin-top: 10px;
+  background: var(--button-background-color-dark);
   border-radius: 50px;
   padding: 11px;
   font-size: 20px;

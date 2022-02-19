@@ -1,0 +1,120 @@
+.create-post-wrapper {
+  background-color: var(--background-color);
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  width: 30vw;
+  min-width: 350px;
+}
+.create-post-wrapper .postContainer {
+  display: none;
+}
+.create-post-wrapper .postContainer.active {
+  display: block;
+}
+.create-post-wrapper .postContainer .profile {
+  display: flex;
+  align-items: center;
+}
+.create-post-wrapper .postContainer .profile .profilePicture {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+.create-post-wrapper .postContainer .profile .details {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-weight: 600;
+}
+.create-post-wrapper .postContainer .profile .details .profileName {
+  color: var(--font-color);
+  margin-bottom: 3px;
+}
+
+.create-post-wrapper .postContainer .react-input-emoji--input {
+  min-height: 100px !important;
+}
+.create-post-wrapper .react-input-emoji--container {
+  color: var(--font-color) !important;
+  font-family: var(--default-font-family) !important;
+  border-radius: var(--default-border-radius) !important;
+  background-color: var(--text-area-background-color) !important;
+  margin: 5px 0px !important;
+  border: 1px solid var(--border-color) !important;
+}
+.create-post-wrapper .react-input-emoji--placeholder {
+  font-size: 1.6rem !important;
+  height: 1.6rem !important;
+  padding-top: 20px;
+  color: var(--placeholder-font-color) !important;
+}
+.create-post-wrapper .body .react-emoji {
+  flex-direction: column;
+}
+.create-post-wrapper .body .react-input-emoji--button {
+  align-self: flex-start;
+  position: absolute !important;
+  bottom: -33px;
+}
+.create-post-wrapper .body .react-input-emoji--button__show svg {
+  fill: var(--font-color) !important;
+}
+
+.create-post-wrapper .react-input-emoji--button svg {
+  fill: var(--sec-color2) !important;
+}
+.create-post-wrapper .react-input-emoji--button svg:hover {
+  fill: var(--font-color) !important;
+}
+.create-post-wrapper .postContainer .postContent:focus {
+  outline: none;
+}
+.create-post-wrapper .postContainer .postContent::placeholder {
+  color: var(--placeholder-font-color);
+}
+.create-post-wrapper .postContainer .actions {
+  display: flex;
+  flex-direction: column;
+}
+.create-post-wrapper .postContainer .actions .helpers {
+  height: 2.5rem;
+  font-size: 2.5rem;
+  color: var(--sec-color2);
+  align-self: flex-end;
+  margin-bottom: 10px;
+  margin-right: 10px;
+  margin-top: 5px;
+}
+.create-post-wrapper .postContainer .actions .helpers div label {
+  cursor: pointer;
+}
+.create-post-wrapper .postContainer .actions .helpers div:hover {
+  color: var(--font-color);
+}
+.create-post-wrapper .postContainer .actions .postButton {
+  border: 0;
+  padding: 15px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 8px;
+  background-color: var(--sec-color1);
+  color: var(--font-color-light);
+}
+.create-post-wrapper .postContainer .actions .postButton.disabled {
+  background-color: var(--button-background-color-dark);
+  color: var(--font-color-disabled);
+  cursor: not-allowed;
+}
+.create-post-wrapper .body {
+  width: 30vw;
+  min-width: 350px;
+  padding: 0 16px;
+  margin-bottom: 20px;
+}
+
+@media screen and (max-width: 768px) {
+  .create-post-wrapper {
+    min-width: 95%;
+  }
+}

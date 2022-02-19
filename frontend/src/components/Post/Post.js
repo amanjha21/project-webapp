@@ -222,7 +222,7 @@ const Post = () => {
     <div className="post-container rounded-corner">
       <div className="creator">
         <img
-          className="circle"
+          className="post-creator-image circle"
           alt="user profile"
           src={
             "http://cp91279.biography.com/1000509261001/1000509261001_1822909398001_BIO-Biography-29-Innovators-Mark-Zuckerberg-115956-SF.jpg"
@@ -232,7 +232,7 @@ const Post = () => {
           <p>Aman Jha</p>
           <p>3h ago</p>
         </div>
-        <PostOptions />
+        <PostOptions postText={text} imgUrl={images} />
       </div>
       <p className="post-message">
         {message}

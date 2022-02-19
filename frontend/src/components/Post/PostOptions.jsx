@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { BiDotsVerticalRounded } from "react-icons/bi";
 import PostOption from "./PostOption/PostOption";
-const PostOptions = () => {
+const PostOptions = ({ postText, imgUrl }) => {
   const [postOptionsVisible, setPostOptionsVisible] = useState(false);
 
   return (
@@ -11,7 +11,11 @@ const PostOptions = () => {
         tabIndex="1"
         onBlur={() => setPostOptionsVisible(false)}
       >
-        <PostOption postOptionsVisible={postOptionsVisible} />
+        <PostOption
+          postOptionsVisible={postOptionsVisible}
+          postText={postText}
+          imgUrl={imgUrl}
+        />
         <BiDotsVerticalRounded
           className="post-option-toggle"
           onClick={() => setPostOptionsVisible((prevState) => !prevState)}
