@@ -1,9 +1,9 @@
 const Member = ({ name, imgUrl, role = "member" }) => {
   return (
     <>
-      <section className="has-top-border"></section>
       <div className="member-list-container">
         <div className="main--team">
+          <section className="has-top-border"></section>
           <section className="member-container">
             <ul className={`member-list ${role.toLowerCase()}`}>
               <li>
