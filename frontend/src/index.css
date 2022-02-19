@@ -45,7 +45,7 @@ html {
 }
 .rounded-corner {
   border-radius: var(--default-border-radius) !important;
-  overflow: hidden !important;
+  overflow: hidden;
 }
 /* input placeholder color */
 ::placeholder {
