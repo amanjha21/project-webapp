@@ -31,48 +31,6 @@
   color: var(--font-color);
   margin-bottom: 3px;
 }
-
-.create-post-wrapper .postContainer .react-input-emoji--input {
-  min-height: 100px !important;
-}
-.create-post-wrapper .react-input-emoji--container {
-  color: var(--font-color) !important;
-  font-family: var(--default-font-family) !important;
-  border-radius: var(--default-border-radius) !important;
-  background-color: var(--text-area-background-color) !important;
-  margin: 5px 0px !important;
-  border: 1px solid var(--border-color) !important;
-}
-.create-post-wrapper .react-input-emoji--placeholder {
-  font-size: 1.6rem !important;
-  height: 1.6rem !important;
-  padding-top: 20px;
-  color: var(--placeholder-font-color) !important;
-}
-.create-post-wrapper .body .react-emoji {
-  flex-direction: column;
-}
-.create-post-wrapper .body .react-input-emoji--button {
-  align-self: flex-start;
-  position: absolute !important;
-  bottom: -33px;
-}
-.create-post-wrapper .body .react-input-emoji--button__show svg {
-  fill: var(--font-color) !important;
-}
-
-.create-post-wrapper .react-input-emoji--button svg {
-  fill: var(--sec-color2) !important;
-}
-.create-post-wrapper .react-input-emoji--button svg:hover {
-  fill: var(--font-color) !important;
-}
-.create-post-wrapper .postContainer .postContent:focus {
-  outline: none;
-}
-.create-post-wrapper .postContainer .postContent::placeholder {
-  color: var(--placeholder-font-color);
-}
 .create-post-wrapper .postContainer .actions {
   display: flex;
   flex-direction: column;
@@ -85,6 +43,23 @@
   margin-bottom: 10px;
   margin-right: 10px;
   margin-top: 5px;
+}
+.create-post-wrapper .postContainer .body .postContent {
+  width: 100%;
+  font-size: 1.6rem;
+  padding: 5px 10px;
+  color: var(--font-color);
+  background-color: var(--text-area-background-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--default-border-radius);
+  font-family: var(--default-font-family);
+  resize: none;
+}
+.create-post-wrapper .postContainer .postContent:focus {
+  outline: none;
+}
+.create-post-wrapper .postContainer .postContent::placeholder {
+  color: var(--placeholder-font-color);
 }
 .create-post-wrapper .postContainer .actions .helpers div label {
   cursor: pointer;
