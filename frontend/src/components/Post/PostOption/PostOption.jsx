@@ -1,7 +1,7 @@
 import "./PostOption.css";
 import { MdEdit, MdDelete } from "react-icons/md";
 import Popup from "../../Popup";
-import DeletePost from "./DeletePost";
+import Confirmation from "../../Confirmation";
 import { useState } from "react";
 import CreatePost from "../CreatePost/CreatePost";
 const PostOption = ({ postOptionsVisible, postText, imgUrl }) => {
@@ -26,9 +26,13 @@ const PostOption = ({ postOptionsVisible, postText, imgUrl }) => {
       <Popup visible={showEdit} setVisible={setShowEdit}>
         <CreatePost postText={postText} imgUrl={imgUrl} />
       </Popup>
-      <Popup visible={showDelete} setVisible={setShowDelete}>
-        <DeletePost setShowDelete={setShowDelete} />
-      </Popup>
+      <Confirmation
+        visible={showDelete}
+        setVisible={setShowDelete}
+        message="Are you sure you want to delete this post?"
+        option="Delete"
+        onConfirm={() => console.log("post delete confirmed")}
+      />
     </>
   );
 };

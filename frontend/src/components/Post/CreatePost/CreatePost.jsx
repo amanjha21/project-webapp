@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import "./CreatePost.css";
 import { MdPermMedia } from "react-icons/md";
-import InputEmoji from "react-input-emoji";
 const CreatePost = ({ postText = "", imgUrl = [] }) => {
   const [text, setText] = useState("");
   function onSubmitHandler() {
@@ -28,11 +27,11 @@ const CreatePost = ({ postText = "", imgUrl = [] }) => {
                 <p>3h ago</p>
               </div>
             </div>
-            <InputEmoji
+            <textarea
+              className="postContent"
+              rows="4"
               value={text}
-              // onChange={setText}
-              cleanOnEnter
-              onEnter={onSubmitHandler}
+              onChange={(e) => setText(e.target.value)}
               placeholder="Write Something..."
             />
             <div className="actions">
