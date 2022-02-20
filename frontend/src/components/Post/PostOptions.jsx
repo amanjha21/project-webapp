@@ -23,7 +23,7 @@ const PostOptions = ({ text, images }) => {
         />
       </Options>
       <Popup visible={showEdit} setVisible={setShowEdit}>
-        <CreatePost postText={text} imgUrl={images} />
+        <CreatePost postText={text} images={images} />
       </Popup>
       <Confirmation
         visible={showDelete}
