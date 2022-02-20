@@ -1,14 +1,38 @@
 import { useEffect, useState } from "react";
 import "./CreatePost.css";
 import { MdPermMedia } from "react-icons/md";
-const CreatePost = ({ postText = "", imgUrl = [] }) => {
+import MediaCarousel from "../MediaCarousel";
+const CreatePost = ({ postText = "", images = [], type = "update" }) => {
+  const [newImageList, setNewImageList] = useState([""]);
+  // console.log(newImageList);
   const [text, setText] = useState("");
-  function onSubmitHandler() {
+  const onSubmitHandler = () => {
     console.log("submitted", text);
-  }
+  };
+  const imageInputChangeHandler = (e) => {
+    e.preventDefault();
+    let reader = new FileReader();
+    let file = e.target.files[0];
+    e.target.value = null;
+    reader.onloadend = () => {
+      let newImage = { original: reader.result, thumbnail: reader.result };
+      let updatedImageList = [...newImageList, newImage];
+      // console.log(newImageList, updatedImageList);
+      setNewImageList(updatedImageList);
+    };
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  };
   useEffect(() => {
     setText(postText);
+    setNewImageList(images);
+    // console.log("ran", images, newImageList);
   }, []);
+  // useEffect(() => {
+  //   console.log("list changed", newImageList);
+  // }, [newImageList]);
+
   return (
     <>
       <div className="create-post-wrapper">
@@ -41,15 +65,21 @@ const CreatePost = ({ postText = "", imgUrl = [] }) => {
                     type="file"
                     accept="image/*"
                     name="chooseFile"
-                    id="post-image-select"
+                    id={`post-image-select ${type}`}
                     onClick={() => console.log("hi")}
+                    onChange={imageInputChangeHandler}
                     hidden
                   />
-                  <label htmlFor="post-image-select">
+                  <label htmlFor={`post-image-select ${type}`}>
                     <MdPermMedia className="item" />
                   </label>
                 </div>
               </div>
+              {newImageList.length != 0 && (
+                <div className="post-image">
+                  <MediaCarousel images={newImageList} />
+                </div>
+              )}
               <button
                 onClick={onSubmitHandler}
                 className={`btn postButton ${text ? "" : "disabled"}`}
