@@ -1,22 +1,21 @@
 import { useState } from "react";
 import "./profileNavbar.css";
 import About from "../aboutSection/about";
+import Post from "../../Post/Post";
+import CreatePost from "../../Post/CreatePost/CreatePost";
 
 const ProfileNavbar = () => {
   const [isPost, setPost] = useState(true);
   const [isAbout, setAbout] = useState(false);
-  const [isShow, setShow] = useState(false);
 
   const handlePost = () => {
     setPost(true);
     setAbout(false);
-    setShow(false);
   };
 
   const handleAbout = () => {
     setAbout(true);
     setPost(false);
-    setShow(true);
   };
 
   return (
@@ -38,7 +37,11 @@ const ProfileNavbar = () => {
         </ul>
       </div>
       <div>
-        <div className={isShow ? "" : "hidden"}>
+        <div className={isPost ? "" : "hidden"}>
+          <CreatePost />
+          <Post />
+        </div>
+        <div className={isAbout ? "" : "hidden"}>
           <About />
         </div>
       </div>

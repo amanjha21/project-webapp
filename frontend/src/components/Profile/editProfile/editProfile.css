@@ -4,6 +4,8 @@
   display: flex;
   min-height: 350px;
   overflow: hidden;
+  max-width: 700px;
+  width: 70vw;
 }
 
 .settings-container .left-column {
@@ -42,7 +44,8 @@
   border-left: 3px solid var(--main-color1);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: center;
 }
 .settings-container .settings-tab form {
   display: flex;
@@ -78,12 +81,6 @@
   outline: none !important;
 }
 
-/* .settings-container .settings-tab .input-group label {
-  font-size: 1.5rem;
-  color: var(--placeholder-font-color);
-  text-align: center;
-} */
-
 .settings-container .settings-tab h1 {
   font-size: 1.6rem;
   margin-top: 0;
@@ -91,7 +88,6 @@
   text-transform: uppercase;
   letter-spacing: 1.5px;
   color: var(--font-color-header);
-  opacity: 0.5;
 }
 .settings-container .settings-tab h2 {
   color: var(--error-color);
@@ -130,16 +126,8 @@
   background: var(--button-background-color-light);
 }
 
-.button-save-changes:hover {
-  box-shadow: var(--button-hover-box-shadow);
-}
-
 .button-confirm {
   background: linear-gradient(45deg, #d5135a, #f05924);
-}
-
-.button-confirm:hover {
-  box-shadow: 0px 7px 30px rgba(223, 45, 70, 0.75);
 }
 
 @media screen and (max-width: 576px) {
