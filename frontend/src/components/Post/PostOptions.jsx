@@ -1,26 +1,39 @@
+import Options from "../Options";
+import { MdEdit, MdDelete } from "react-icons/md";
+import Popup from "../Popup";
+import Confirmation from "../Confirmation";
 import { useState } from "react";
-import { BiDotsVerticalRounded } from "react-icons/bi";
-import PostOption from "./PostOption/PostOption";
-const PostOptions = ({ postText, imgUrl }) => {
-  const [postOptionsVisible, setPostOptionsVisible] = useState(false);
-
+import CreatePost from "./CreatePost/CreatePost";
+const PostOptions = ({ text, images }) => {
+  const [showDelete, setShowDelete] = useState(false);
+  const [showEdit, setShowEdit] = useState(false);
+  const [confirmData, setConfirmData] = useState("");
+  const deleteConfirmHandler = ({ data }) => {
+    console.log("deleted", data);
+  };
   return (
     <>
-      <div
-        className="post-options"
-        tabIndex="1"
-        onBlur={() => setPostOptionsVisible(false)}
-      >
-        <PostOption
-          postOptionsVisible={postOptionsVisible}
-          postText={postText}
-          imgUrl={imgUrl}
+      <Options>
+        <MdEdit
+          className=" post-option post-edit-option"
+          onClick={() => setShowEdit(true)}
         />
-        <BiDotsVerticalRounded
-          className="post-option-toggle"
-          onClick={() => setPostOptionsVisible((prevState) => !prevState)}
+        <MdDelete
+          className="post-option post-delete-option"
+          onClick={() => setShowDelete(true)}
         />
-      </div>
+      </Options>
+      <Popup visible={showEdit} setVisible={setShowEdit}>
+        <CreatePost postText={text} imgUrl={images} />
+      </Popup>
+      <Confirmation
+        visible={showDelete}
+        setVisible={setShowDelete}
+        message="Are you sure you want to delete this post?"
+        option="Delete"
+        onConfirm={deleteConfirmHandler}
+        // input={{ confirmData, setConfirmData, placeholder: "Password" }}
+      />
     </>
   );
 };
