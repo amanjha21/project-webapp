@@ -1,8 +1,10 @@
 @import "~react-image-gallery/styles/css/image-gallery.css";
 .post-container {
-  width: 500px;
+  width: 50vw;
+  min-width: 300px;
+  max-width: 500px;
   background-color: var(--background-color);
-  margin: 50px 50px;
+  margin: 5px;
   border: 2px solid var(--border-color);
 }
 .creator {
