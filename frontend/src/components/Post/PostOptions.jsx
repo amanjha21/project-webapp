@@ -7,7 +7,6 @@ import CreatePost from "./CreatePost/CreatePost";
 const PostOptions = ({ text, images }) => {
   const [showDelete, setShowDelete] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
-  const [confirmData, setConfirmData] = useState("");
   const deleteConfirmHandler = ({ data }) => {
     console.log("deleted", data);
   };
@@ -32,7 +31,7 @@ const PostOptions = ({ text, images }) => {
         message="Are you sure you want to delete this post?"
         option="Delete"
         onConfirm={deleteConfirmHandler}
-        // input={{ confirmData, setConfirmData, placeholder: "Password" }}
+        input={{ placeholder: "Password" }}
       />
     </>
   );

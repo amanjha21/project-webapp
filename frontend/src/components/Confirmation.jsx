@@ -22,7 +22,7 @@ const Confirmation = ({
       <Popup visible={visible} setVisible={setVisible}>
         <div className="confirmation-message-container rounded-corner">
           <div>{message}</div>
-          {input.setConfirmData ? (
+          {input.placeholder ? (
             <form
               onSubmit={formSubmitHandler}
               className="confirm-form-container"
@@ -31,8 +31,6 @@ const Confirmation = ({
                 name="confirmInput"
                 className="confirm-form-input"
                 rows="1"
-                value={input.confirmData}
-                onChange={(e) => input.setConfirmData(e.target.value)}
                 placeholder={input.placeholder ? input.placeholder : ""}
                 required
               ></textarea>
