@@ -76,7 +76,7 @@
 }
 
 .card .card-form-btn {
-  background: var(--button-background-color-light);
+  background: none;
   border: none;
   font-family: var(--button-font-family);
   font-weight: 600;
@@ -87,16 +87,15 @@
   min-height: 40px;
   color: var(--default-btn-txt-colour);
   cursor: pointer;
-  backface-visibility: hidden;
-  transition: all 0.3s;
 }
 
 .card .button--delete {
   min-width: 101px;
   margin-bottom: 0;
   padding-bottom: 0;
+  background: linear-gradient(45deg, #d5135a, #f05924);
 }
 
-.card .card-form-btn:hover {
-  box-shadow: var(--button-hover-box-shadow);
+.card .button--save {
+  background: var(--button-background-color-light);
 }

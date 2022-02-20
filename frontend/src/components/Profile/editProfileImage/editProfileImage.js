@@ -11,23 +11,24 @@ const ImgUpload = ({ onChange, src }) => (
   </label>
 );
 
-const Edit = ({ onSubmit, children }) => (
+const formSubmitHandler = (e) => {
+  e.preventDefault();
+};
+
+const Edit = ({ children }) => (
   <div className="card">
-    <form className="card-form" onSubmit={onSubmit}>
+    <form className="card-form" onSubmit={formSubmitHandler}>
       <h1>Edit Profile</h1>
       {children}
-      <button type="submit" className="card-form-btn button--delete">
+      <button className="card-form-btn button--delete">
         <BsTrash />
       </button>
-      <button type="submit" className="card-form-btn button--save">
-        Save
-      </button>
+      <button className="card-form-btn button--save">Save</button>
     </form>
   </div>
 );
 
 const EditProfileImage = () => {
-  const [file, setFile] = useState();
   const [imagePreviewUrl, setImagePreviewUrl] = useState(
     "https://github.com/OlgaKoplik/CodePen/blob/master/profile.jpg?raw=true"
   );
@@ -37,10 +38,11 @@ const EditProfileImage = () => {
     const reader = new FileReader();
     const newFile = e.target.files[0];
     reader.onloadend = () => {
-      setFile(newFile);
       setImagePreviewUrl(reader.result);
     };
-    reader.readAsDataURL(newFile);
+    if (newFile) {
+      reader.readAsDataURL(newFile);
+    }
   };
 
   return (

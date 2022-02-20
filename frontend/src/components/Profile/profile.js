@@ -1,5 +1,8 @@
 import "./profile.css";
 import { useState } from "react";
+import { ImCog } from "react-icons/im";
+import { IoMdAddCircle } from "react-icons/io";
+import Confirmation from "../Confirmation";
 
 import Popup from "../Popup";
 import ProfileNavbar from "./profileNavbar/profileNavbar";
@@ -9,6 +12,7 @@ import EditProfile from "./editProfile/editProfile";
 const UserProfile = () => {
   const [viewEditProfileImg, setViewEditProfileImg] = useState(false);
   const [viewEditProfile, setViewEditProfile] = useState(false);
+  const [showAddMember, setshowAddMember] = useState(false);
 
   return (
     <>
@@ -32,14 +36,17 @@ const UserProfile = () => {
           </div>
 
           <div className="profile-card-ctr">
-            {/* <button className="profile-card-btn button--blue js-message-btn">
-              Add member
-            </button> */}
+            <button
+              className="profile-card-btn button--add"
+              onClick={setshowAddMember}
+            >
+              Add User <IoMdAddCircle className="add-icon" />
+            </button>
             <button
               className="profile-card-btn button--orange cursor"
               onClick={() => setViewEditProfile(true)}
             >
-              Edit Profile
+              Settings <ImCog className="setting-icon" />
             </button>
           </div>
         </div>
@@ -53,6 +60,14 @@ const UserProfile = () => {
       <Popup visible={viewEditProfile} setVisible={setViewEditProfile}>
         <EditProfile />
       </Popup>
+      <Confirmation
+        visible={showAddMember}
+        setVisible={setshowAddMember}
+        message="Enter User's email address to send request"
+        option="Send Request"
+        onConfirm={() => console.log("Request Sent Successfully")}
+        input={{ placeholder: "User Email" }}
+      />
     </>
   );
 };
