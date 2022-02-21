@@ -8,7 +8,6 @@
   font-size: 3rem;
   font-weight: 800;
   color: var(--font-color-header);
-  opacity: 0.5;
 }
 
 .about-container .about-view-container {
@@ -27,12 +26,6 @@
   min-height: 3px;
   color: var(--button-font-color-light);
   cursor: pointer;
-  backface-visibility: hidden;
-  transition: all 0.3s;
-}
-
-.about-container .button-view:hover {
-  box-shadow: var(--button-hover-box-shadow);
 }
 
 .member-list-container {
@@ -53,6 +46,7 @@
 }
 
 .member-list-container .member-container {
+  display: flex;
   padding: 1.875em;
   background-color: var(--background-color);
 }

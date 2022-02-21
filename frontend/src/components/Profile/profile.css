@@ -2,7 +2,6 @@
   width: 100%;
   min-height: 300px;
   margin: auto;
-  box-shadow: var(--default-container-box-shadow);
   background: var(--background-color);
   max-width: 900px;
   position: relative;
@@ -17,7 +16,6 @@
   overflow: hidden;
   position: relative;
   z-index: 4;
-  box-shadow: var(--default-profile-box-border);
 }
 
 .profile-card .profile-card__img .profile__img {
@@ -61,34 +59,50 @@
   font-weight: 700;
 }
 
+.profile-card-ctr {
+  height: 30px;
+  display: flex;
+  justify-content: center;
+}
+
 .profile-card .profile-card__cnt .profile-card-ctr .profile-card-btn {
   border: none;
   font-family: var(--button-font-family);
   font-weight: 600;
-  font-size: 1.5rem;
-  min-width: 121px;
+  font-size: 1.8rem;
+  min-width: 111px;
   border-radius: 50px;
   min-height: 30px;
   color: var(--button-font-color-light);
-  backface-visibility: hidden;
-  transition: all 0.3s;
+  margin: 0px 12px;
+  cursor: pointer;
+  justify-content: center;
 }
 
-/* .button--blue {
-  background: linear-gradient(45deg, #66ff66, #23a523);
-  box-shadow: 0px 4px 30px rgba(9, 131, 25, 0.4);
+.profile-card .profile-card__cnt .profile-card-ctr .profile-card-btn .add-icon {
+  font-size: 2.8rem;
+  padding-left: 0.5rem;
 }
 
-.button--blue:hover {
-  box-shadow: 0px 7px 30px rgba(18, 109, 6, 0.75);
-} */
+.profile-card
+  .profile-card__cnt
+  .profile-card-ctr
+  .profile-card-btn
+  .setting-icon {
+  font-size: 2.2rem;
+  padding-left: 0.5rem;
+}
+
+.button--add {
+  background: var(--button-background-color-light);
+  display: flex;
+  align-items: center;
+}
 
 .profile-card .profile-card__cnt .profile-card-ctr .button--orange {
   background: var(--button-background-color-light);
-}
-
-.profile-card .profile-card__cnt .profile-card-ctr .button--orange:hover {
-  box-shadow: var(--button-hover-box-shadow);
+  display: flex;
+  align-items: center;
 }
 
 @media screen and (max-width: 576px) {

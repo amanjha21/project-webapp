@@ -8,7 +8,6 @@
   text-align: center;
   max-width: 400px;
   min-width: 300px;
-  height: 12vh;
   min-height: 250px;
   background-color: var(--background-color);
   overflow: auto !important;
@@ -49,4 +48,23 @@
   border: none;
   box-shadow: none;
   cursor: pointer;
+}
+.confirm-form-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.confirm-form-input {
+  width: 70%;
+  font-size: 2rem;
+  padding: 5px 10px;
+  color: var(--font-color);
+  background-color: var(--text-area-background-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--default-border-radius);
+  font-family: var(--default-font-family);
+  resize: none;
+  margin: 10px 0;
 }

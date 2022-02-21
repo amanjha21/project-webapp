@@ -2,8 +2,10 @@
   background-color: var(--background-color);
   border-radius: 8px;
   border: 1px solid var(--border-color);
-  width: 30vw;
-  min-width: 350px;
+  width: 50vw;
+  min-width: 300px;
+  max-width: 500px;
+  margin: 5px;
 }
 .create-post-wrapper .postContainer {
   display: none;
@@ -72,9 +74,10 @@
   padding: 15px;
   font-size: 14px;
   font-weight: 600;
-  border-radius: 8px;
+  border-radius: var(--default-border-radius);
   background-color: var(--sec-color1);
   color: var(--font-color-light);
+  cursor: pointer;
 }
 .create-post-wrapper .postContainer .actions .postButton.disabled {
   background-color: var(--button-background-color-dark);
@@ -82,14 +85,9 @@
   cursor: not-allowed;
 }
 .create-post-wrapper .body {
-  width: 30vw;
-  min-width: 350px;
+  width: 50vw;
+  min-width: 300px;
+  max-width: 500px;
   padding: 0 16px;
   margin-bottom: 20px;
-}
-
-@media screen and (max-width: 768px) {
-  .create-post-wrapper {
-    min-width: 95%;
-  }
 }

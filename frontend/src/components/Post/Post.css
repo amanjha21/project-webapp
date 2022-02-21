@@ -1,8 +1,10 @@
 @import "~react-image-gallery/styles/css/image-gallery.css";
 .post-container {
-  width: 500px;
+  width: 50vw;
+  min-width: 300px;
+  max-width: 500px;
   background-color: var(--background-color);
-  margin: 50px 50px;
+  margin: 5px;
   border: 2px solid var(--border-color);
 }
 .creator {
@@ -37,19 +39,6 @@
   font-size: 1.2rem;
   color: var(--sec-color2);
   margin-top: -10px;
-}
-.creator .post-options {
-  margin-left: auto;
-  margin-right: 10px;
-  display: flex;
-  font-size: 2.5rem;
-}
-.creator .post-options .post-option-toggle {
-  cursor: pointer;
-  color: var(--sec-color2);
-}
-.creator .post-options .post-option-toggle:hover {
-  color: var(--sec-color1);
 }
 .post-message {
   font-size: 1.6rem;

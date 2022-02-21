@@ -1,3 +1,6 @@
+import Options from "../../Options";
+import { MdEdit, MdDelete } from "react-icons/md";
+
 const Member = ({ name, imgUrl, role = "member" }) => {
   return (
     <>
@@ -11,11 +14,17 @@ const Member = ({ name, imgUrl, role = "member" }) => {
                   <img className="circle" src={imgUrl} alt="" />
                 </div>
                 <div className="member-meta">
-                  <span className="name">{name}</span>
+                  <span className="name cursor">{name}</span>
                   <span className="role">{role}</span>
                 </div>
               </li>
             </ul>
+            <Options className="">
+              <button className="post-option">Admin</button>
+              <button className="post-option">Ad</button>
+              <button className="post-option">min</button>
+              <MdDelete className="post-option post-delete-option" />
+            </Options>
           </section>
         </div>
       </div>

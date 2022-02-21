@@ -232,7 +232,7 @@ const Post = () => {
           <p>Aman Jha</p>
           <p>3h ago</p>
         </div>
-        <PostOptions postText={text} imgUrl={images} />
+        <PostOptions text={text} images={images} />
       </div>
       <p className="post-message">
         {message}
