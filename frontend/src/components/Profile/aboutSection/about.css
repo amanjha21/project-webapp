@@ -1,6 +1,9 @@
 .about-container {
   background: var(--background-color);
   max-width: 900px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .about-container .about-team-head {
@@ -32,7 +35,7 @@
 .member-list-container {
   display: flex;
   max-width: 900px;
-  max-height: 200px;
+  height: 150px;
   font-size: 1.5rem;
   font-weight: 400;
   line-height: 1.5;
@@ -49,7 +52,8 @@
 
 .member-list-container .member-container {
   display: flex;
-  padding: 1.875em;
+  justify-content: center;
+  padding: 1.5rem;
   background-color: var(--background-color);
 }
 
@@ -72,27 +76,14 @@
 
 .member-list-container .member-avatar img {
   display: block;
-  max-width: 50px;
+  max-width: 70px;
   height: auto;
-}
-
-.member-list-container .admin .member-avatar img {
-  max-width: 80px;
-}
-
-.member-list-container .moderator .member-avatar img {
-  max-width: 60px;
-}
-
-.member-list-container .member .member-avatar img {
-  max-width: 50px;
 }
 
 .member-list-container .member-meta {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  padding-left: 3em;
+  padding-left: 5rem;
 }
 
 .member-list-container .name,
@@ -104,6 +95,7 @@
 .member-list-container .name {
   color: var(--font-color);
   font-weight: 600;
+  font-size: 2rem;
 }
 
 .member-list-container .role {
@@ -111,18 +103,27 @@
   font-size: 0.875em;
 }
 
+.member-list-container .make-role {
+  position: absolute;
+  right: 0%;
+}
+
 .member-list-container .make-role-btn {
   border: none;
-  margin: 2px;
+  margin-bottom: 3px;
   font-family: var(--button-font-family);
-  border-radius: 50px;
+  border-radius: 20px;
   cursor: pointer;
   font-size: 1.2rem;
   color: var(--button-font-color-light);
   background: var(--button-background-color-light);
-  /* flex-direction: column; */
+  width: 101px;
+  height: 30px;
 }
 
-.member-list-containe .option-sec {
+.member-list-container .option-sec {
+  display: flex;
   flex-direction: column;
+  position: relative;
+  top: 0%;
 }

@@ -25,6 +25,12 @@
   object-fit: cover;
 }
 
+.profile-card .profile-card-logout {
+  position: absolute;
+  top: 0.5%;
+  right: 0%;
+}
+
 .profile-card .profile-card__cnt {
   margin-top: 50px;
   text-align: center;
@@ -65,7 +71,7 @@
   justify-content: center;
 }
 
-.profile-card .profile-card__cnt .profile-card-ctr .profile-card-btn {
+.profile-card .profile-card-btn {
   border: none;
   font-family: var(--button-font-family);
   font-weight: 600;
@@ -79,7 +85,17 @@
   justify-content: center;
 }
 
-.profile-card .profile-card__cnt .profile-card-ctr .profile-card-btn .add-icon {
+.profile-card .logout-btn {
+  background-color: var(--error-color);
+  font-size: 1.4rem;
+  min-width: 75px;
+  min-height: 25px;
+  display: flex;
+  align-items: center;
+}
+
+.profile-card .profile-card__cnt .profile-card-ctr .profile-card-btn .add-icon,
+.profile-card .logout-icon {
   font-size: 2.8rem;
   padding-left: 0.5rem;
 }
@@ -109,5 +125,20 @@
   .profile-card .profile-card__img .profile-card__img {
     width: 120px;
     height: 120px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .profile-card .logout-btn {
+    background-color: var(--error-color);
+    font-size: 1rem;
+    min-width: 60px;
+    min-height: 25px;
+    display: flex;
+    align-items: center;
+  }
+  .profile-card .logout-icon {
+    padding-left: 0.5rem;
+    font-size: 2rem;
   }
 }
