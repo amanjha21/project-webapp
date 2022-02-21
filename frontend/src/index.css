@@ -26,7 +26,7 @@
   --default-border-radius: 10px;
   --default-profile-box-border: 0px 0px 0px 6px rgba(107, 74, 255, 0.5);
   --default-container-box-shadow: 0px 8px 60px -10px rgba(13, 28, 39, 0.6);
-  --scroll-bar-color: #ddd;
+  --scroll-bar-color: #999;
   --popup-background-color: rgba(0, 0, 0, 0.288);
   --error-color: #e83114;
   --success-color: rgb(10, 218, 138);
@@ -74,15 +74,16 @@ html {
 }
 
 ::-webkit-scrollbar {
-  width: 12px;
-  background-color: #f5f5f5;
+  width: 5px;
+  background-color: transparent;
 }
 /* Track */
 ::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  /* box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   border-radius: 20px;
-  background-color: var(--background-color);
+  background-color: var(--background-color); */
+  display: none;
 }
 
 /* Handle */
