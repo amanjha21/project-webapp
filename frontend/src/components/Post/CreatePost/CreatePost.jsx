@@ -4,10 +4,9 @@ import { MdPermMedia } from "react-icons/md";
 import MediaCarousel from "../MediaCarousel";
 const CreatePost = ({ postText = "", images = [], type = "update" }) => {
   const [newImageList, setNewImageList] = useState([""]);
-  // console.log(newImageList);
   const [text, setText] = useState("");
   const onSubmitHandler = () => {
-    console.log("submitted", text);
+    console.log("submitted", text, newImageList);
   };
   const imageInputChangeHandler = (e) => {
     e.preventDefault();
@@ -16,23 +15,23 @@ const CreatePost = ({ postText = "", images = [], type = "update" }) => {
     e.target.value = null;
     reader.onloadend = () => {
       let newImage = { original: reader.result, thumbnail: reader.result };
-      let updatedImageList = [...newImageList, newImage];
-      // console.log(newImageList, updatedImageList);
+      let updatedImageList = [newImage, ...newImageList];
       setNewImageList(updatedImageList);
     };
     if (file) {
       reader.readAsDataURL(file);
     }
   };
+  const removeCurrentImageFromList = (e, currentIndex = 0) => {
+    e.preventDefault();
+    let updatedImageList = newImageList.filter((img, i) => i !== currentIndex);
+    setNewImageList(updatedImageList);
+    console.log("remove current", e);
+  };
   useEffect(() => {
     setText(postText);
     setNewImageList(images);
-    // console.log("ran", images, newImageList);
   }, []);
-  // useEffect(() => {
-  //   console.log("list changed", newImageList);
-  // }, [newImageList]);
-
   return (
     <>
       <div className="create-post-wrapper">
@@ -66,7 +65,6 @@ const CreatePost = ({ postText = "", images = [], type = "update" }) => {
                     accept="image/*"
                     name="chooseFile"
                     id={`post-image-select ${type}`}
-                    onClick={() => console.log("hi")}
                     onChange={imageInputChangeHandler}
                     hidden
                   />
@@ -76,13 +74,23 @@ const CreatePost = ({ postText = "", images = [], type = "update" }) => {
                 </div>
               </div>
               {newImageList.length != 0 && (
-                <div className="post-image">
-                  <MediaCarousel images={newImageList} />
-                </div>
+                <>
+                  <div className="post-image create-post-image-preview">
+                    <MediaCarousel images={newImageList} />
+                  </div>
+                  <button
+                    onClick={removeCurrentImageFromList}
+                    className={`deleteImageButton`}
+                  >
+                    Remove Image
+                  </button>
+                </>
               )}
               <button
-                onClick={onSubmitHandler}
-                className={`btn postButton ${text ? "" : "disabled"}`}
+                onClick={(e) => {
+                  text && onSubmitHandler(e);
+                }}
+                className={`postButton ${text ? "" : "disabled"}`}
               >
                 Post
               </button>
