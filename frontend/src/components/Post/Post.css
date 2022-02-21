@@ -31,14 +31,26 @@
   cursor: pointer;
   font-weight: bold;
   color: var(--main-color1);
+  margin-bottom: 3px;
 }
+.creator .post-user-details .notice-user .name:hover,
 .creator div p:first-of-type:hover {
   text-decoration: underline;
 }
+.creator .post-user-details .notice-user {
+  margin-bottom: 3px;
+  margin-top: 0;
+  padding: 0;
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: var(--font-color);
+  cursor: pointer;
+}
+.creator .post-user-details .create,
 .creator div p:last-of-type {
   font-size: 1.2rem;
   color: var(--sec-color2);
-  margin-top: -10px;
+  margin-top: 0;
 }
 .post-message {
   font-size: 1.6rem;

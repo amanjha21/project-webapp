@@ -1,8 +1,8 @@
 import ImageGallery from "react-image-gallery";
 import { MdFileDownload } from "react-icons/md";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 
-const MediaCarousel = ({ images }) => {
+const MediaCarousel = ({ images, currentIndex }) => {
   const onErrorImageUrl = "/errorImg.jpg";
   const getCurrentIndex = useRef(null);
   const [display, setDisplay] = useState("none");
@@ -53,6 +53,7 @@ const MediaCarousel = ({ images }) => {
   const closeCarouselHandler = () => {
     getCurrentIndex.current.toggleFullScreen();
   };
+  // useEffect(()=>{},[])
   return (
     <>
       <ImageGallery

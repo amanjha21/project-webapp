@@ -6,13 +6,24 @@ import Popup from "../Popup";
 import UserReaction from "./UserReaction/UserReaction";
 import PostOptions from "./PostOptions";
 
-const Post = () => {
+const Post = ({ type = "post" }) => {
   const defaultTextLength = 150;
   const defaultNotFoundImgProfile =
     "https://heatherchristenaschmidt.files.wordpress.com/2011/09/facebook_no_profile_pic2-jpg.gif";
   const currentUser = {
     username: "Aman Jha",
     imgUrl: defaultNotFoundImgProfile,
+  };
+  const postUser = {
+    imgUrl:
+      "http://cp91279.biography.com/1000509261001/1000509261001_1822909398001_BIO-Biography-29-Innovators-Mark-Zuckerberg-115956-SF.jpg",
+    name: "Aman Jha",
+  };
+  const noticeTeam = {
+    imgUrl:
+      "https://heatherchristenaschmidt.files.wordpress.com/2011/09/facebook_no_profile_pic2-jpg.gif",
+    name: "Team Name",
+    user: "Aman 2",
   };
   const text = `
     Omg it's snowing outside! Lorem ipsum dolor sit amet, consectetur
@@ -224,12 +235,16 @@ const Post = () => {
         <img
           className="post-creator-image circle"
           alt="user profile"
-          src={
-            "http://cp91279.biography.com/1000509261001/1000509261001_1822909398001_BIO-Biography-29-Innovators-Mark-Zuckerberg-115956-SF.jpg"
-          }
+          src={type === "post" ? postUser.imgUrl : noticeTeam.imgUrl}
         />
         <div className="post-user-details">
-          <p>Aman Jha</p>
+          <p>{type === "post" ? postUser.name : noticeTeam.name}</p>
+          {type === "notice" && (
+            <p className="notice-user">
+              <span className="create">{"created by:- "}</span>
+              <span className="name">{noticeTeam.user}</span>
+            </p>
+          )}
           <p>3h ago</p>
         </div>
         <PostOptions text={text} images={images} />
