@@ -1,6 +1,18 @@
 import SingleTeam from "./SingleTeam";
+import { IoAddSharp } from "react-icons/io5";
+import { useState } from "react";
 import "./UserTeams.css";
 const UserTeams = () => {
+  const [selectedTeam, setSelectedTeam] = useState("");
+  const createTeamHandler = () => {
+    console.log("Create Team"); //show popup for creating team
+  };
+
+  const selectTeamHandler = (i) => {
+    console.log(i);
+    setSelectedTeam(i);
+  };
+
   const teams = [
     {
       name: "Team1",
@@ -31,8 +43,21 @@ const UserTeams = () => {
   return (
     <>
       <div className="user-team-container rounded-corner">
+        <div
+          className="create-team team-single team-user"
+          onClick={createTeamHandler}
+        >
+          Create Team <IoAddSharp className="add-team-icon" />
+        </div>
         {teams.map((team, i) => (
-          <SingleTeam key={i} name={team.name} imgUrl={team.imgUrl} />
+          <div
+            className={`team-single  rounded-corner ${
+              selectedTeam === i ? "team-selected" : ""
+            }`}
+            onClick={() => selectTeamHandler(i)}
+          >
+            <SingleTeam key={i} name={team.name} imgUrl={team.imgUrl} />
+          </div>
         ))}
       </div>
     </>

@@ -31,6 +31,7 @@
   --error-color: #e83114;
   --success-color: rgb(10, 218, 138);
   --default-font-family: "Montserrat", sans-serif;
+  --selected-bgcolor: #ccc;
 }
 * {
   box-sizing: border-box;
