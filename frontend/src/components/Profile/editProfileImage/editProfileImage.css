@@ -49,12 +49,14 @@
 }
 
 .card {
-  width: 310px;
+  width: 50vw;
   min-height: 450px;
+  max-width: 500px;
   margin-top: 15px;
   border-radius: var(--default-border-radius);
   display: flex;
   justify-content: center;
+  flex-direction: column;
   background-color: var(--sec-background-color);
 }
 

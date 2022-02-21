@@ -16,7 +16,7 @@ const UserProfile = () => {
 
   return (
     <>
-      <div className="profile-card js-profile-card">
+      <div className="profile-card">
         <div className="profile-card__img circle">
           <img
             className="profile__img"
@@ -26,7 +26,7 @@ const UserProfile = () => {
           />
         </div>
 
-        <div className="profile-card__cnt js-profile-cnt">
+        <div className="profile-card__cnt">
           <div className="profile-card__name">Amisha semwal</div>
           <div className="profile-card__roll">2019ugcs118</div>
           <div className="profile-card__txt">

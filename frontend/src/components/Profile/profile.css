@@ -1,5 +1,5 @@
 .profile-card {
-  width: 100%;
+  width: 60vw;
   min-height: 300px;
   margin: auto;
   background: var(--background-color);
@@ -70,7 +70,7 @@
   font-family: var(--button-font-family);
   font-weight: 600;
   font-size: 1.8rem;
-  min-width: 111px;
+  min-width: 121px;
   border-radius: 50px;
   min-height: 30px;
   color: var(--button-font-color-light);

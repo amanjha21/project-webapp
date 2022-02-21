@@ -34,19 +34,30 @@ const Member = ({ name, imgUrl, role = "member" }) => {
                   <span className="name cursor">{name}</span>
                   <span className="role">{makeRole}</span>
                 </div>
+                <div className="option-sec">
+                  <Options>
+                    <button
+                      className="make-role-btn"
+                      onClick={makeAdminHandler}
+                    >
+                      Make Admin
+                    </button>
+                    <button
+                      className="make-role-btn"
+                      onClick={makeModeratorHandler}
+                    >
+                      Make moderator
+                    </button>
+                    <button
+                      className="make-role-btn"
+                      onClick={makeMemberHandler}
+                    >
+                      Make Member
+                    </button>
+                  </Options>
+                </div>
               </li>
             </ul>
-            <Options>
-              <button className="make-role-btn" onClick={makeAdminHandler}>
-                Make Admin
-              </button>
-              <button className="make-role-btn" onClick={makeModeratorHandler}>
-                Make moderator
-              </button>
-              <button className="make-role-btn" onClick={makeMemberHandler}>
-                Make Member
-              </button>
-            </Options>
           </section>
         </div>
       </div>

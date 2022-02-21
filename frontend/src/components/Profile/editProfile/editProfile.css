@@ -2,10 +2,10 @@
   background-color: var(--sec-background-color);
   border-radius: 0.25rem;
   display: flex;
-  min-height: 350px;
+  min-height: 450px;
   overflow: hidden;
-  max-width: 700px;
-  width: 70vw;
+  max-width: 500px;
+  width: 50vw;
 }
 
 .settings-container .left-column {
@@ -130,7 +130,7 @@
   background: linear-gradient(45deg, #d5135a, #f05924);
 }
 
-@media screen and (max-width: 576px) {
+@media screen and (max-width: 887px) {
   .settings-container {
     flex-direction: column;
   }
