@@ -30,6 +30,8 @@
   --popup-background-color: rgba(0, 0, 0, 0.288);
   --error-color: #e83114;
   --success-color: rgb(10, 218, 138);
+  --clickable-background-color: #ddd;
+  --clickable-font-color: #444;
   --default-font-family: "Montserrat", sans-serif;
 }
 * {
