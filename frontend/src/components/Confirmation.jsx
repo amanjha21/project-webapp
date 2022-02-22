@@ -7,6 +7,7 @@ const Confirmation = ({
   option,
   onConfirm,
   input = {},
+  type = "",
 }) => {
   const getFormData = (e) => {
     const data = new FormData(e.target);
@@ -37,7 +38,14 @@ const Confirmation = ({
               <button className="confirmation-message-button">{option}</button>
             </form>
           ) : (
-            <button className="confirmation-message-button" onClick={onConfirm}>
+            <button
+              className={
+                type == "delete"
+                  ? "confirmation-delete-button"
+                  : "confirmation-button"
+              }
+              onClick={onConfirm}
+            >
               {option}
             </button>
           )}
