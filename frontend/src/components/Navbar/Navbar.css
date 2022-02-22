@@ -32,7 +32,7 @@
 .navbar-main nav .nav-items li a,
 .navbar-main nav .nav-items li div {
   color: #fff;
-  font-size: 18px;
+  font-size: 3rem;
   font-weight: 500;
   text-decoration: none;
   cursor: pointer;
@@ -156,7 +156,7 @@ nav .search-icon {
     content: "";
     height: 60px;
     padding: 2px;
-    background: var(--sec-color1);
+    background: var(--background-color);
     border-radius: 2px;
     min-width: calc(100% + 20px);
     z-index: -2;
