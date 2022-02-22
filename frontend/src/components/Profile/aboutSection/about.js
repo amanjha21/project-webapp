@@ -7,7 +7,7 @@ const About = () => {
     {
       name: "Vaibhav",
       imgUrl: "http://i.pravatar.cc/150?img=53",
-      role: "Admin",
+      role: "admin",
     },
     {
       name: "Vaibhav",
