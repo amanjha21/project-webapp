@@ -35,7 +35,15 @@ const Confirmation = ({
                 placeholder={input.placeholder ? input.placeholder : ""}
                 required
               ></textarea>
-              <button className="confirmation-message-button">{option}</button>
+              <button
+                className={
+                  type == "delete"
+                    ? "confirmation-delete-button"
+                    : "confirmation-button"
+                }
+              >
+                {option}
+              </button>
             </form>
           ) : (
             <button
