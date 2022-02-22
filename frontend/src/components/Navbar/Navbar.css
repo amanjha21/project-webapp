@@ -29,21 +29,27 @@
   list-style: none;
   padding: 0 15px;
 }
-.navbar-main nav .nav-items li a,
+
 .navbar-main nav .nav-items li div {
   color: #fff;
-  font-size: 3rem;
+  font-size: 2.2rem;
   font-weight: 500;
   text-decoration: none;
   cursor: pointer;
 }
-.navbar-main nav .nav-items li .dropdown a {
-  color: var(--main-color1);
+.navbar-main .nav-dropdown {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 22px;
+  padding: 5px;
+  color: var(--font-color-light);
 }
-.navbar-main nav .nav-items li a:hover,
-.navbar-main nav .nav-items li div:hover {
-  color: var(--sec-color2);
+.navbar-main .nav-dropdown:hover {
+  color: var(--font-color-light);
+  background-color: rgba(255, 255, 255, 0.2);
 }
+
 .navbar-main nav form {
   display: flex;
   height: 50px;
@@ -232,9 +238,28 @@ nav .search-icon {
   color: var(--sec-color1);
   border-bottom: 2px solid var(--border-color);
 }
-
 .navbar-main img {
-  width: 40px;
-  height: 40px;
+  width: 35px;
+  height: 35px;
   border-radius: 50%;
+  /* border: 2px solid transparent;
+  outline: 2px solid var(--border-color); */
+}
+.navbar-main .nav-profile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 15px 8px 8px;
+  border-radius: 22px;
+}
+
+.navbar-main .nav-userName {
+  margin-left: 10px;
+  font-size: 1.6rem;
+  font-weight: bold;
+
+  color: var(--border-color);
+}
+.navbar-main .nav-profile:hover {
+  background-color: rgba(255, 255, 255, 0.2);
 }
