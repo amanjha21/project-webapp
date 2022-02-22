@@ -33,6 +33,7 @@
   --clickable-background-color: #ddd;
   --clickable-font-color: #444;
   --default-font-family: "Montserrat", sans-serif;
+  --selected-bgcolor: #ccc;
 }
 * {
   box-sizing: border-box;
