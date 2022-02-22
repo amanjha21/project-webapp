@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { MdOutlineSearch } from "react-icons/md";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { AiOutlineClose } from "react-icons/ai";
-import { BiDotsVerticalRounded } from "react-icons/bi";
+import { ImCog } from "react-icons/im";
 import "./Navbar.css";
 import UserSettings from "./UserSettings";
 import Popup from "../Popup";
@@ -83,13 +83,14 @@ const Navbar = () => {
                   src="http://cp91279.biography.com/1000509261001/1000509261001_1822909398001_BIO-Biography-29-Innovators-Mark-Zuckerberg-115956-SF.jpg"
                   alt=""
                 />{" "}
+                <span className="nav-userName">UserName</span>
               </div>
             </a>
           </li>
           <li>
             <div onClick={() => setShowUserSettings(true)}>
               <div className="nav-dropdown">
-                <BiDotsVerticalRounded />
+                <ImCog />
               </div>
             </div>
           </li>
