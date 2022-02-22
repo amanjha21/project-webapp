@@ -103,3 +103,9 @@
   padding: 0 16px;
   margin-bottom: 20px;
 }
+.create-post-wrapper .post-creator-image {
+  margin: 0;
+}
+.create-post-wrapper .post-user-details {
+  margin-left: 48px;
+}
