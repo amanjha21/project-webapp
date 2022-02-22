@@ -82,8 +82,12 @@ module.exports = async (req, res) => {
       const adminUser = await Schemas.User.findOne({
         _id: admin,
       });
-      if (adminUser != team.admin && adminUser.teams.includes(teamId)) {
+      if (adminUser._id != team.admin && adminUser.teams.includes(teamId)) {
         team.admin = adminUser._id;
+        if (team.moderator.includes(adminUser._id)) {
+          const index = team.moderator.indexOf(adminUser._id);
+          team.moderator.splice(index, 1);
+        }
         await team.save();
       } else {
         return res.status(400).json({
@@ -98,9 +102,12 @@ module.exports = async (req, res) => {
         _id: moderator,
       });
       if (modUser && modUser.teams.includes(teamId)) {
-        if (!team.moderator.includes(modUser._id)) {
+        if (
+          !team.moderator.includes(modUser._id) &&
+          modUser._id != team.admin
+        ) {
           team.moderator.push(modUser._id);
-          console.log("here");
+
           await team.save();
         } else {
           if (team.moderator.includes(modUser._id)) {
