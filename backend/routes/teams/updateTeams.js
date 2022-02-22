@@ -1,9 +1,12 @@
 const Schemas = require("../../models/index");
 const logger = require("../../helpers/logger");
+const uploader = require("../../helpers/uploader");
 
 module.exports = async (req, res) => {
   const teamId = req.params.id;
+  const profileImage = req.body.imageData;
   const name = req.body.name;
+  const description = req.body.description;
   const admin = req.body.admin;
   const moderator = req.body.moderator;
   const userId = req.user._id;
@@ -16,7 +19,7 @@ module.exports = async (req, res) => {
     });
   }
 
-  if (!name && !admin && !moderator) {
+  if (!name && !admin && !moderator && !profileImage && !description) {
     return res.status(403).json({
       success: false,
       message: "Nothing to update",
@@ -46,6 +49,17 @@ module.exports = async (req, res) => {
       });
     }
 
+    if (profileImage != team.imageData) {
+      if (profileImage === "0") {
+        team.imageData = "";
+      } else if (profileImage) {
+        const url = await uploader(profileImage);
+        //Save url in database
+        team.imageData = url;
+      }
+      await team.save();
+    }
+
     if (team.name == organization.name && name != team.name) {
       return res.status(400).json({
         success: false,
@@ -56,6 +70,11 @@ module.exports = async (req, res) => {
         team.name = name;
         await team.save();
       }
+    }
+
+    if (description && description !== team.description) {
+      team.description = description;
+      await team.save();
     }
 
     if (admin && admin != team.admin) {
