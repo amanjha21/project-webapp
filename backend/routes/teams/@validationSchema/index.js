@@ -12,13 +12,12 @@ const getTeamsByOrganizationIdValidation = Joi.object({
 
 const addTeamsValidation = Joi.object({
   name: Joi.string().required(),
-  organization: Joi.string().required(),
-  admin: Joi.string().length(24).required(),
-  moderator: Joi.array().items(Joi.string().length(24)).optional(),
 });
 
 const updateTeamsValidation = Joi.object({
+  imageData: Joi.string().optional(),
   name: Joi.string().optional(),
+  description: Joi.string().max(150).optional(),
   admin: Joi.string().length(24).optional(),
   moderator: Joi.string().length(24).optional(),
 });

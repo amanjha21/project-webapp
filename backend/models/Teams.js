@@ -1,7 +1,9 @@
 const mongoose = require("mongoose");
 const teamSchema = new mongoose.Schema(
   {
+    imageData: String,
     name: String,
+    description: String,
     organization: {
       type: mongoose.SchemaTypes.ObjectId,
       ref: "Organizations",
