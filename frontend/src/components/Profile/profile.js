@@ -1,7 +1,8 @@
 import "./profile.css";
 import { useState } from "react";
 import { ImCog } from "react-icons/im";
-import { IoMdAddCircle } from "react-icons/io";
+import { IoMdAddCircle, IoMdExit } from "react-icons/io";
+
 import Confirmation from "../Confirmation";
 
 import Popup from "../Popup";
@@ -13,10 +14,11 @@ const UserProfile = () => {
   const [viewEditProfileImg, setViewEditProfileImg] = useState(false);
   const [viewEditProfile, setViewEditProfile] = useState(false);
   const [showAddMember, setshowAddMember] = useState(false);
+  const [logout, setLogout] = useState(false);
 
   return (
     <>
-      <div className="profile-card js-profile-card">
+      <div className="profile-card">
         <div className="profile-card__img circle">
           <img
             className="profile__img"
@@ -25,8 +27,13 @@ const UserProfile = () => {
             alt="profile card"
           />
         </div>
+        <div className="profile-card-logout">
+          <button className="profile-card-btn logout-btn" onClick={setLogout}>
+            Leave Team <IoMdExit className="logout-icon" />
+          </button>
+        </div>
 
-        <div className="profile-card__cnt js-profile-cnt">
+        <div className="profile-card__cnt">
           <div className="profile-card__name">Amisha semwal</div>
           <div className="profile-card__roll">2019ugcs118</div>
           <div className="profile-card__txt">
@@ -54,6 +61,13 @@ const UserProfile = () => {
           <ProfileNavbar />
         </div>
       </div>
+      <Confirmation
+        visible={logout}
+        setVisible={setLogout}
+        message="Are you Sure you want to leave this Team?"
+        option="Confirm"
+        onConfirm={() => console.log("Request Sent Successfully")}
+      />
       <Popup visible={viewEditProfileImg} setVisible={setViewEditProfileImg}>
         <EditProfileImage />
       </Popup>

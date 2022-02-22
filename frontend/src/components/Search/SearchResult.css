@@ -20,18 +20,19 @@
   display: flex;
   align-items: center;
   height: 50px;
+  margin-bottom: 5px;
 }
 .search-result-container .search-creator-image {
   width: 40px;
   height: 40px;
   background-size: cover;
   background-position: center;
-  margin: 0 0 0 12px;
+  margin: 0;
   position: absolute;
 }
 .search-result-container .search-user-details {
   display: inline-block;
-  margin-left: 60px;
+  margin-left: 50px;
   font-size: 1.4rem;
   cursor: pointer;
   font-weight: bold;
