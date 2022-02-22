@@ -77,20 +77,44 @@ module.exports = async (req, res) => {
       await team.save();
     }
 
-    if (admin && admin != team.admin) {
-      team.admin = admin;
-      await team.save();
+    //if admin and admin is user of team and admin != team.admin
+    if (admin) {
+      const adminUser = await Schemas.User.findOne({
+        _id: admin,
+      });
+      if (adminUser != team.admin && adminUser.teams.includes(teamId)) {
+        team.admin = adminUser._id;
+        await team.save();
+      } else {
+        return res.status(400).json({
+          success: false,
+          message: "Admin must be a member of Team..",
+        });
+      }
     }
 
-    if (moderator && !team.moderator.includes(moderator)) {
-      team.moderator.push(moderator);
-      await team.save();
-    } else {
-      if (moderator) {
-        const index = team.moderator.indexOf(moderator);
-        team.moderator.splice(index, 1);
+    if (moderator) {
+      const modUser = await Schemas.User.findOne({
+        _id: moderator,
+      });
+      if (modUser && modUser.teams.includes(teamId)) {
+        if (!team.moderator.includes(modUser._id)) {
+          team.moderator.push(modUser._id);
+          console.log("here");
+          await team.save();
+        } else {
+          if (team.moderator.includes(modUser._id)) {
+            const index = team.moderator.indexOf(modUser._id);
+            team.moderator.splice(index, 1);
+            await team.save();
+          }
+        }
+      } else {
+        return res.status(400).json({
+          success: false,
+          message: "Moderator must be a member of Team..",
+        });
       }
-      await team.save();
     }
 
     logger({
