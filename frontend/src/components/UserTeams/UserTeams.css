@@ -1,10 +1,9 @@
 .user-team-container {
-  /* width: 15vw; */
   display: flex;
   flex-direction: column;
-  /* min-width: 100px; */
+
   height: 30vh;
-  /* min-height: 200px; */
+
   background-color: var(--background-color);
   overflow: auto !important;
   padding: 10px 5px;
@@ -31,14 +30,10 @@
   margin-left: 10px;
 }
 .team-user-details .team-user-name {
-  /* cursor: pointer; */
   font-weight: bold;
   color: var(--main-color1);
   font-size: 1.2rem;
 }
-/* .team-user-details .team-user-name:hover {
-  text-decoration: underline;
-} */
 
 .team-user-details .team-time {
   font-size: 1rem;
@@ -64,8 +59,6 @@
   display: flex;
   align-items: center;
   color: var(--sec-color1);
-
-  /* cursor: pointer; */
 }
 .add-team-icon {
   color: var(--font-color);
