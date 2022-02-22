@@ -43,6 +43,8 @@ module.exports = async (req, res) => {
     });
 
     const newTeam = await team.save();
+    adminDetails.teams.push(newTeam);
+    await adminDetails.save();
 
     logger({
       userId: admin,
