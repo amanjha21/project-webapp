@@ -5,8 +5,6 @@ module.exports = async (req, res) => {
   const userId = req.params.id;
   const name = req.body.name;
 
-  const teams = req.body.teams;
-
   //checking if the userId length is proper or not
   if (userId.length != 24) {
     return res.status(400).json({
@@ -15,7 +13,7 @@ module.exports = async (req, res) => {
     });
   }
   //checking if all the params exist
-  if (!name && !teams) {
+  if (!name) {
     return res.status(400).json({
       success: false,
       message: "Nothing to update!!",
@@ -38,13 +36,8 @@ module.exports = async (req, res) => {
       await user.save();
     }
 
-    // checking if teams exists and if it needs to be updated in the database
-    if (teams && user.teams.includes(teams)) {
-      user.teams.push(teams);
-      await user.save();
-    }
     // checkin if the changes were made successfully
-    if (name == user.name || teams == user.teams) {
+    if (name == user.name) {
       res.status(200).json({
         success: true,
         message: "User updated",
