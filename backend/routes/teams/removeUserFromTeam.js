@@ -7,7 +7,7 @@ module.exports = async (req, res) => {
   const userId = req.user._id;
   const ip = req.header("x-forwarded-for") || req.connection.remoteAddress;
 
-  if (teamId.length != 24 && !member) {
+  if (teamId.length != 24 || !member) {
     return res.status(400).json({
       success: false,
       message: "Invalid Request",
