@@ -8,6 +8,7 @@ const deleteTeamById = require("./deleteTeamById");
 const validation = require("../../middlewares/validation");
 const validationSchema = require("./@validationSchema");
 const verifyToken = require("../../middlewares/verifyToken");
+const removeUserFromTeam = require("./removeUserFromTeam");
 
 //Get Team By Id
 router.get("/:id", getTeamById);
@@ -36,6 +37,14 @@ router.post(
   validation(validationSchema.updateTeamsValidation),
   verifyToken,
   updateTeams
+);
+
+//removeUserFromTeam
+router.post(
+  "/:id",
+  validation(validationSchema.removeUserFromTeamValidation),
+  verifyToken,
+  removeUserFromTeam
 );
 
 //Delete Team
