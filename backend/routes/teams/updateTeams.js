@@ -77,7 +77,7 @@ module.exports = async (req, res) => {
       await team.save();
     }
 
-    //if admin and admin is user of team and admin != team.admin
+    //if admin and admin is member of team and admin != team.admin
     if (admin) {
       const adminUser = await Schemas.User.findOne({
         _id: admin,
@@ -97,6 +97,7 @@ module.exports = async (req, res) => {
       }
     }
 
+    //if moderator and moderator is member of team
     if (moderator) {
       const modUser = await Schemas.User.findOne({
         _id: moderator,
