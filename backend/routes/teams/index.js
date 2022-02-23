@@ -9,6 +9,7 @@ const validation = require("../../middlewares/validation");
 const validationSchema = require("./@validationSchema");
 const verifyToken = require("../../middlewares/verifyToken");
 const removeUserFromTeam = require("./removeUserFromTeam");
+const addUserInTeam = require("./addUserinTeam");
 
 //Get Team By Id
 router.get("/:id", getTeamById);
@@ -39,9 +40,17 @@ router.post(
   updateTeams
 );
 
+//addUserInTeam
+router.post(
+  "/:id/add",
+  validation(validationSchema.addUserInTeamValidation),
+  verifyToken,
+  addUserInTeam
+);
+
 //removeUserFromTeam
 router.post(
-  "/:id",
+  "/:id/remove",
   validation(validationSchema.removeUserFromTeamValidation),
   verifyToken,
   removeUserFromTeam
