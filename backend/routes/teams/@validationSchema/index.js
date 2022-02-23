@@ -14,6 +14,12 @@ const addTeamsValidation = Joi.object({
   name: Joi.string().required(),
 });
 
+const addUserInTeamValidation = Joi.object({
+  email: Joi.string()
+    .email({ minDomainSegments: 3, tlds: { allow: ["in"] } })
+    .required(),
+});
+
 const removeUserFromTeamValidation = Joi.object({
   member: Joi.string().length(24).required(),
 });
@@ -32,4 +38,5 @@ module.exports = {
   addTeamsValidation,
   updateTeamsValidation,
   removeUserFromTeamValidation,
+  addUserInTeamValidation,
 };
