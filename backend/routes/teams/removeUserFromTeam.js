@@ -33,19 +33,19 @@ module.exports = async (req, res) => {
       });
     }
 
-    if (member) {
-      const teamMember = await Schemas.User.findOne({
-        _id: member,
-      });
-      if (
-        teamMember &&
-        teamMember.teams.include(teamId) &&
-        team.admin != teamMember._id
-      ) {
-        const index = teamMember.teams.indexOf(teamId);
-        teamMember.teams.splice(index, 1);
-        await teamMember.save();
-      }
+    const teamMember = await Schemas.User.findOne({
+      _id: member,
+    });
+
+    if (
+      teamMember &&
+      teamMember.teams.includes(teamId) &&
+      team.admin != teamMember._id
+    ) {
+      const index = teamMember.teams.indexOf(teamId);
+      teamMember.teams.splice(index, 1);
+      await teamMember.save();
+
       if (team.moderator.includes(teamMember._id)) {
         const modIndex = team.moderator.indexOf(teamMember._id);
         team.moderator.splice(modIndex, 1);
@@ -60,7 +60,7 @@ module.exports = async (req, res) => {
 
     logger({
       userId: team.admin,
-      message: `User:${member} removed from Team ( ${team.name}) with TeamId: ${teamId} By UserId : ${team.admin}.`,
+      message: `User:${teamMember} removed from Team ( ${team.name}) with TeamId: ${teamId} By UserId : ${team.admin}.`,
       ip,
     });
 
