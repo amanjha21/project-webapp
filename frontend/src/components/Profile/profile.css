@@ -86,12 +86,17 @@
 }
 
 .profile-card .logout-btn {
-  background-color: var(--error-color);
+  background: none;
+  color: var(--sec-color2);
   font-size: 1.4rem;
   min-width: 75px;
   min-height: 25px;
   display: flex;
   align-items: center;
+}
+.profile-card .logout-btn:hover {
+  background-color: var(--sec-color2);
+  color: var(--button-font-color-light);
 }
 
 .profile-card .profile-card__cnt .profile-card-ctr .profile-card-btn .add-icon,
@@ -130,7 +135,6 @@
 
 @media screen and (max-width: 767px) {
   .profile-card .logout-btn {
-    background-color: var(--error-color);
     font-size: 1rem;
     min-width: 60px;
     min-height: 25px;
