@@ -49,13 +49,13 @@ module.exports = async (req, res) => {
       });
     }
 
-    if (profileImage != team.imageData) {
+    if (profileImage != team.imageUrl) {
       if (profileImage === "0") {
-        team.imageData = "";
+        team.imageUrl = "";
       } else if (profileImage) {
         const url = await uploader(profileImage);
         //Save url in database
-        team.imageData = url;
+        team.imageUrl = url;
       }
       await team.save();
     }
