@@ -4,7 +4,7 @@ const mailer = require("../../helpers/mailer");
 require("dotenv").config();
 
 module.exports = async (req, res) => {
-  const teamId = req.params.teamId;
+  const teamId = req.body.teamId;
   const email = req.body.email;
   const userId = req.user._id;
   const ip = req.header("x-forwarded-for") || req.connection.remoteAddress;
@@ -41,7 +41,7 @@ module.exports = async (req, res) => {
       _id: userId,
     });
 
-    //check if user exist in database from req email
+    //check if user exist in database from req email && if user is from same organization
     const user = await Schemas.User.findOne({
       email,
       organization: team.organization,
@@ -61,15 +61,16 @@ module.exports = async (req, res) => {
         message: "User is already a member of Team",
       });
     }
+
     //if user exists create a token
     const addUserToken = jwt.sign(
-      { teamId, userId, memberEmail: email, reqType: "add", ip },
+      { teamId, memberEmail: email, reqType: "add", ip },
       process.env.APPROVE_TOKEN_SECRET,
       { expiresIn: process.env.APPROVE_TOKEN_EXPIRE_TIME }
     );
 
     //create a link to send Add request to user
-    const addUserLink = `${fullUrl}/addInTeamRequest/${addUserToken}`;
+    const addUserLink = `${fullUrl}/add-member-confirm/${addUserToken}`;
 
     //send mail with Add request link
     await mailer({
@@ -77,8 +78,7 @@ module.exports = async (req, res) => {
       reason: `Request to Add in team:-
       Team name: ${team.name}
       Requested By: ${admin.name}
-      Requester's Email: ${admin.email}
-      Request IP: ${ip}`,
+      Requester's Email: ${admin.email}`,
       link: addUserLink,
     });
 
