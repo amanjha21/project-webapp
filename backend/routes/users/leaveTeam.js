@@ -5,12 +5,6 @@ module.exports = async (req, res) => {
   const teamId = req.body.teamId;
   const ip = req.header("x-forwarded-for") || req.connection.remoteAddress;
   try {
-    if (!userId && !teamId) {
-      res
-        .status(400)
-        .json({ success: false, message: "UserID and TeamID dont exist" });
-    }
-
     const user = await Schemas.User.findOne({
       _id: userId,
       teams: { $in: teamId },
@@ -23,9 +17,8 @@ module.exports = async (req, res) => {
       await user.save();
     }
 
-    if (!user.teams.includes(teamId)) {
-      res.status(200).json({ success: true, message: "User left the team" });
-    }
+    res.status(200).json({ success: true, message: "User left the team" });
+
     logger({
       email: user.email,
       message: `User:${userId} left team: ${teamId}   `,
