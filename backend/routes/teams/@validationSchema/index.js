@@ -14,6 +14,18 @@ const addTeamsValidation = Joi.object({
   name: Joi.string().required(),
 });
 
+const addUserInTeamValidation = Joi.object({
+  teamId: Joi.string().length(24).required(),
+  email: Joi.string()
+    .email({ minDomainSegments: 3, tlds: { allow: ["in"] } })
+    .required(),
+});
+
+const removeUserFromTeamValidation = Joi.object({
+  teamId: Joi.string().length(24).required(),
+  member: Joi.string().length(24).required(),
+});
+
 const updateTeamsValidation = Joi.object({
   imageData: Joi.string().optional(),
   name: Joi.string().optional(),
@@ -27,4 +39,6 @@ module.exports = {
   getTeamsByOrganizationIdValidation,
   addTeamsValidation,
   updateTeamsValidation,
+  removeUserFromTeamValidation,
+  addUserInTeamValidation,
 };

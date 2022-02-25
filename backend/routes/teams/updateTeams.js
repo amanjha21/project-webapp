@@ -49,14 +49,13 @@ module.exports = async (req, res) => {
       });
     }
 
-    if (profileImage != team.imageData) {
-      if (profileImage === "0") {
-        team.imageData = "";
-      } else if (profileImage) {
-        const url = await uploader(profileImage);
-        //Save url in database
-        team.imageData = url;
-      }
+    if (profileImage === "0") {
+      team.imageUrl = "";
+      await team.save();
+    } else if (profileImage) {
+      const url = await uploader(profileImage);
+      //Save url in database
+      team.imageUrl = url;
       await team.save();
     }
 
@@ -77,20 +76,52 @@ module.exports = async (req, res) => {
       await team.save();
     }
 
-    if (admin && admin != team.admin) {
-      team.admin = admin;
-      await team.save();
+    //if admin and admin is member of team and admin != team.admin
+    if (admin) {
+      const adminUser = await Schemas.User.findOne({
+        _id: admin,
+      });
+      if (adminUser._id != team.admin && adminUser.teams.includes(teamId)) {
+        team.admin = adminUser._id;
+        if (team.moderator.includes(adminUser._id)) {
+          const index = team.moderator.indexOf(adminUser._id);
+          team.moderator.splice(index, 1);
+        }
+        await team.save();
+      } else {
+        return res.status(400).json({
+          success: false,
+          message: "Admin must be a member of Team..",
+        });
+      }
     }
 
-    if (moderator && !team.moderator.includes(moderator)) {
-      team.moderator.push(moderator);
-      await team.save();
-    } else {
-      if (moderator) {
-        const index = team.moderator.indexOf(moderator);
-        team.moderator.splice(index, 1);
+    //if moderator and moderator is member of team
+    if (moderator) {
+      const modUser = await Schemas.User.findOne({
+        _id: moderator,
+      });
+      if (modUser && modUser.teams.includes(teamId)) {
+        if (
+          !team.moderator.includes(modUser._id) &&
+          modUser._id != team.admin
+        ) {
+          team.moderator.push(modUser._id);
+
+          await team.save();
+        } else {
+          if (team.moderator.includes(modUser._id)) {
+            const index = team.moderator.indexOf(modUser._id);
+            team.moderator.splice(index, 1);
+            await team.save();
+          }
+        }
+      } else {
+        return res.status(400).json({
+          success: false,
+          message: "Moderator must be a member of Team..",
+        });
       }
-      await team.save();
     }
 
     logger({
