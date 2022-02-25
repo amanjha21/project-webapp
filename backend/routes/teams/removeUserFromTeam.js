@@ -2,17 +2,10 @@ const Schemas = require("../../models/index");
 const logger = require("../../helpers/logger");
 
 module.exports = async (req, res) => {
-  const teamId = req.params.id;
+  const teamId = req.body.id;
   const member = req.body.member;
   const userId = req.user._id;
   const ip = req.header("x-forwarded-for") || req.connection.remoteAddress;
-
-  if (teamId.length != 24 || !member) {
-    return res.status(400).json({
-      success: false,
-      message: "Invalid Request",
-    });
-  }
 
   try {
     const team = await Schemas.Team.findOne({
@@ -37,20 +30,26 @@ module.exports = async (req, res) => {
       _id: member,
     });
 
+    if (!teamMember) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid Request",
+      });
+    }
+
     if (
       teamMember &&
       teamMember.teams.includes(teamId) &&
       team.admin != teamMember._id
     ) {
-      const index = teamMember.teams.indexOf(teamId);
-      teamMember.teams.splice(index, 1);
-      await teamMember.save();
-
       if (team.moderator.includes(teamMember._id)) {
         const modIndex = team.moderator.indexOf(teamMember._id);
         team.moderator.splice(modIndex, 1);
         await team.save();
       }
+      const index = teamMember.teams.indexOf(teamId);
+      teamMember.teams.splice(index, 1);
+      await teamMember.save();
     } else {
       return res.status(400).json({
         success: false,
