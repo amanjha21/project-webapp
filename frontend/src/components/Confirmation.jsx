@@ -7,6 +7,7 @@ const Confirmation = ({
   option,
   onConfirm,
   input = {},
+  type = "",
 }) => {
   const getFormData = (e) => {
     const data = new FormData(e.target);
@@ -34,10 +35,25 @@ const Confirmation = ({
                 placeholder={input.placeholder ? input.placeholder : ""}
                 required
               ></textarea>
-              <button className="confirmation-message-button">{option}</button>
+              <button
+                className={
+                  type == "delete"
+                    ? "confirmation-delete-button"
+                    : "confirmation-button"
+                }
+              >
+                {option}
+              </button>
             </form>
           ) : (
-            <button className="confirmation-message-button" onClick={onConfirm}>
+            <button
+              className={
+                type == "delete"
+                  ? "confirmation-delete-button"
+                  : "confirmation-button"
+              }
+              onClick={onConfirm}
+            >
               {option}
             </button>
           )}

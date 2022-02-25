@@ -19,7 +19,7 @@
 .confirmation-message-container div:first-child {
   margin-bottom: 10px;
 }
-.confirmation-message-button {
+.confirmation-delete-button {
   width: 150px;
   height: 50px;
   margin-top: 10px;
@@ -67,4 +67,19 @@
   font-family: var(--default-font-family);
   resize: none;
   margin: 10px 0;
+}
+.confirmation-message-container .confirmation-button {
+  width: 150px;
+  height: 50px;
+  margin-top: 10px;
+  background: var(--sec-color1);
+  border-radius: 50px;
+  padding: 11px;
+  font-size: 20px;
+  color: var(--button-font-color-light);
+  text-decoration: none;
+  font-weight: 500;
+  border: none;
+  box-shadow: none;
+  cursor: pointer;
 }
