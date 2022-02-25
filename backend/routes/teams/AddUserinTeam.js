@@ -2,11 +2,10 @@ const Schemas = require("../../models/index");
 const logger = require("../../helpers/logger");
 
 module.exports = async (req, res) => {
-  const teamId = req.team.teamId;
-  const userId = req.team.userId;
-  const email = req.team.memberEmail;
-  const ip = req.team.ip;
-  const reqType = req.team.reqType;
+  const teamId = req.organization.teamId;
+  const email = req.organization.memberEmail;
+  const ip = req.organization.ip;
+  const reqType = req.organization.reqType;
 
   if (reqType != "add" || teamId.length != 24) {
     return res.status(403).json({
@@ -27,17 +26,10 @@ module.exports = async (req, res) => {
         message: "Team doesn't exist",
       });
     }
-    //Check if Logged In user is admin of team or not
-    if (userId != team.admin) {
-      return res.status(400).json({
-        success: false,
-        message: "Invalid Request",
-      });
-    }
+
     //check if user exist in database from req email
     const user = await Schemas.User.findOne({
       email,
-      organization: team.organization,
     });
 
     if (!user) {
