@@ -15,6 +15,7 @@ const addTeamsValidation = Joi.object({
 });
 
 const addUserInTeamValidation = Joi.object({
+  teamId: Joi.string().length(24).required(),
   email: Joi.string()
     .email({ minDomainSegments: 3, tlds: { allow: ["in"] } })
     .required(),
