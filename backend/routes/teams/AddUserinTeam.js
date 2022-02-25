@@ -1,17 +1,15 @@
 const Schemas = require("../../models/index");
-const jwt = require("jsonwebtoken");
 const logger = require("../../helpers/logger");
-const mailer = require("../../helpers/mailer");
 
 module.exports = async (req, res) => {
-  const teamId = req.params.teamId;
-  const email = req.body.email;
-  const userId = req.user._id;
-  const ip = req.header("x-forwarded-for") || req.connection.remoteAddress;
-  const fullUrl = req.protocol + "://" + req.get("host") + req.originalUrl;
+  const teamId = req.team.teamId;
+  const userId = req.team.userId;
+  const email = req.team.memberEmail;
+  const ip = req.team.ip;
+  const reqType = req.team.reqType;
 
-  if (teamId.length != 24 || !email) {
-    return res.status(404).json({
+  if (reqType != "add" || teamId.length != 24) {
+    return res.status(403).json({
       success: false,
       message: "Invalid Request",
     });
@@ -29,7 +27,6 @@ module.exports = async (req, res) => {
         message: "Team doesn't exist",
       });
     }
-
     //Check if Logged In user is admin of team or not
     if (userId != team.admin) {
       return res.status(400).json({
@@ -37,7 +34,6 @@ module.exports = async (req, res) => {
         message: "Invalid Request",
       });
     }
-
     //check if user exist in database from req email
     const user = await Schemas.User.findOne({
       email,
@@ -50,35 +46,27 @@ module.exports = async (req, res) => {
         message: "user doesn't exist",
       });
     }
-    //if user exists create a token
-    const addUserToken = jwt.sign(
-      {
-        _id: user._id,
-        email: user.email,
-      },
-      process.env.APPROVE_TOKEN_SECRET,
-      { expiresIn: process.env.APPROVE_TOKEN_EXPIRE_TIME }
-    );
 
-    //create a link to send Add request to user
-    const addUserLink = `${fullUrl}/${addUserToken}`;
+    //check if user is already a memeber of team
+    if (user.teams.includes(teamId)) {
+      return res.status(400).json({
+        success: false,
+        message: "User is already a member of Team",
+      });
+    }
 
-    //send mail with Add request link
-    await mailer({
-      email: user.email,
-      reason: `Request to Add in team (${team.name})`,
-      link: addUserLink,
-    });
+    user.teams.push(team);
+    await user.save();
 
     logger({
       userId: team.admin,
-      message: `sent Add request link to User:${user} from Team ( ${team.name}) with TeamId: ${teamId} By UserId : ${team.admin}.`,
+      message: `User:${user._id} added to Team ( ${team.name}) with TeamId: ${teamId} By UserId : ${team.admin} Successfully.`,
       ip,
     });
 
-    res.status(200).json({
+    res.status(201).json({
       success: true,
-      message: "Sent Add Request to team Successfully",
+      message: "User added to team successfully",
     });
   } catch (err) {
     res.status(404).json({
