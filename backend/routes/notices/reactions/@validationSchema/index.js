@@ -12,7 +12,7 @@ const deleteCommentValidation = Joi.object({
 
 const updateCommentValidation = Joi.object({
   noticeId: Joi.string().length(24).required(),
-  type: Joi.string().required(),
+  type: Joi.string().valid("like", "dislike").required(),
 });
 
 module.exports = {
