@@ -15,12 +15,13 @@ module.exports = async (req, res) => {
     });
   }
   //checking if all the params exist
-  if (!name) {
+  if (!name || !imageData || !description) {
     return res.status(400).json({
       success: false,
       message: "Nothing to update!!",
     });
   }
+
   try {
     const user = await Schemas.User.findOne({
       _id: userId,
@@ -43,30 +44,27 @@ module.exports = async (req, res) => {
       user.description = description;
     }
 
-    // if imageData is passed from the body then we will change the value of the user image_link in the database
-    if (imageData && imageData != user.image_link) {
-      let imageUrl = await uploader(imageData);
-      user.image_link = imageUrl;
+    // if imageData is passed from the body then we will change the value of the user imageUrl in the database
+
+    if (imageData === "0") {
+      user.imageUrl = "";
+    } else if (imageData) {
+      const url = await uploader(imageData);
+      //Save url in database
+      user.imageUrl = url;
     }
+
     await user.save();
 
-    // checkin if the changes were made successfully
-    if (name == user.name || imageData == user.image_link) {
-      res.status(200).json({
-        success: true,
-        message: "User updated",
-      });
-      logger({
-        userId: user._id,
-        message: `User: ${user._id} updated successfully by user with userId: ${user._id}`,
-        ip,
-      });
-    } else {
-      res.status(400).json({
-        success: false,
-        message: "Failed to Update!!",
-      });
-    }
+    res.status(200).json({
+      success: true,
+      message: "User updated",
+    });
+    logger({
+      userId: user._id,
+      message: `User: ${user._id} updated successfully by user with userId: ${user._id}`,
+      ip,
+    });
   } catch (err) {
     res.status(404).json({
       success: false,
