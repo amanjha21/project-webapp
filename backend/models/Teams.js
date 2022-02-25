@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const teamSchema = new mongoose.Schema(
   {
-    imageData: String,
+    imageUrl: String,
     name: String,
     description: String,
     organization: {
