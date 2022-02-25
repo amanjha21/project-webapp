@@ -16,9 +16,14 @@ const updateCommentValidation = Joi.object({
 
   postId: Joi.string().length(24).required(),
 });
-
+const getCommentsValidation = Joi.object({
+  id: Joi.string()
+    .regex(/^[0-9a-fA-F]{24}$/)
+    .required(),
+});
 module.exports = {
   addCommentValidation,
   deleteCommentValidation,
   updateCommentValidation,
+  getCommentsValidation,
 };

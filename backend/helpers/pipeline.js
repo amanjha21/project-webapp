@@ -5,7 +5,8 @@ const defaultNoOfPosts = parseInt(process.env.DEFAULT_NO_OF_POSTS);
 const defaultNoOfComments = parseInt(process.env.DEFAULT_NO_OF_COMMENTS);
 const postById = (postId, userId) => {
   if (userId) {
-    const pipeline = [{
+    const pipeline = [
+      {
         $match: {
           _id: new ObjectId(postId),
         },
@@ -21,7 +22,7 @@ const postById = (postId, userId) => {
       {
         $unwind: {
           path: "$reaction",
-          preserveNullAndEmptyArrays: true
+          preserveNullAndEmptyArrays: true,
         },
       },
       {
@@ -49,7 +50,8 @@ const postById = (postId, userId) => {
           },
           reactions: {
             $push: {
-              $cond: [{
+              $cond: [
+                {
                   $ne: ["$reaction.type", "comment"],
                 },
                 {
@@ -62,8 +64,10 @@ const postById = (postId, userId) => {
           },
           comments: {
             $push: {
-              $cond: [{
-                  $and: [{
+              $cond: [
+                {
+                  $and: [
+                    {
                       $ne: ["$reaction.user", new ObjectId(userId)],
                     },
                     {
@@ -82,8 +86,10 @@ const postById = (postId, userId) => {
           },
           user_comments: {
             $push: {
-              $cond: [{
-                  $and: [{
+              $cond: [
+                {
+                  $and: [
+                    {
                       $eq: ["$reaction.user", new ObjectId(userId)],
                     },
                     {
@@ -102,8 +108,10 @@ const postById = (postId, userId) => {
           },
           reaction_by_user: {
             $push: {
-              $cond: [{
-                  $and: [{
+              $cond: [
+                {
+                  $and: [
+                    {
                       $eq: ["$reaction.user", new ObjectId(userId)],
                     },
                     {
@@ -132,7 +140,8 @@ const postById = (postId, userId) => {
           reactions: 1,
           reaction_by_user: 1,
           comments: {
-            $slice: [{
+            $slice: [
+              {
                 $concatArrays: ["$user_comments", "$comments"],
               },
               0,
@@ -144,7 +153,8 @@ const postById = (postId, userId) => {
     ];
     return pipeline;
   } else {
-    const pipeline = [{
+    const pipeline = [
+      {
         $match: {
           _id: new ObjectId(postId),
         },
@@ -160,7 +170,7 @@ const postById = (postId, userId) => {
       {
         $unwind: {
           path: "$reaction",
-          preserveNullAndEmptyArrays: true
+          preserveNullAndEmptyArrays: true,
         },
       },
       {
@@ -188,7 +198,8 @@ const postById = (postId, userId) => {
           },
           reactions: {
             $push: {
-              $cond: [{
+              $cond: [
+                {
                   $ne: ["$reaction.type", "comment"],
                 },
                 {
@@ -201,7 +212,8 @@ const postById = (postId, userId) => {
           },
           comments: {
             $push: {
-              $cond: [{
+              $cond: [
+                {
                   $eq: ["$reaction.type", "comment"],
                 },
                 {
@@ -237,8 +249,10 @@ const posts = (userId, pageInput, number) => {
   let page = pageInput || 1;
   let noOfPosts = number || defaultNoOfPosts;
   page--;
+  let pipeline;
   if (userId) {
-    const pipeline = [{
+    pipeline = [
+      {
         $sort: {
           createdAt: -1,
         },
@@ -260,7 +274,7 @@ const posts = (userId, pageInput, number) => {
       {
         $unwind: {
           path: "$reaction",
-          preserveNullAndEmptyArrays: true
+          preserveNullAndEmptyArrays: true,
         },
       },
       {
@@ -288,7 +302,8 @@ const posts = (userId, pageInput, number) => {
           },
           reactions: {
             $push: {
-              $cond: [{
+              $cond: [
+                {
                   $ne: ["$reaction.type", "comment"],
                 },
                 {
@@ -301,8 +316,10 @@ const posts = (userId, pageInput, number) => {
           },
           comments: {
             $push: {
-              $cond: [{
-                  $and: [{
+              $cond: [
+                {
+                  $and: [
+                    {
                       $ne: ["$reaction.user", new ObjectId(userId)],
                     },
                     {
@@ -321,8 +338,10 @@ const posts = (userId, pageInput, number) => {
           },
           user_comments: {
             $push: {
-              $cond: [{
-                  $and: [{
+              $cond: [
+                {
+                  $and: [
+                    {
                       $eq: ["$reaction.user", new ObjectId(userId)],
                     },
                     {
@@ -341,8 +360,10 @@ const posts = (userId, pageInput, number) => {
           },
           reaction_by_user: {
             $push: {
-              $cond: [{
-                  $and: [{
+              $cond: [
+                {
+                  $and: [
+                    {
                       $eq: ["$reaction.user", new ObjectId(userId)],
                     },
                     {
@@ -371,7 +392,8 @@ const posts = (userId, pageInput, number) => {
           reactions: 1,
           reaction_by_user: 1,
           comments: {
-            $slice: [{
+            $slice: [
+              {
                 $concatArrays: ["$user_comments", "$comments"],
               },
               0,
@@ -386,9 +408,9 @@ const posts = (userId, pageInput, number) => {
         },
       },
     ];
-    return pipeline;
   } else {
-    const pipeline = [{
+    pipeline = [
+      {
         $sort: {
           createdAt: -1,
         },
@@ -410,7 +432,7 @@ const posts = (userId, pageInput, number) => {
       {
         $unwind: {
           path: "$reaction",
-          preserveNullAndEmptyArrays: true
+          preserveNullAndEmptyArrays: true,
         },
       },
       {
@@ -438,7 +460,8 @@ const posts = (userId, pageInput, number) => {
           },
           reactions: {
             $push: {
-              $cond: [{
+              $cond: [
+                {
                   $ne: ["$reaction.type", "comment"],
                 },
                 {
@@ -451,7 +474,8 @@ const posts = (userId, pageInput, number) => {
           },
           comments: {
             $push: {
-              $cond: [{
+              $cond: [
+                {
                   $eq: ["$reaction.type", "comment"],
                 },
                 {
@@ -485,15 +509,16 @@ const posts = (userId, pageInput, number) => {
         },
       },
     ];
-    return pipeline;
   }
+  return pipeline;
 };
 const postsByUserId = (userId, currentUserId, pageInput, number) => {
   let page = pageInput || 1;
   let noOfPosts = number || defaultNoOfPosts;
   page--;
   if (currentUserId) {
-    const pipeline = [{
+    const pipeline = [
+      {
         $match: {
           user: new ObjectId(userId),
         },
@@ -520,7 +545,7 @@ const postsByUserId = (userId, currentUserId, pageInput, number) => {
       {
         $unwind: {
           path: "$reaction",
-          preserveNullAndEmptyArrays: true
+          preserveNullAndEmptyArrays: true,
         },
       },
       {
@@ -548,7 +573,8 @@ const postsByUserId = (userId, currentUserId, pageInput, number) => {
           },
           reactions: {
             $push: {
-              $cond: [{
+              $cond: [
+                {
                   $ne: ["$reaction.type", "comment"],
                 },
                 {
@@ -561,8 +587,10 @@ const postsByUserId = (userId, currentUserId, pageInput, number) => {
           },
           comments: {
             $push: {
-              $cond: [{
-                  $and: [{
+              $cond: [
+                {
+                  $and: [
+                    {
                       $ne: ["$reaction.user", new ObjectId(currentUserId)],
                     },
                     {
@@ -581,8 +609,10 @@ const postsByUserId = (userId, currentUserId, pageInput, number) => {
           },
           user_comments: {
             $push: {
-              $cond: [{
-                  $and: [{
+              $cond: [
+                {
+                  $and: [
+                    {
                       $eq: ["$reaction.user", new ObjectId(currentUserId)],
                     },
                     {
@@ -601,8 +631,10 @@ const postsByUserId = (userId, currentUserId, pageInput, number) => {
           },
           reaction_by_user: {
             $push: {
-              $cond: [{
-                  $and: [{
+              $cond: [
+                {
+                  $and: [
+                    {
                       $eq: ["$reaction.user", new ObjectId(currentUserId)],
                     },
                     {
@@ -631,7 +663,8 @@ const postsByUserId = (userId, currentUserId, pageInput, number) => {
           reactions: 1,
           reaction_by_user: 1,
           comments: {
-            $slice: [{
+            $slice: [
+              {
                 $concatArrays: ["$user_comments", "$comments"],
               },
               0,
@@ -648,7 +681,8 @@ const postsByUserId = (userId, currentUserId, pageInput, number) => {
     ];
     return pipeline;
   } else {
-    const pipeline = [{
+    const pipeline = [
+      {
         $match: {
           user: new ObjectId(userId),
         },
@@ -675,7 +709,7 @@ const postsByUserId = (userId, currentUserId, pageInput, number) => {
       {
         $unwind: {
           path: "$reaction",
-          preserveNullAndEmptyArrays: true
+          preserveNullAndEmptyArrays: true,
         },
       },
       {
@@ -703,7 +737,8 @@ const postsByUserId = (userId, currentUserId, pageInput, number) => {
           },
           reactions: {
             $push: {
-              $cond: [{
+              $cond: [
+                {
                   $ne: ["$reaction.type", "comment"],
                 },
                 {
@@ -716,7 +751,8 @@ const postsByUserId = (userId, currentUserId, pageInput, number) => {
           },
           comments: {
             $push: {
-              $cond: [{
+              $cond: [
+                {
                   $eq: ["$reaction.type", "comment"],
                 },
                 {
@@ -753,8 +789,283 @@ const postsByUserId = (userId, currentUserId, pageInput, number) => {
     return pipeline;
   }
 };
+const commentsByPostId = (
+  postId,
+  userId = "000000000000000000000000",
+  pageInput,
+  number
+) => {
+  let page = pageInput || 1;
+  let noOfPosts = number || defaultNoOfComments;
+  page--;
+  let pipeline = [
+    {
+      $facet: {
+        comment: [
+          {
+            $match: {
+              $and: [
+                { type: "comment" },
+                {
+                  post: new ObjectId(postId),
+                },
+                {
+                  user: {
+                    $ne: new ObjectId(userId),
+                  },
+                },
+              ],
+            },
+          },
+          {
+            $sort: {
+              createdAt: -1,
+            },
+          },
+          {
+            $skip: page * noOfPosts,
+          },
+          {
+            $limit: noOfPosts,
+          },
+          {
+            $lookup: {
+              from: "users",
+              localField: "user",
+              foreignField: "_id",
+              as: "user",
+            },
+          },
+          {
+            $project: {
+              _id: 1,
+              comment: 1,
+              post: 1,
+              user: {
+                $arrayElemAt: ["$user", 0],
+              },
+              createdAt: 1,
+            },
+          },
+          {
+            $project: {
+              _id: 1,
+              comment: 1,
+              post: 1,
+              "user._id": 1,
+              "user.name": 1,
+              "user.imgUrl": 1,
+              createdAt: 1,
+            },
+          },
+        ],
+        user_comment: [
+          {
+            $match: {
+              $and: [
+                { type: "comment" },
+                {
+                  post: new ObjectId(postId),
+                },
+                {
+                  user: {
+                    $eq: new ObjectId(userId),
+                  },
+                },
+              ],
+            },
+          },
+          {
+            $sort: {
+              createdAt: -1,
+            },
+          },
+          {
+            $skip: page * noOfPosts,
+          },
+          {
+            $limit: noOfPosts,
+          },
+          {
+            $lookup: {
+              from: "users",
+              localField: "user",
+              foreignField: "_id",
+              as: "user",
+            },
+          },
+          {
+            $project: {
+              _id: 1,
+              comment: 1,
+              post: 1,
+              user: {
+                $arrayElemAt: ["$user", 0],
+              },
+              createdAt: 1,
+            },
+          },
+          {
+            $project: {
+              _id: 1,
+              comment: 1,
+              post: 1,
+              "user._id": 1,
+              "user.name": 1,
+              "user.imgUrl": 1,
+              createdAt: 1,
+            },
+          },
+        ],
+      },
+    },
+  ];
+  return pipeline;
+};
+const reactionsByPostId = (
+  postId,
+  userId = "000000000000000000000000",
+  pageInput,
+  number
+) => {
+  let page = pageInput || 1;
+  let noOfPosts = number || defaultNoOfComments;
+  page--;
+  let pipeline = [
+    {
+      $facet: {
+        reactions: [
+          {
+            $match: {
+              $and: [
+                {
+                  type: {
+                    $ne: "comment",
+                  },
+                },
+                {
+                  post: new ObjectId(postId),
+                },
+                {
+                  user: {
+                    $ne: new ObjectId(userId),
+                  },
+                },
+              ],
+            },
+          },
+          {
+            $sort: {
+              createdAt: -1,
+            },
+          },
+          {
+            $skip: page * noOfPosts,
+          },
+          {
+            $limit: noOfPosts,
+          },
+          {
+            $lookup: {
+              from: "users",
+              localField: "user",
+              foreignField: "_id",
+              as: "user",
+            },
+          },
+          {
+            $project: {
+              _id: 1,
+              type: 1,
+              post: 1,
+              user: {
+                $arrayElemAt: ["$user", 0],
+              },
+              createdAt: 1,
+            },
+          },
+          {
+            $project: {
+              _id: 1,
+              type: 1,
+              post: 1,
+              "user._id": 1,
+              "user.name": 1,
+              "user.imgUrl": 1,
+              createdAt: 1,
+            },
+          },
+        ],
+        user_reaction: [
+          {
+            $match: {
+              $and: [
+                {
+                  type: {
+                    $ne: "comment",
+                  },
+                },
+                {
+                  post: new ObjectId(postId),
+                },
+                {
+                  user: {
+                    $eq: new ObjectId(userId),
+                  },
+                },
+              ],
+            },
+          },
+          {
+            $sort: {
+              createdAt: -1,
+            },
+          },
+          {
+            $skip: page * noOfPosts,
+          },
+          {
+            $limit: noOfPosts,
+          },
+          {
+            $lookup: {
+              from: "users",
+              localField: "user",
+              foreignField: "_id",
+              as: "user",
+            },
+          },
+          {
+            $project: {
+              _id: 1,
+              type: 1,
+              post: 1,
+              user: {
+                $arrayElemAt: ["$user", 0],
+              },
+              createdAt: 1,
+            },
+          },
+          {
+            $project: {
+              _id: 1,
+              type: 1,
+              post: 1,
+              "user._id": 1,
+              "user.name": 1,
+              "user.imgUrl": 1,
+              createdAt: 1,
+            },
+          },
+        ],
+      },
+    },
+  ];
+  return pipeline;
+};
 const organizationDetails = (organizationId) => {
-  const pipeline = [{
+  const pipeline = [
+    {
       $match: {
         _id: new ObjectId(organizationId),
       },
@@ -896,78 +1207,88 @@ const organizationDetails = (organizationId) => {
   return pipeline;
 };
 const userDetails = (userId) => {
-  const pipeline = [{
-    '$match': {
-      '_id': new ObjectId(userId)
-    }
-  }, {
-    '$lookup': {
-      'from': 'reactions',
-      'localField': '_id',
-      'foreignField': 'user',
-      'as': 'reactions'
-    }
-  }, {
-    '$lookup': {
-      'from': 'posts',
-      'localField': '_id',
-      'foreignField': 'user',
-      'as': 'posts'
-    }
-  }, {
-    '$unwind': {
-      'path': '$Post',
-      'preserveNullAndEmptyArrays': true
-    }
-  }, {
-    '$project': {
-      '_id': 1,
-      'name': 1,
-      'email': 1,
-      'organization': 1,
-      'teams': 1,
-      'posts': '$posts._id',
-      'reactions': 1
-    }
-  }, {
-    '$unwind': {
-      'path': '$reactions',
-      'preserveNullAndEmptyArrays': true
-    }
-  }, {
-    '$project': {
-      '_id': 1,
-      'name': 1,
-      'email': 1,
-      'organization': 1,
-      'posts': 1,
-      'reactions': '$reactions._id'
-    }
-  }, {
-    '$group': {
-      '_id': '$_id',
-      'name': {
-        '$first': '$name'
+  const pipeline = [
+    {
+      $match: {
+        _id: new ObjectId(userId),
       },
-      'email': {
-        '$first': '$email'
+    },
+    {
+      $lookup: {
+        from: "reactions",
+        localField: "_id",
+        foreignField: "user",
+        as: "reactions",
       },
-      'organization': {
-        '$first': '$organization'
+    },
+    {
+      $lookup: {
+        from: "posts",
+        localField: "_id",
+        foreignField: "user",
+        as: "posts",
       },
-      'Posts': {
-        '$first': '$posts'
+    },
+    {
+      $unwind: {
+        path: "$Post",
+        preserveNullAndEmptyArrays: true,
       },
-      'reactions': {
-        '$addToSet': '$reactions'
-      }
-    }
-  }]
+    },
+    {
+      $project: {
+        _id: 1,
+        name: 1,
+        email: 1,
+        organization: 1,
+        teams: 1,
+        posts: "$posts._id",
+        reactions: 1,
+      },
+    },
+    {
+      $unwind: {
+        path: "$reactions",
+        preserveNullAndEmptyArrays: true,
+      },
+    },
+    {
+      $project: {
+        _id: 1,
+        name: 1,
+        email: 1,
+        organization: 1,
+        posts: 1,
+        reactions: "$reactions._id",
+      },
+    },
+    {
+      $group: {
+        _id: "$_id",
+        name: {
+          $first: "$name",
+        },
+        email: {
+          $first: "$email",
+        },
+        organization: {
+          $first: "$organization",
+        },
+        Posts: {
+          $first: "$posts",
+        },
+        reactions: {
+          $addToSet: "$reactions",
+        },
+      },
+    },
+  ];
   return pipeline;
-}
+};
 const noticeById = (noticeId, userId) => {
   if (userId) {
-    const pipeline = [{
+    const pipeline = [
+      {
         $match: {
           _id: new ObjectId(noticeId),
         },
@@ -1014,7 +1335,8 @@ const noticeById = (noticeId, userId) => {
           },
           reactions: {
             $push: {
-              $cond: [{
+              $cond: [
+                {
                   $ne: ["$reaction.type", "comment"],
                 },
                 {
@@ -1027,8 +1349,10 @@ const noticeById = (noticeId, userId) => {
           },
           comments: {
             $push: {
-              $cond: [{
-                  $and: [{
+              $cond: [
+                {
+                  $and: [
+                    {
                       $ne: ["$reaction.user", new ObjectId(userId)],
                     },
                     {
@@ -1047,8 +1371,10 @@ const noticeById = (noticeId, userId) => {
           },
           user_comments: {
             $push: {
-              $cond: [{
-                  $and: [{
+              $cond: [
+                {
+                  $and: [
+                    {
                       $eq: ["$reaction.user", new ObjectId(userId)],
                     },
                     {
@@ -1067,8 +1393,10 @@ const noticeById = (noticeId, userId) => {
           },
           reaction_by_user: {
             $push: {
-              $cond: [{
-                  $and: [{
+              $cond: [
+                {
+                  $and: [
+                    {
                       $eq: ["$reaction.user", new ObjectId(userId)],
                     },
                     {
@@ -1098,7 +1426,8 @@ const noticeById = (noticeId, userId) => {
           reactions: 1,
           reaction_by_user: 1,
           comments: {
-            $slice: [{
+            $slice: [
+              {
                 $concatArrays: ["$user_comments", "$comments"],
               },
               0,
@@ -1110,7 +1439,8 @@ const noticeById = (noticeId, userId) => {
     ];
     return pipeline;
   } else {
-    const pipeline = [{
+    const pipeline = [
+      {
         $match: {
           _id: new ObjectId(noticeId),
         },
@@ -1157,7 +1487,8 @@ const noticeById = (noticeId, userId) => {
           },
           reactions: {
             $push: {
-              $cond: [{
+              $cond: [
+                {
                   $ne: ["$reaction.type", "comment"],
                 },
                 {
@@ -1170,7 +1501,8 @@ const noticeById = (noticeId, userId) => {
           },
           comments: {
             $push: {
-              $cond: [{
+              $cond: [
+                {
                   $eq: ["$reaction.type", "comment"],
                 },
                 {
@@ -1208,7 +1540,8 @@ const notices = (userId, pageInput, number) => {
   let noOfPosts = number || defaultNoOfPosts;
   page--;
   if (userId) {
-    const pipeline = [{
+    const pipeline = [
+      {
         $sort: {
           createdAt: -1,
         },
@@ -1230,7 +1563,7 @@ const notices = (userId, pageInput, number) => {
       {
         $unwind: {
           path: "$reaction",
-          preserveNullAndEmptyArrays: true
+          preserveNullAndEmptyArrays: true,
         },
       },
       {
@@ -1261,7 +1594,8 @@ const notices = (userId, pageInput, number) => {
           },
           reactions: {
             $push: {
-              $cond: [{
+              $cond: [
+                {
                   $ne: ["$reaction.type", "comment"],
                 },
                 {
@@ -1274,8 +1608,10 @@ const notices = (userId, pageInput, number) => {
           },
           comments: {
             $push: {
-              $cond: [{
-                  $and: [{
+              $cond: [
+                {
+                  $and: [
+                    {
                       $ne: ["$reaction.user", new ObjectId(userId)],
                     },
                     {
@@ -1294,8 +1630,10 @@ const notices = (userId, pageInput, number) => {
           },
           user_comments: {
             $push: {
-              $cond: [{
-                  $and: [{
+              $cond: [
+                {
+                  $and: [
+                    {
                       $eq: ["$reaction.user", new ObjectId(userId)],
                     },
                     {
@@ -1314,8 +1652,10 @@ const notices = (userId, pageInput, number) => {
           },
           reaction_by_user: {
             $push: {
-              $cond: [{
-                  $and: [{
+              $cond: [
+                {
+                  $and: [
+                    {
                       $eq: ["$reaction.user", new ObjectId(userId)],
                     },
                     {
@@ -1345,7 +1685,8 @@ const notices = (userId, pageInput, number) => {
           reactions: 1,
           reaction_by_user: 1,
           comments: {
-            $slice: [{
+            $slice: [
+              {
                 $concatArrays: ["$user_comments", "$comments"],
               },
               0,
@@ -1362,7 +1703,8 @@ const notices = (userId, pageInput, number) => {
     ];
     return pipeline;
   } else {
-    const pipeline = [{
+    const pipeline = [
+      {
         $sort: {
           createdAt: -1,
         },
@@ -1384,7 +1726,7 @@ const notices = (userId, pageInput, number) => {
       {
         $unwind: {
           path: "$reaction",
-          preserveNullAndEmptyArrays: true
+          preserveNullAndEmptyArrays: true,
         },
       },
       {
@@ -1415,7 +1757,8 @@ const notices = (userId, pageInput, number) => {
           },
           reactions: {
             $push: {
-              $cond: [{
+              $cond: [
+                {
                   $ne: ["$reaction.type", "comment"],
                 },
                 {
@@ -1428,7 +1771,8 @@ const notices = (userId, pageInput, number) => {
           },
           comments: {
             $push: {
-              $cond: [{
+              $cond: [
+                {
                   $eq: ["$reaction.type", "comment"],
                 },
                 {
@@ -1471,7 +1815,8 @@ const noticesByUserId = (userId, currentUserId, pageInput, number) => {
   let noOfPosts = number || defaultNoOfPosts;
   page--;
   if (currentUserId) {
-    const pipeline = [{
+    const pipeline = [
+      {
         $match: {
           user: new ObjectId(userId),
         },
@@ -1498,7 +1843,7 @@ const noticesByUserId = (userId, currentUserId, pageInput, number) => {
       {
         $unwind: {
           path: "$reaction",
-          preserveNullAndEmptyArrays: true
+          preserveNullAndEmptyArrays: true,
         },
       },
       {
@@ -1529,7 +1874,8 @@ const noticesByUserId = (userId, currentUserId, pageInput, number) => {
           },
           reactions: {
             $push: {
-              $cond: [{
+              $cond: [
+                {
                   $ne: ["$reaction.type", "comment"],
                 },
                 {
@@ -1542,8 +1888,10 @@ const noticesByUserId = (userId, currentUserId, pageInput, number) => {
           },
           comments: {
             $push: {
-              $cond: [{
-                  $and: [{
+              $cond: [
+                {
+                  $and: [
+                    {
                       $ne: ["$reaction.user", new ObjectId(currentUserId)],
                     },
                     {
@@ -1562,8 +1910,10 @@ const noticesByUserId = (userId, currentUserId, pageInput, number) => {
           },
           user_comments: {
             $push: {
-              $cond: [{
-                  $and: [{
+              $cond: [
+                {
+                  $and: [
+                    {
                       $eq: ["$reaction.user", new ObjectId(currentUserId)],
                     },
                     {
@@ -1582,8 +1932,10 @@ const noticesByUserId = (userId, currentUserId, pageInput, number) => {
           },
           reaction_by_user: {
             $push: {
-              $cond: [{
-                  $and: [{
+              $cond: [
+                {
+                  $and: [
+                    {
                       $eq: ["$reaction.user", new ObjectId(currentUserId)],
                     },
                     {
@@ -1613,7 +1965,8 @@ const noticesByUserId = (userId, currentUserId, pageInput, number) => {
           reactions: 1,
           reaction_by_user: 1,
           comments: {
-            $slice: [{
+            $slice: [
+              {
                 $concatArrays: ["$user_comments", "$comments"],
               },
               0,
@@ -1630,7 +1983,8 @@ const noticesByUserId = (userId, currentUserId, pageInput, number) => {
     ];
     return pipeline;
   } else {
-    const pipeline = [{
+    const pipeline = [
+      {
         $match: {
           user: new ObjectId(userId),
         },
@@ -1657,7 +2011,7 @@ const noticesByUserId = (userId, currentUserId, pageInput, number) => {
       {
         $unwind: {
           path: "$reaction",
-          preserveNullAndEmptyArrays: true
+          preserveNullAndEmptyArrays: true,
         },
       },
       {
@@ -1688,7 +2042,8 @@ const noticesByUserId = (userId, currentUserId, pageInput, number) => {
           },
           reactions: {
             $push: {
-              $cond: [{
+              $cond: [
+                {
                   $ne: ["$reaction.type", "comment"],
                 },
                 {
@@ -1701,7 +2056,8 @@ const noticesByUserId = (userId, currentUserId, pageInput, number) => {
           },
           comments: {
             $push: {
-              $cond: [{
+              $cond: [
+                {
                   $eq: ["$reaction.type", "comment"],
                 },
                 {
@@ -1744,7 +2100,8 @@ const noticesByTeamId = (teamId, currentUserId, pageInput, number) => {
   let noOfPosts = number || defaultNoOfPosts;
   page--;
   if (currentUserId) {
-    const pipeline = [{
+    const pipeline = [
+      {
         $match: {
           team: new ObjectId(teamId),
         },
@@ -1771,7 +2128,7 @@ const noticesByTeamId = (teamId, currentUserId, pageInput, number) => {
       {
         $unwind: {
           path: "$reaction",
-          preserveNullAndEmptyArrays: true
+          preserveNullAndEmptyArrays: true,
         },
       },
       {
@@ -1802,7 +2159,8 @@ const noticesByTeamId = (teamId, currentUserId, pageInput, number) => {
           },
           reactions: {
             $push: {
-              $cond: [{
+              $cond: [
+                {
                   $ne: ["$reaction.type", "comment"],
                 },
                 {
@@ -1815,8 +2173,10 @@ const noticesByTeamId = (teamId, currentUserId, pageInput, number) => {
           },
           comments: {
             $push: {
-              $cond: [{
-                  $and: [{
+              $cond: [
+                {
+                  $and: [
+                    {
                       $ne: ["$reaction.user", new ObjectId(currentUserId)],
                     },
                     {
@@ -1835,8 +2195,10 @@ const noticesByTeamId = (teamId, currentUserId, pageInput, number) => {
           },
           user_comments: {
             $push: {
-              $cond: [{
-                  $and: [{
+              $cond: [
+                {
+                  $and: [
+                    {
                       $eq: ["$reaction.user", new ObjectId(currentUserId)],
                     },
                     {
@@ -1855,8 +2217,10 @@ const noticesByTeamId = (teamId, currentUserId, pageInput, number) => {
           },
           reaction_by_user: {
             $push: {
-              $cond: [{
-                  $and: [{
+              $cond: [
+                {
+                  $and: [
+                    {
                       $eq: ["$reaction.user", new ObjectId(currentUserId)],
                     },
                     {
@@ -1886,7 +2250,8 @@ const noticesByTeamId = (teamId, currentUserId, pageInput, number) => {
           reactions: 1,
           reaction_by_user: 1,
           comments: {
-            $slice: [{
+            $slice: [
+              {
                 $concatArrays: ["$user_comments", "$comments"],
               },
               0,
@@ -1903,7 +2268,8 @@ const noticesByTeamId = (teamId, currentUserId, pageInput, number) => {
     ];
     return pipeline;
   } else {
-    const pipeline = [{
+    const pipeline = [
+      {
         $match: {
           team: new ObjectId(teamId),
         },
@@ -1930,7 +2296,7 @@ const noticesByTeamId = (teamId, currentUserId, pageInput, number) => {
       {
         $unwind: {
           path: "$reaction",
-          preserveNullAndEmptyArrays: true
+          preserveNullAndEmptyArrays: true,
         },
       },
       {
@@ -1961,7 +2327,8 @@ const noticesByTeamId = (teamId, currentUserId, pageInput, number) => {
           },
           reactions: {
             $push: {
-              $cond: [{
+              $cond: [
+                {
                   $ne: ["$reaction.type", "comment"],
                 },
                 {
@@ -1974,7 +2341,8 @@ const noticesByTeamId = (teamId, currentUserId, pageInput, number) => {
           },
           comments: {
             $push: {
-              $cond: [{
+              $cond: [
+                {
                   $eq: ["$reaction.type", "comment"],
                 },
                 {
@@ -2022,4 +2390,6 @@ module.exports = {
   noticesByUserId,
   noticesByTeamId,
   userDetails,
+  commentsByPostId,
+  reactionsByPostId,
 };
