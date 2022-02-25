@@ -10,7 +10,6 @@ const validationSchema = require("./@validationSchema");
 const verifyToken = require("../../middlewares/verifyToken");
 const removeUserFromTeam = require("./removeUserFromTeam");
 const AddUserinTeamRequest = require("./AddUserinTeamRequest");
-const AddUserinTeamRequest = require("./AddUserinTeamRequest");
 
 //Get Team By Id
 router.get("/:id", getTeamById);
