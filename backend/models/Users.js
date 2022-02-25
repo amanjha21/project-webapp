@@ -3,6 +3,7 @@ const userSchema = new mongoose.Schema({
   name: String,
   email: String,
   image_link: [String],
+  description: String,
   organization: {
     type: mongoose.SchemaTypes.ObjectId,
     ref: "Organizations",
