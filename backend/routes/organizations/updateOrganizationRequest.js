@@ -1,6 +1,8 @@
 const Schemas = require("../../models/index");
 const jwt = require("jsonwebtoken");
 const mailer = require("../../helpers/mailer");
+require("dotenv").config();
+
 module.exports = async (req, res) => {
   const organizationId = req.params.id;
   const name = req.body.name;
