@@ -22,6 +22,7 @@ const addUserInTeamValidation = Joi.object({
 });
 
 const removeUserFromTeamValidation = Joi.object({
+  teamId: Joi.string().length(24).required(),
   member: Joi.string().length(24).required(),
 });
 
