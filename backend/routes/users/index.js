@@ -16,7 +16,7 @@ const updateUserPassword = require("./updateUserPassword");
 const verifyToken = require("../../middlewares/verifyToken");
 const addUserVerifyEmail = require("./addUserVerifyEmail");
 const verifyApproveToken = require("../../middlewares/verifyApproveToken");
-
+const leaveTeam = require("./leaveTeam");
 // get user route
 router.get("/:id", getUserById);
 
@@ -39,6 +39,13 @@ router.post(
   validation(validationSchema.updateUserValidation),
   verifyToken,
   updateUser
+);
+//leave team route
+router.post(
+  "/leaveTeam/:token",
+  validation(validationSchema.leaveTeamValidation),
+  verifyToken,
+  leaveTeam
 );
 // delete user route
 router.delete("/", verifyToken, deleteUser);

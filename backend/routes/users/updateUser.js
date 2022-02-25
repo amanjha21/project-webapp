@@ -1,10 +1,11 @@
 const Schemas = require("../../models/index");
 const logger = require("../../helpers/logger");
+const uploader = require("../../helpers/uploader");
 module.exports = async (req, res) => {
   const ip = req.header("x-forwarded-for") || req.connection.remoteAddress;
   const userId = req.params.id;
   const name = req.body.name;
-
+  const imageData = req.body.imageData;
   //checking if the userId length is proper or not
   if (userId.length != 24) {
     return res.status(400).json({
@@ -30,14 +31,21 @@ module.exports = async (req, res) => {
         message: "User doesnt exist",
       });
     }
+
     // checking if name exists and if it needs to be updated in the Database
     if (name && name != user.name) {
       user.name = name;
-      await user.save();
     }
 
+    // if imageData is passed from the body then we will change the value of the user image_link in the database
+    if (imageData && imageData != user.image_link) {
+      let imageUrl = await uploader(imageData);
+      user.image_link = imageUrl;
+    }
+    await user.save();
+
     // checkin if the changes were made successfully
-    if (name == user.name) {
+    if (name == user.name || imageData == user.image_link) {
       res.status(200).json({
         success: true,
         message: "User updated",
