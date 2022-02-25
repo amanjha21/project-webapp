@@ -5,6 +5,7 @@ module.exports = async (req, res) => {
   const ip = req.header("x-forwarded-for") || req.connection.remoteAddress;
   const userId = req.params.id;
   const name = req.body.name;
+  const description = req.body.description;
   const imageData = req.body.imageData;
   //checking if the userId length is proper or not
   if (userId.length != 24) {
@@ -35,6 +36,11 @@ module.exports = async (req, res) => {
     // checking if name exists and if it needs to be updated in the Database
     if (name && name != user.name) {
       user.name = name;
+    }
+
+    // checking if description exists
+    if (description && description != user.description) {
+      user.description = description;
     }
 
     // if imageData is passed from the body then we will change the value of the user image_link in the database
