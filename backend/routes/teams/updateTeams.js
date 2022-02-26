@@ -12,6 +12,7 @@ module.exports = async (req, res) => {
   const userId = req.user._id;
   const ip = req.header("x-forwarded-for") || req.connection.remoteAddress;
 
+  //check if teamId is valid
   if (teamId.length != 24) {
     return res.status(400).json({
       success: false,
@@ -19,6 +20,7 @@ module.exports = async (req, res) => {
     });
   }
 
+  //check if there is somthing to update
   if (!name && !admin && !moderator && !profileImage && !description) {
     return res.status(403).json({
       success: false,
@@ -27,6 +29,7 @@ module.exports = async (req, res) => {
   }
 
   try {
+    //check if team exists
     const team = await Schemas.Team.findOne({
       _id: teamId,
     }).exec();
@@ -42,6 +45,7 @@ module.exports = async (req, res) => {
       _id: team.organization,
     });
 
+    //check if logged in user is admin
     if (userId != team.admin) {
       return res.status(400).json({
         success: false,
@@ -49,6 +53,7 @@ module.exports = async (req, res) => {
       });
     }
 
+    //if profileImage == 0 delete team.imageUrl else if profileImage then update team.imageUrl
     if (profileImage === "0") {
       team.imageUrl = "";
       await team.save();
@@ -59,30 +64,34 @@ module.exports = async (req, res) => {
       await team.save();
     }
 
+    //check if team name is not same as team.organization name
     if (team.name == organization.name && name != team.name) {
       return res.status(400).json({
         success: false,
         message: "Invalid Request",
       });
     } else {
+      //update team.name
       if (name && name != team.name) {
         team.name = name;
         await team.save();
       }
     }
 
+    //updat team.description
     if (description && description !== team.description) {
       team.description = description;
       await team.save();
     }
 
-    //if admin and admin is member of team and admin != team.admin
+    //if admin and admin is member of team and admin != team.admin then update team.admin
     if (admin) {
       const adminUser = await Schemas.User.findOne({
         _id: admin,
       });
       if (adminUser._id != team.admin && adminUser.teams.includes(teamId)) {
         team.admin = adminUser._id;
+        //if adminUser is team.moderator then remove adminUser from team.moderator
         if (team.moderator.includes(adminUser._id)) {
           const index = team.moderator.indexOf(adminUser._id);
           team.moderator.splice(index, 1);
