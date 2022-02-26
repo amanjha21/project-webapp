@@ -850,1100 +850,446 @@ const userDetails = (userId) => {
   ];
   return pipeline;
 };
-const noticeById = (noticeId, userId) => {
-  if (userId) {
-    const pipeline = [
-      {
-        $match: {
-          _id: new ObjectId(noticeId),
-        },
+const noticeById = (noticeId, currentUserId) => {
+  let pipeline = [
+    {
+      $match: {
+        _id: new ObjectId(noticeId),
       },
-      {
-        $lookup: {
-          from: "notice_reactions",
-          localField: "_id",
-          foreignField: "notice",
-          as: "reaction",
-        },
+    },
+    {
+      $lookup: {
+        from: "notice_reactions",
+        localField: "_id",
+        foreignField: "notice",
+        as: "reaction",
       },
-      {
-        $unwind: {
-          path: "$reaction",
-          preserveNullAndEmptyArrays: true,
-        },
+    },
+    {
+      $lookup: {
+        from: "users",
+        localField: "user",
+        foreignField: "_id",
+        as: "user",
       },
-      {
-        $sort: {
-          "reaction.createdAt": -1,
-        },
+    },
+    {
+      $unwind: {
+        path: "$reaction",
+        preserveNullAndEmptyArrays: true,
       },
-      {
-        $group: {
-          _id: "$_id",
-          content: {
-            $first: "$content",
-          },
-          image_link: {
-            $first: "$image_link",
-          },
-          user: {
-            $first: "$user",
-          },
-          team: {
-            $first: "$team",
-          },
-          createdAt: {
-            $first: "$createdAt",
-          },
-          updatedAt: {
-            $first: "$updatedAt",
-          },
-          reactions: {
-            $push: {
-              $cond: [
-                {
-                  $ne: ["$reaction.type", "comment"],
-                },
-                {
-                  type: "$reaction.type",
-                  user: "$reaction.user",
-                },
-                "$$REMOVE",
-              ],
-            },
-          },
-          comments: {
-            $push: {
-              $cond: [
-                {
-                  $and: [
-                    {
-                      $ne: ["$reaction.user", new ObjectId(userId)],
-                    },
-                    {
-                      $eq: ["$reaction.type", "comment"],
-                    },
-                  ],
-                },
-                {
-                  text: "$reaction.comment",
-                  user: "$reaction.user",
-                  createdAt: "$reaction.createdAt",
-                },
-                "$$REMOVE",
-              ],
-            },
-          },
-          user_comments: {
-            $push: {
-              $cond: [
-                {
-                  $and: [
-                    {
-                      $eq: ["$reaction.user", new ObjectId(userId)],
-                    },
-                    {
-                      $eq: ["$reaction.type", "comment"],
-                    },
-                  ],
-                },
-                {
-                  text: "$reaction.comment",
-                  user: "$reaction.user",
-                  createdAt: "$reaction.createdAt",
-                },
-                "$$REMOVE",
-              ],
-            },
-          },
-          reaction_by_user: {
-            $push: {
-              $cond: [
-                {
-                  $and: [
-                    {
-                      $eq: ["$reaction.user", new ObjectId(userId)],
-                    },
-                    {
-                      $ne: ["$reaction.type", "comment"],
-                    },
-                  ],
-                },
-                {
-                  type: "$reaction.type",
-                  createdAt: "$reaction.createdAt",
-                },
-                "$$REMOVE",
-              ],
-            },
-          },
-        },
+    },
+    {
+      $sort: {
+        "reaction.createdAt": -1,
       },
-      {
-        $project: {
-          _id: 1,
-          content: 1,
-          image_link: 1,
-          createdAt: 1,
-          updatedAt: 1,
-          user: 1,
-          team: 1,
-          reactions: 1,
-          reaction_by_user: 1,
-          comments: {
-            $slice: [
+    },
+    {
+      $group: {
+        _id: "$_id",
+        content: {
+          $first: "$content",
+        },
+        image_link: {
+          $first: "$image_link",
+        },
+        team: {
+          $first: "$team",
+        },
+        user: {
+          $first: "$user",
+        },
+        createdAt: {
+          $first: "$createdAt",
+        },
+        updatedAt: {
+          $first: "$updatedAt",
+        },
+        user_reaction: {
+          $push: {
+            $cond: [
               {
-                $concatArrays: ["$user_comments", "$comments"],
+                $and: [
+                  {
+                    $eq: ["$reaction.user", new ObjectId(currentUserId)],
+                  },
+                  {
+                    $ne: ["$reaction.type", "comment"],
+                  },
+                ],
               },
+              {
+                type: "$reaction.type",
+                createdAt: "$reaction.createdAt",
+              },
+              "$$REMOVE",
+            ],
+          },
+        },
+        like: {
+          $sum: {
+            $cond: [
+              {
+                $eq: ["$reaction.type", "like"],
+              },
+              1,
               0,
-              10,
+            ],
+          },
+        },
+        dislike: {
+          $sum: {
+            $cond: [
+              {
+                $eq: ["$reaction.type", "like"],
+              },
+              1,
+              0,
             ],
           },
         },
       },
-    ];
-    return pipeline;
-  } else {
-    const pipeline = [
-      {
-        $match: {
-          _id: new ObjectId(noticeId),
+    },
+    {
+      $project: {
+        _id: 1,
+        content: 1,
+        image_link: 1,
+        createdAt: 1,
+        updatedAt: 1,
+        team: 1,
+        user: {
+          $arrayElemAt: ["$user", 0],
         },
-      },
-      {
-        $lookup: {
-          from: "notice_reactions",
-          localField: "_id",
-          foreignField: "notice",
-          as: "reaction",
+        user_reaction: {
+          $arrayElemAt: ["$user_reaction", 0],
         },
+        like: 1,
+        dislike: 1,
       },
-      {
-        $unwind: {
-          path: "$reaction",
-          preserveNullAndEmptyArrays: true,
-        },
+    },
+    {
+      $project: {
+        _id: 1,
+        content: 1,
+        image_link: 1,
+        createdAt: 1,
+        updatedAt: 1,
+        team: 1,
+        "user._id": 1,
+        "user.imageUrl": 1,
+        "user.name": 1,
+        user_reaction: 1,
+        like: 1,
+        dislike: 1,
       },
-      {
-        $sort: {
-          "reaction.createdAt": -1,
-        },
+    },
+    {
+      $sort: {
+        createdAt: -1,
       },
-      {
-        $group: {
-          _id: "$_id",
-          content: {
-            $first: "$content",
-          },
-          image_link: {
-            $first: "$image_link",
-          },
-          user: {
-            $first: "$user",
-          },
-          team: {
-            $first: "$team",
-          },
-          createdAt: {
-            $first: "$createdAt",
-          },
-          updatedAt: {
-            $first: "$updatedAt",
-          },
-          reactions: {
-            $push: {
-              $cond: [
-                {
-                  $ne: ["$reaction.type", "comment"],
-                },
-                {
-                  type: "$reaction.type",
-                  user: "$reaction.user",
-                },
-                "$$REMOVE",
-              ],
-            },
-          },
-          comments: {
-            $push: {
-              $cond: [
-                {
-                  $eq: ["$reaction.type", "comment"],
-                },
-                {
-                  text: "$reaction.comment",
-                  user: "$reaction.user",
-                  createdAt: "$reaction.createdAt",
-                },
-                "$$REMOVE",
-              ],
-            },
-          },
-        },
-      },
-      {
-        $project: {
-          _id: 1,
-          content: 1,
-          image_link: 1,
-          createdAt: 1,
-          updatedAt: 1,
-          user: 1,
-          team: 1,
-          reactions: 1,
-          comments: {
-            $slice: ["$comments", 0, 10],
-          },
-        },
-      },
-    ];
-    return pipeline;
-  }
+    },
+  ];
+  return pipeline;
 };
-const notices = (userId, pageInput, number) => {
+const noticesByUserId = (
+  userId,
+  teamId,
+  currentUserId = "000000000000000000000000",
+  pageInput,
+  number
+) => {
   let page = pageInput || 1;
   let noOfPosts = number || defaultNoOfPosts;
   page--;
-  if (userId) {
-    const pipeline = [
-      {
-        $sort: {
-          createdAt: -1,
+  let pipeline = [
+    {
+      $match: {
+        user: new ObjectId(userId),
+        team: new ObjectId(teamId),
+      },
+    },
+    {
+      $skip: page * noOfPosts,
+    },
+    {
+      $limit: noOfPosts,
+    },
+    {
+      $lookup: {
+        from: "notice_reactions",
+        localField: "_id",
+        foreignField: "notice",
+        as: "reaction",
+      },
+    },
+    {
+      $lookup: {
+        from: "users",
+        localField: "user",
+        foreignField: "_id",
+        as: "user",
+      },
+    },
+    {
+      $unwind: {
+        path: "$reaction",
+        preserveNullAndEmptyArrays: true,
+      },
+    },
+    {
+      $sort: {
+        "reaction.createdAt": -1,
+      },
+    },
+    {
+      $group: {
+        _id: "$_id",
+        content: {
+          $first: "$content",
         },
-      },
-      {
-        $skip: page * noOfPosts,
-      },
-      {
-        $limit: noOfPosts,
-      },
-      {
-        $lookup: {
-          from: "notice_reactions",
-          localField: "_id",
-          foreignField: "notice",
-          as: "reaction",
+        image_link: {
+          $first: "$image_link",
         },
-      },
-      {
-        $unwind: {
-          path: "$reaction",
-          preserveNullAndEmptyArrays: true,
+        user: {
+          $first: "$user",
         },
-      },
-      {
-        $sort: {
-          "reaction.createdAt": -1,
+        createdAt: {
+          $first: "$createdAt",
         },
-      },
-      {
-        $group: {
-          _id: "$_id",
-          content: {
-            $first: "$content",
-          },
-          image_link: {
-            $first: "$image_link",
-          },
-          user: {
-            $first: "$user",
-          },
-          team: {
-            $first: "$team",
-          },
-          createdAt: {
-            $first: "$createdAt",
-          },
-          updatedAt: {
-            $first: "$updatedAt",
-          },
-          reactions: {
-            $push: {
-              $cond: [
-                {
-                  $ne: ["$reaction.type", "comment"],
-                },
-                {
-                  type: "$reaction.type",
-                  user: "$reaction.user",
-                },
-                "$$REMOVE",
-              ],
-            },
-          },
-          comments: {
-            $push: {
-              $cond: [
-                {
-                  $and: [
-                    {
-                      $ne: ["$reaction.user", new ObjectId(userId)],
-                    },
-                    {
-                      $eq: ["$reaction.type", "comment"],
-                    },
-                  ],
-                },
-                {
-                  text: "$reaction.comment",
-                  user: "$reaction.user",
-                  createdAt: "$reaction.createdAt",
-                },
-                "$$REMOVE",
-              ],
-            },
-          },
-          user_comments: {
-            $push: {
-              $cond: [
-                {
-                  $and: [
-                    {
-                      $eq: ["$reaction.user", new ObjectId(userId)],
-                    },
-                    {
-                      $eq: ["$reaction.type", "comment"],
-                    },
-                  ],
-                },
-                {
-                  text: "$reaction.comment",
-                  user: "$reaction.user",
-                  createdAt: "$reaction.createdAt",
-                },
-                "$$REMOVE",
-              ],
-            },
-          },
-          reaction_by_user: {
-            $push: {
-              $cond: [
-                {
-                  $and: [
-                    {
-                      $eq: ["$reaction.user", new ObjectId(userId)],
-                    },
-                    {
-                      $ne: ["$reaction.type", "comment"],
-                    },
-                  ],
-                },
-                {
-                  type: "$reaction.type",
-                  createdAt: "$reaction.createdAt",
-                },
-                "$$REMOVE",
-              ],
-            },
-          },
+        updatedAt: {
+          $first: "$updatedAt",
         },
-      },
-      {
-        $project: {
-          _id: 1,
-          content: 1,
-          image_link: 1,
-          createdAt: 1,
-          updatedAt: 1,
-          user: 1,
-          team: 1,
-          reactions: 1,
-          reaction_by_user: 1,
-          comments: {
-            $slice: [
+        user_reaction: {
+          $push: {
+            $cond: [
               {
-                $concatArrays: ["$user_comments", "$comments"],
+                $and: [
+                  {
+                    $eq: ["$reaction.user", new ObjectId(currentUserId)],
+                  },
+                  {
+                    $ne: ["$reaction.type", "comment"],
+                  },
+                ],
               },
+              {
+                type: "$reaction.type",
+                createdAt: "$reaction.createdAt",
+              },
+              "$$REMOVE",
+            ],
+          },
+        },
+        like: {
+          $sum: {
+            $cond: [
+              {
+                $eq: ["$reaction.type", "like"],
+              },
+              1,
               0,
-              defaultNoOfComments,
+            ],
+          },
+        },
+        dislike: {
+          $sum: {
+            $cond: [
+              {
+                $eq: ["$reaction.type", "like"],
+              },
+              1,
+              0,
             ],
           },
         },
       },
-      {
-        $sort: {
-          createdAt: -1,
+    },
+    {
+      $project: {
+        _id: 1,
+        content: 1,
+        image_link: 1,
+        createdAt: 1,
+        updatedAt: 1,
+        user: {
+          $arrayElemAt: ["$user", 0],
         },
-      },
-    ];
-    return pipeline;
-  } else {
-    const pipeline = [
-      {
-        $sort: {
-          createdAt: -1,
+        user_reaction: {
+          $arrayElemAt: ["$user_reaction", 0],
         },
+        like: 1,
+        dislike: 1,
       },
-      {
-        $skip: page * noOfPosts,
+    },
+    {
+      $project: {
+        _id: 1,
+        content: 1,
+        image_link: 1,
+        createdAt: 1,
+        updatedAt: 1,
+        "user._id": 1,
+        "user.imageUrl": 1,
+        "user.name": 1,
+        user_reaction: 1,
+        like: 1,
+        dislike: 1,
       },
-      {
-        $limit: noOfPosts,
+    },
+    {
+      $sort: {
+        createdAt: -1,
       },
-      {
-        $lookup: {
-          from: "notice_reactions",
-          localField: "_id",
-          foreignField: "notice",
-          as: "reaction",
-        },
-      },
-      {
-        $unwind: {
-          path: "$reaction",
-          preserveNullAndEmptyArrays: true,
-        },
-      },
-      {
-        $sort: {
-          "reaction.createdAt": -1,
-        },
-      },
-      {
-        $group: {
-          _id: "$_id",
-          content: {
-            $first: "$content",
-          },
-          image_link: {
-            $first: "$image_link",
-          },
-          user: {
-            $first: "$user",
-          },
-          team: {
-            $first: "$team",
-          },
-          createdAt: {
-            $first: "$createdAt",
-          },
-          updatedAt: {
-            $first: "$updatedAt",
-          },
-          reactions: {
-            $push: {
-              $cond: [
-                {
-                  $ne: ["$reaction.type", "comment"],
-                },
-                {
-                  type: "$reaction.type",
-                  user: "$reaction.user",
-                },
-                "$$REMOVE",
-              ],
-            },
-          },
-          comments: {
-            $push: {
-              $cond: [
-                {
-                  $eq: ["$reaction.type", "comment"],
-                },
-                {
-                  text: "$reaction.comment",
-                  user: "$reaction.user",
-                  createdAt: "$reaction.createdAt",
-                },
-                "$$REMOVE",
-              ],
-            },
-          },
-        },
-      },
-      {
-        $project: {
-          _id: 1,
-          content: 1,
-          image_link: 1,
-          createdAt: 1,
-          updatedAt: 1,
-          user: 1,
-          team: 1,
-          reactions: 1,
-          comments: {
-            $slice: ["$comments", 0, defaultNoOfComments],
-          },
-        },
-      },
-      {
-        $sort: {
-          createdAt: -1,
-        },
-      },
-    ];
-    return pipeline;
-  }
-};
-const noticesByUserId = (userId, currentUserId, pageInput, number) => {
-  let page = pageInput || 1;
-  let noOfPosts = number || defaultNoOfPosts;
-  page--;
-  if (currentUserId) {
-    const pipeline = [
-      {
-        $match: {
-          user: new ObjectId(userId),
-        },
-      },
-      {
-        $sort: {
-          createdAt: -1,
-        },
-      },
-      {
-        $skip: page * noOfPosts,
-      },
-      {
-        $limit: noOfPosts,
-      },
-      {
-        $lookup: {
-          from: "notice_reactions",
-          localField: "_id",
-          foreignField: "notice",
-          as: "reaction",
-        },
-      },
-      {
-        $unwind: {
-          path: "$reaction",
-          preserveNullAndEmptyArrays: true,
-        },
-      },
-      {
-        $sort: {
-          "reaction.createdAt": -1,
-        },
-      },
-      {
-        $group: {
-          _id: "$_id",
-          content: {
-            $first: "$content",
-          },
-          image_link: {
-            $first: "$image_link",
-          },
-          user: {
-            $first: "$user",
-          },
-          team: {
-            $first: "$team",
-          },
-          createdAt: {
-            $first: "$createdAt",
-          },
-          updatedAt: {
-            $first: "$updatedAt",
-          },
-          reactions: {
-            $push: {
-              $cond: [
-                {
-                  $ne: ["$reaction.type", "comment"],
-                },
-                {
-                  type: "$reaction.type",
-                  user: "$reaction.user",
-                },
-                "$$REMOVE",
-              ],
-            },
-          },
-          comments: {
-            $push: {
-              $cond: [
-                {
-                  $and: [
-                    {
-                      $ne: ["$reaction.user", new ObjectId(currentUserId)],
-                    },
-                    {
-                      $eq: ["$reaction.type", "comment"],
-                    },
-                  ],
-                },
-                {
-                  text: "$reaction.comment",
-                  user: "$reaction.user",
-                  createdAt: "$reaction.createdAt",
-                },
-                "$$REMOVE",
-              ],
-            },
-          },
-          user_comments: {
-            $push: {
-              $cond: [
-                {
-                  $and: [
-                    {
-                      $eq: ["$reaction.user", new ObjectId(currentUserId)],
-                    },
-                    {
-                      $eq: ["$reaction.type", "comment"],
-                    },
-                  ],
-                },
-                {
-                  text: "$reaction.comment",
-                  user: "$reaction.user",
-                  createdAt: "$reaction.createdAt",
-                },
-                "$$REMOVE",
-              ],
-            },
-          },
-          reaction_by_user: {
-            $push: {
-              $cond: [
-                {
-                  $and: [
-                    {
-                      $eq: ["$reaction.user", new ObjectId(currentUserId)],
-                    },
-                    {
-                      $ne: ["$reaction.type", "comment"],
-                    },
-                  ],
-                },
-                {
-                  type: "$reaction.type",
-                  createdAt: "$reaction.createdAt",
-                },
-                "$$REMOVE",
-              ],
-            },
-          },
-        },
-      },
-      {
-        $project: {
-          _id: 1,
-          content: 1,
-          image_link: 1,
-          createdAt: 1,
-          updatedAt: 1,
-          user: 1,
-          team: 1,
-          reactions: 1,
-          reaction_by_user: 1,
-          comments: {
-            $slice: [
-              {
-                $concatArrays: ["$user_comments", "$comments"],
-              },
-              0,
-              defaultNoOfComments,
-            ],
-          },
-        },
-      },
-      {
-        $sort: {
-          createdAt: -1,
-        },
-      },
-    ];
-    return pipeline;
-  } else {
-    const pipeline = [
-      {
-        $match: {
-          user: new ObjectId(userId),
-        },
-      },
-      {
-        $sort: {
-          createdAt: -1,
-        },
-      },
-      {
-        $skip: page * noOfPosts,
-      },
-      {
-        $limit: noOfPosts,
-      },
-      {
-        $lookup: {
-          from: "notice_reactions",
-          localField: "_id",
-          foreignField: "notice",
-          as: "reaction",
-        },
-      },
-      {
-        $unwind: {
-          path: "$reaction",
-          preserveNullAndEmptyArrays: true,
-        },
-      },
-      {
-        $sort: {
-          "reaction.createdAt": -1,
-        },
-      },
-      {
-        $group: {
-          _id: "$_id",
-          content: {
-            $first: "$content",
-          },
-          image_link: {
-            $first: "$image_link",
-          },
-          user: {
-            $first: "$user",
-          },
-          team: {
-            $first: "$team",
-          },
-          createdAt: {
-            $first: "$createdAt",
-          },
-          updatedAt: {
-            $first: "$updatedAt",
-          },
-          reactions: {
-            $push: {
-              $cond: [
-                {
-                  $ne: ["$reaction.type", "comment"],
-                },
-                {
-                  type: "$reaction.type",
-                  user: "$reaction.user",
-                },
-                "$$REMOVE",
-              ],
-            },
-          },
-          comments: {
-            $push: {
-              $cond: [
-                {
-                  $eq: ["$reaction.type", "comment"],
-                },
-                {
-                  text: "$reaction.comment",
-                  user: "$reaction.user",
-                  createdAt: "$reaction.createdAt",
-                },
-                "$$REMOVE",
-              ],
-            },
-          },
-        },
-      },
-      {
-        $project: {
-          _id: 1,
-          content: 1,
-          image_link: 1,
-          createdAt: 1,
-          updatedAt: 1,
-          user: 1,
-          team: 1,
-          reactions: 1,
-          comments: {
-            $slice: ["$comments", 0, defaultNoOfComments],
-          },
-        },
-      },
-      {
-        $sort: {
-          createdAt: -1,
-        },
-      },
-    ];
-    return pipeline;
-  }
+    },
+  ];
+  return pipeline;
 };
 const noticesByTeamId = (teamId, currentUserId, pageInput, number) => {
   let page = pageInput || 1;
   let noOfPosts = number || defaultNoOfPosts;
   page--;
-  if (currentUserId) {
-    const pipeline = [
-      {
-        $match: {
-          team: new ObjectId(teamId),
+  let pipeline = [
+    {
+      $match: {
+        team: new ObjectId(teamId),
+      },
+    },
+    {
+      $skip: page * noOfPosts,
+    },
+    {
+      $limit: noOfPosts,
+    },
+    {
+      $lookup: {
+        from: "notice_reactions",
+        localField: "_id",
+        foreignField: "notice",
+        as: "reaction",
+      },
+    },
+    {
+      $lookup: {
+        from: "users",
+        localField: "user",
+        foreignField: "_id",
+        as: "user",
+      },
+    },
+    {
+      $unwind: {
+        path: "$reaction",
+        preserveNullAndEmptyArrays: true,
+      },
+    },
+    {
+      $sort: {
+        "reaction.createdAt": -1,
+      },
+    },
+    {
+      $group: {
+        _id: "$_id",
+        content: {
+          $first: "$content",
         },
-      },
-      {
-        $sort: {
-          createdAt: -1,
+        image_link: {
+          $first: "$image_link",
         },
-      },
-      {
-        $skip: page * noOfPosts,
-      },
-      {
-        $limit: noOfPosts,
-      },
-      {
-        $lookup: {
-          from: "notice_reactions",
-          localField: "_id",
-          foreignField: "notice",
-          as: "reaction",
+        user: {
+          $first: "$user",
         },
-      },
-      {
-        $unwind: {
-          path: "$reaction",
-          preserveNullAndEmptyArrays: true,
+        createdAt: {
+          $first: "$createdAt",
         },
-      },
-      {
-        $sort: {
-          "reaction.createdAt": -1,
+        updatedAt: {
+          $first: "$updatedAt",
         },
-      },
-      {
-        $group: {
-          _id: "$_id",
-          content: {
-            $first: "$content",
-          },
-          image_link: {
-            $first: "$image_link",
-          },
-          user: {
-            $first: "$user",
-          },
-          team: {
-            $first: "$team",
-          },
-          createdAt: {
-            $first: "$createdAt",
-          },
-          updatedAt: {
-            $first: "$updatedAt",
-          },
-          reactions: {
-            $push: {
-              $cond: [
-                {
-                  $ne: ["$reaction.type", "comment"],
-                },
-                {
-                  type: "$reaction.type",
-                  user: "$reaction.user",
-                },
-                "$$REMOVE",
-              ],
-            },
-          },
-          comments: {
-            $push: {
-              $cond: [
-                {
-                  $and: [
-                    {
-                      $ne: ["$reaction.user", new ObjectId(currentUserId)],
-                    },
-                    {
-                      $eq: ["$reaction.type", "comment"],
-                    },
-                  ],
-                },
-                {
-                  text: "$reaction.comment",
-                  user: "$reaction.user",
-                  createdAt: "$reaction.createdAt",
-                },
-                "$$REMOVE",
-              ],
-            },
-          },
-          user_comments: {
-            $push: {
-              $cond: [
-                {
-                  $and: [
-                    {
-                      $eq: ["$reaction.user", new ObjectId(currentUserId)],
-                    },
-                    {
-                      $eq: ["$reaction.type", "comment"],
-                    },
-                  ],
-                },
-                {
-                  text: "$reaction.comment",
-                  user: "$reaction.user",
-                  createdAt: "$reaction.createdAt",
-                },
-                "$$REMOVE",
-              ],
-            },
-          },
-          reaction_by_user: {
-            $push: {
-              $cond: [
-                {
-                  $and: [
-                    {
-                      $eq: ["$reaction.user", new ObjectId(currentUserId)],
-                    },
-                    {
-                      $ne: ["$reaction.type", "comment"],
-                    },
-                  ],
-                },
-                {
-                  type: "$reaction.type",
-                  createdAt: "$reaction.createdAt",
-                },
-                "$$REMOVE",
-              ],
-            },
-          },
-        },
-      },
-      {
-        $project: {
-          _id: 1,
-          content: 1,
-          image_link: 1,
-          createdAt: 1,
-          updatedAt: 1,
-          user: 1,
-          team: 1,
-          reactions: 1,
-          reaction_by_user: 1,
-          comments: {
-            $slice: [
+        user_reaction: {
+          $push: {
+            $cond: [
               {
-                $concatArrays: ["$user_comments", "$comments"],
+                $and: [
+                  {
+                    $eq: ["$reaction.user", new ObjectId(currentUserId)],
+                  },
+                  {
+                    $ne: ["$reaction.type", "comment"],
+                  },
+                ],
               },
+              {
+                type: "$reaction.type",
+                createdAt: "$reaction.createdAt",
+              },
+              "$$REMOVE",
+            ],
+          },
+        },
+        like: {
+          $sum: {
+            $cond: [
+              {
+                $eq: ["$reaction.type", "like"],
+              },
+              1,
               0,
-              defaultNoOfComments,
+            ],
+          },
+        },
+        dislike: {
+          $sum: {
+            $cond: [
+              {
+                $eq: ["$reaction.type", "like"],
+              },
+              1,
+              0,
             ],
           },
         },
       },
-      {
-        $sort: {
-          createdAt: -1,
+    },
+    {
+      $project: {
+        _id: 1,
+        content: 1,
+        image_link: 1,
+        createdAt: 1,
+        updatedAt: 1,
+        user: {
+          $arrayElemAt: ["$user", 0],
         },
-      },
-    ];
-    return pipeline;
-  } else {
-    const pipeline = [
-      {
-        $match: {
-          team: new ObjectId(teamId),
+        user_reaction: {
+          $arrayElemAt: ["$user_reaction", 0],
         },
+        like: 1,
+        dislike: 1,
       },
-      {
-        $sort: {
-          createdAt: -1,
-        },
+    },
+    {
+      $project: {
+        _id: 1,
+        content: 1,
+        image_link: 1,
+        createdAt: 1,
+        updatedAt: 1,
+        "user._id": 1,
+        "user.imageUrl": 1,
+        "user.name": 1,
+        user_reaction: 1,
+        like: 1,
+        dislike: 1,
       },
-      {
-        $skip: page * noOfPosts,
+    },
+    {
+      $sort: {
+        createdAt: -1,
       },
-      {
-        $limit: noOfPosts,
-      },
-      {
-        $lookup: {
-          from: "notice_reactions",
-          localField: "_id",
-          foreignField: "notice",
-          as: "reaction",
-        },
-      },
-      {
-        $unwind: {
-          path: "$reaction",
-          preserveNullAndEmptyArrays: true,
-        },
-      },
-      {
-        $sort: {
-          "reaction.createdAt": -1,
-        },
-      },
-      {
-        $group: {
-          _id: "$_id",
-          content: {
-            $first: "$content",
-          },
-          image_link: {
-            $first: "$image_link",
-          },
-          user: {
-            $first: "$user",
-          },
-          team: {
-            $first: "$team",
-          },
-          createdAt: {
-            $first: "$createdAt",
-          },
-          updatedAt: {
-            $first: "$updatedAt",
-          },
-          reactions: {
-            $push: {
-              $cond: [
-                {
-                  $ne: ["$reaction.type", "comment"],
-                },
-                {
-                  type: "$reaction.type",
-                  user: "$reaction.user",
-                },
-                "$$REMOVE",
-              ],
-            },
-          },
-          comments: {
-            $push: {
-              $cond: [
-                {
-                  $eq: ["$reaction.type", "comment"],
-                },
-                {
-                  text: "$reaction.comment",
-                  user: "$reaction.user",
-                  createdAt: "$reaction.createdAt",
-                },
-                "$$REMOVE",
-              ],
-            },
-          },
-        },
-      },
-      {
-        $project: {
-          _id: 1,
-          content: 1,
-          image_link: 1,
-          createdAt: 1,
-          updatedAt: 1,
-          user: 1,
-          team: 1,
-          reactions: 1,
-          comments: {
-            $slice: ["$comments", 0, defaultNoOfComments],
-          },
-        },
-      },
-      {
-        $sort: {
-          createdAt: -1,
-        },
-      },
-    ];
-    return pipeline;
-  }
+    },
+  ];
+  return pipeline;
 };
 module.exports = {
   postById,
@@ -1951,7 +1297,6 @@ module.exports = {
   postsByUserId,
   organizationDetails,
   noticeById,
-  notices,
   noticesByUserId,
   noticesByTeamId,
   userDetails,
