@@ -36,6 +36,7 @@ module.exports = async (req, res) => {
       });
     }
 
+    //Create new team
     const team = new Schemas.Team({
       name,
       organization,
@@ -43,6 +44,8 @@ module.exports = async (req, res) => {
     });
 
     const newTeam = await team.save();
+
+    //Add team in User.teams
     adminDetails.teams.push(newTeam);
     await adminDetails.save();
 
