@@ -21,7 +21,7 @@ router.get(
   getCommentsByPostId
 );
 router.get(
-  "/reaction/:id",
+  "/:id",
   validation(validationSchema.getCommentsValidation, "params"),
   verifyToken,
   getReactionsByPostId
