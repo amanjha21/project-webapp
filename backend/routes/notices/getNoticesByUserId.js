@@ -8,7 +8,7 @@ module.exports = async (req, res) => {
   const currentUserId = req.user._id;
   const page = parseInt(req.query.page);
   const noOfPosts = parseInt(req.query.limit);
-  if (userId.length != 24) {
+  if (userId.length != 24 || teamId.length != 24) {
     return res.status(400).json({
       success: false,
       message: "Invalid Request",
@@ -26,7 +26,7 @@ module.exports = async (req, res) => {
     });
   try {
     const notices = await Schemas.Notice.aggregate(
-      pipeline.noticesByUserId(userId, currentUserId, page, noOfPosts)
+      pipeline.noticesByUserId(userId, teamId, currentUserId, page, noOfPosts)
     );
     if (notices.length == 0) {
       return res.status(400).json({
