@@ -14,9 +14,14 @@ const updateCommentValidation = Joi.object({
   noticeId: Joi.string().length(24).required(),
   type: Joi.string().valid("like", "dislike").required(),
 });
-
+const getCommentsValidation = Joi.object({
+  id: Joi.string()
+    .regex(/^[0-9a-fA-F]{24}$/)
+    .required(),
+});
 module.exports = {
   addCommentValidation,
   deleteCommentValidation,
   updateCommentValidation,
+  getCommentsValidation,
 };
