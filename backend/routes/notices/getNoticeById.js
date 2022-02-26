@@ -12,7 +12,7 @@ module.exports = async (req, res) => {
   }
   try {
     const notice = await Schemas.Notice.aggregate(
-      pipeline.postById(noticeId, userId)
+      pipeline.noticeById(noticeId, userId)
     );
     if (notice.length == 0) {
       return res.status(400).json({
