@@ -18,6 +18,9 @@ const updateUserPasswordValidation = Joi.object({
     .required(),
 });
 
+const leaveTeamValidation = Joi.object({
+  teamId: Joi.string().required(),
+});
 const updateUserValidation = Joi.object({
   name: Joi.string().optional(),
   teams: Joi.array().items(Joi.string().length(24)),
@@ -42,4 +45,5 @@ module.exports = {
   resetUserPasswordValidation,
   getUsersByOrganizationIdValidation,
   getUsersByTeamIdValidation,
+  leaveTeamValidation,
 };
