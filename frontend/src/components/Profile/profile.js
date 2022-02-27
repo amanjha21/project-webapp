@@ -1,4 +1,4 @@
-import "./profile.css";
+import "./Profile.css";
 import { useState } from "react";
 import { ImCog } from "react-icons/im";
 import { IoMdAddCircle, IoMdExit } from "react-icons/io";
@@ -6,9 +6,9 @@ import { IoMdAddCircle, IoMdExit } from "react-icons/io";
 import Confirmation from "../Confirmation";
 
 import Popup from "../Popup";
-import ProfileNavbar from "./profileNavbar/profileNavbar";
-import EditProfileImage from "./editProfileImage/editProfileImage";
-import EditProfile from "./editProfile/editProfile";
+import ProfileNavbar from "./ProfileNavbar/ProfileNavbar";
+import EditProfileImage from "./EditProfileImage/EditProfileImage";
+import EditProfile from "./EditProfile/EditProfile";
 
 const UserProfile = () => {
   const [viewEditProfileImg, setViewEditProfileImg] = useState(false);
