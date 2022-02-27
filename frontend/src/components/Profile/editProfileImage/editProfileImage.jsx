@@ -1,4 +1,4 @@
-import "./editProfileImage.css";
+import "./EditProfileImage.css";
 import { useState } from "react";
 import { BsTrash } from "react-icons/bs";
 

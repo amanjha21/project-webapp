@@ -4,13 +4,13 @@ const getTeams = require("./getTeams");
 const getTeamsByOrganizationId = require("./getTeamsByOrganizationId");
 const addTeams = require("./addTeams");
 const updateTeams = require("./updateTeams");
+const removeUserFromTeam = require("./removeUserFromTeam");
+const addUserInTeamsRequest = require("./addUserInTeamsRequest");
+const addUserInTeams = require("./addUserInTeams");
 const deleteTeamById = require("./deleteTeamById");
 const validation = require("../../middlewares/validation");
 const validationSchema = require("./@validationSchema");
 const verifyToken = require("../../middlewares/verifyToken");
-const removeUserFromTeam = require("./removeUserFromTeam");
-const addUserInTeam = require("./addUserInTeam");
-const AddUserinTeamRequest = require("./AddUserinTeamRequest");
 const verifyApproveToken = require("../../middlewares/verifyApproveToken");
 
 //Get Team By Id
@@ -47,11 +47,11 @@ router.post(
   "/add-member-request",
   validation(validationSchema.addUserInTeamValidation),
   verifyToken,
-  AddUserinTeamRequest
+  addUserInTeamsRequest
 );
 
 //addUserInTeam
-router.get("/add-member-confirm/:token", verifyApproveToken, addUserInTeam);
+router.get("/add-member-confirm/:token", verifyApproveToken, addUserInTeams);
 
 //removeUserFromTeam
 router.post(

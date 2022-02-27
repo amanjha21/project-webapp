@@ -1,6 +1,6 @@
 import { useState } from "react";
-import "./profileNavbar.css";
-import About from "../aboutSection/about";
+import "./ProfileNavbar.css";
+import About from "../AboutSection/About";
 import Post from "../../Post/Post";
 import CreatePost from "../../Post/CreatePost/CreatePost";
 

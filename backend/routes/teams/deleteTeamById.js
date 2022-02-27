@@ -6,6 +6,7 @@ module.exports = async (req, res) => {
   const userId = req.user._id;
   const ip = req.header("x-forwarded-for") || req.connection.remoteAddress;
 
+  //check if teamId is valid
   if (teamId.length != 24) {
     return res.status(400).json({
       success: false,
@@ -14,6 +15,7 @@ module.exports = async (req, res) => {
   }
 
   try {
+    //Check if team exists
     const team = await Schemas.Team.findOne({ _id: teamId }).exec();
 
     if (!team) {
@@ -26,6 +28,7 @@ module.exports = async (req, res) => {
       _id: team.organization,
     });
 
+    //check if team is not a Organization Team
     if (team.name == organization.name || userId !== team.admin) {
       return res.status(400).json({
         success: false,
@@ -36,22 +39,27 @@ module.exports = async (req, res) => {
     const teamName = team.name;
     const adminId = team.admin;
 
+    //find all notices posted by team
     const noticeIdArray = await Schemas.Notice.find(
       { team: team._id },
       { _id: 1 }
     );
 
+    //delete all reactions on notices
     await Schemas.Notice_Reaction.deleteMany({
       notice: { $in: noticeIdArray },
     });
 
+    //delete all notices posted by teams
     await Schemas.Notice.deleteMany({ _id: { $in: noticeIdArray } });
 
+    //remove team from all users(user.teams)
     await Schemas.User.updateMany(
       { teams: teamId },
       { $pull: { teams: teamId } }
     ).exec();
 
+    //delete team
     const result = await Schemas.Team.deleteOne({ _id: teamId }).exec();
 
     logger({

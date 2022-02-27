@@ -1,4 +1,4 @@
-import "./editProfile.css";
+import "./EditProfile.css";
 import { useState } from "react";
 import EditProfileFormInput from "./EditProfileFormInput";
 import Confirmation from "../../Confirmation";
