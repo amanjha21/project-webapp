@@ -8,6 +8,7 @@ module.exports = async (req, res) => {
   const ip = req.header("x-forwarded-for") || req.connection.remoteAddress;
 
   try {
+    //Check if team exists
     const team = await Schemas.Team.findOne({
       _id: teamId,
     }).exec();
@@ -19,6 +20,7 @@ module.exports = async (req, res) => {
       });
     }
 
+    //Check if logged in user is admin
     if (userId != team.admin) {
       return res.status(400).json({
         success: false,
@@ -26,10 +28,12 @@ module.exports = async (req, res) => {
       });
     }
 
+    //find teamMember to remove
     const teamMember = await Schemas.User.findOne({
       _id: member,
     });
 
+    //check if user exists
     if (!teamMember) {
       return res.status(400).json({
         success: false,
@@ -37,6 +41,7 @@ module.exports = async (req, res) => {
       });
     }
 
+    //remove team from teamMember.teams
     if (
       teamMember &&
       teamMember.teams.includes(teamId) &&
