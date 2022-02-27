@@ -8,7 +8,7 @@ const deleteImage = (imageUrl, imageUrlArray = []) => {
         error && console.log(error);
       });
     });
-  } else {
+  } else if (imageUrl) {
     let fileName = imageUrl.split("/synoarx/")[1];
     let publicId = "synoarx/" + fileName.substr(0, fileName.length - 4);
     cloudinary.uploader.destroy(publicId, function (error, result) {
