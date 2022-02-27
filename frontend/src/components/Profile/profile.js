@@ -10,7 +10,7 @@ import ProfileNavbar from "./ProfileNavbar/ProfileNavbar";
 import EditProfileImage from "./EditProfileImage/EditProfileImage";
 import EditProfile from "./EditProfile/EditProfile";
 
-const UserProfile = () => {
+const Profile = () => {
   const [viewEditProfileImg, setViewEditProfileImg] = useState(false);
   const [viewEditProfile, setViewEditProfile] = useState(false);
   const [showAddMember, setshowAddMember] = useState(false);
@@ -86,4 +86,4 @@ const UserProfile = () => {
   );
 };
 
-export default UserProfile;
+export default Profile;
