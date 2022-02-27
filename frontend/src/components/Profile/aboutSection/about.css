@@ -1,5 +1,4 @@
 .about-container {
-  background: var(--background-color);
   max-width: 900px;
   display: flex;
   flex-direction: column;
@@ -16,7 +15,6 @@
 
 .about-container .about-view-container {
   text-align: center;
-  background-color: var(--background-color);
 }
 
 .about-container .button-view {
@@ -30,6 +28,8 @@
   min-height: 3px;
   color: var(--button-font-color-light);
   cursor: pointer;
+  position: absolute;
+  bottom: 1%;
 }
 
 .member-list-container {
@@ -42,19 +42,16 @@
 }
 
 .member-list-container .main--team {
-  background-color: var(--background-color);
   width: 100%;
 }
 
-.member-list-container .has-top-border {
+.about-container .has-top-border {
   border-top: 1px solid #e3edf2;
 }
 
 .member-list-container .member-container {
   display: flex;
-  justify-content: center;
   padding: 1.5rem;
-  background-color: var(--background-color);
 }
 
 .member-list-container .member-list {
