@@ -10,6 +10,14 @@ const cors = require("cors");
 const helmet = require("helmet");
 const responseTime = require("response-time");
 
+const multer = require("multer");
+const upload = multer();
+
+const compression = require("compression");
+
+//gzip compression
+app.use(compression());
+
 // Set security headers
 app.use(helmet());
 
@@ -26,6 +34,8 @@ app.use(
     extended: true,
   })
 );
+// for parsing multipart/form-data
+app.use(upload.array("imageData"));
 
 //Routes
 app.use("/", routes);

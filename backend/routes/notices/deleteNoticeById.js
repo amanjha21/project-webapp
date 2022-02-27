@@ -1,6 +1,5 @@
 const Schemas = require("../../models/index");
 const logger = require("../../helpers/logger");
-const auth = require("../../helpers/auth/index");
 module.exports = async (req, res) => {
   const userId = req.user._id;
   const noticeId = req.params.id;
