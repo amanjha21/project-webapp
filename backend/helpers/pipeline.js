@@ -808,7 +808,7 @@ const userDetails = (userId) => {
         organization: 1,
         teams: 1,
         posts: "$posts._id",
-        imageUrl: "$image_link",
+        imageUrl: "$posts.image_link",
         reactions: 1,
       },
     },
