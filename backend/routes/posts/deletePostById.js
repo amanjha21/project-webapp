@@ -5,13 +5,10 @@ module.exports = async (req, res) => {
   const userId = req.user._id;
   const postId = req.params.id;
   const ip = req.header("x-forwarded-for") || req.connection.remoteAddress;
-  if (postId.length != 24) {
-    return res.status(400).json({
-      success: false,
-      message: "Post doesn't exist",
-    });
-  }
   try {
+    if (postId.length != 24) {
+      throw new Error("Post doesn't exist");
+    }
     //check if this post exists and belongs to this user
     const post = await Schemas.Post.findOne({ _id: postId }).exec();
     if (!post || post.user != userId) {
