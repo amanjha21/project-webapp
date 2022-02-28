@@ -16,10 +16,7 @@ module.exports = async (req, res) => {
     }).exec();
 
     if (!organization) {
-      return res.status(400).json({
-        success: false,
-        message: "Organization doesn't exist",
-      });
+      throw new Error("Organization doesn't exist");
     }
 
     res.status(200).json(organization);

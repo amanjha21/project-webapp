@@ -20,10 +20,7 @@ module.exports = async (req, res) => {
     }).exec();
 
     if (!organization) {
-      return res.status(400).json({
-        success: false,
-        message: "Organization Doesn't Exist",
-      });
+      throw new Error("Organization Doesn't Exist");
     }
 
     //To get AdminID For Logger

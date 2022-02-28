@@ -19,10 +19,7 @@ module.exports = async (req, res) => {
     const team = await Schemas.Team.findOne({ _id: teamId }).exec();
 
     if (!team) {
-      return res.status(400).json({
-        success: false,
-        message: "Team doesn't exist",
-      });
+      throw new Error("Team doesn't exist");
     }
     const organization = await Schemas.Organization.findOne({
       _id: team.organization,
@@ -30,10 +27,7 @@ module.exports = async (req, res) => {
 
     //check if team is not a Organization Team
     if (team.name == organization.name || userId !== team.admin) {
-      return res.status(400).json({
-        success: false,
-        message: "Invalid Request",
-      });
+      throw new Error("Invalid Request");
     }
 
     const teamName = team.name;
@@ -62,18 +56,18 @@ module.exports = async (req, res) => {
     //delete team
     const result = await Schemas.Team.deleteOne({ _id: teamId }).exec();
 
-    logger({
-      userId: adminId,
-      message: `${teamName} Team Deleted with teamId: ${teamId} By User With UserId: ${adminId}`,
-      ip,
-    });
-
     if (result.deletedCount == 1) {
       res.status(200).json({
         success: true,
         message: "Team deleted successfully",
       });
     }
+
+    logger({
+      userId: adminId,
+      message: `${teamName} Team Deleted with teamId: ${teamId} By User With UserId: ${adminId}`,
+      ip,
+    });
   } catch (err) {
     res.status(404).json({
       success: false,

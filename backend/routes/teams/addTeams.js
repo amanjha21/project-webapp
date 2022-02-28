@@ -16,10 +16,7 @@ module.exports = async (req, res) => {
     });
 
     if (!adminDetails) {
-      return res.status(404).json({
-        success: false,
-        message: "Invalid Request",
-      });
+      throw new Error("Invalid Request");
     }
     const organization = adminDetails.organization;
 
@@ -30,10 +27,7 @@ module.exports = async (req, res) => {
     }).exec();
 
     if (result) {
-      return res.status(400).json({
-        success: false,
-        message: "Team already exist",
-      });
+      throw new Error("Team already exist");
     }
 
     //Create new team

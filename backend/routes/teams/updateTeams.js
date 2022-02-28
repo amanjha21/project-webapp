@@ -1,10 +1,11 @@
 const Schemas = require("../../models/index");
 const logger = require("../../helpers/logger");
-const uploader = require("../../helpers/uploader");
+const uploadImage = require("../../helpers/uploadImage");
+const deleteImage = require("../../helpers/deleteImage");
 
 module.exports = async (req, res) => {
   const teamId = req.params.id;
-  const profileImage = req.body.imageData;
+  const profileImage = req.files;
   const name = req.body.name;
   const description = req.body.description;
   const admin = req.body.admin;
@@ -35,10 +36,7 @@ module.exports = async (req, res) => {
     }).exec();
 
     if (!team) {
-      return res.status(400).json({
-        success: false,
-        message: "Team doesn't exist",
-      });
+      throw new Error("Team doesn't exist");
     }
 
     const organization = await Schemas.Organization.findOne({
@@ -47,18 +45,17 @@ module.exports = async (req, res) => {
 
     //check if logged in user is admin
     if (userId != team.admin) {
-      return res.status(400).json({
-        success: false,
-        message: "Invalid Request",
-      });
+      throw new Error("Access Denied");
     }
 
     //if profileImage == 0 delete team.imageUrl else if profileImage then update team.imageUrl
+
     if (profileImage === "0") {
+      deleteImage(team.teamUrl, "");
       team.imageUrl = "";
       await team.save();
-    } else if (profileImage) {
-      const url = await uploader(profileImage);
+    } else if (profileImage.length > 0) {
+      const url = await uploadImage(data, `/team/${teamId}`);
       //Save url in database
       team.imageUrl = url;
       await team.save();
@@ -66,10 +63,7 @@ module.exports = async (req, res) => {
 
     //check if team name is not same as team.organization name
     if (team.name == organization.name && name != team.name) {
-      return res.status(400).json({
-        success: false,
-        message: "Invalid Request",
-      });
+      throw new Error("Access Denied");
     } else {
       //update team.name
       if (name && name != team.name) {
@@ -98,10 +92,7 @@ module.exports = async (req, res) => {
         }
         await team.save();
       } else {
-        return res.status(400).json({
-          success: false,
-          message: "Admin must be a member of Team..",
-        });
+        throw new Error("Admin must be a member of Team.");
       }
     }
 
@@ -126,10 +117,7 @@ module.exports = async (req, res) => {
           }
         }
       } else {
-        return res.status(400).json({
-          success: false,
-          message: "Moderator must be a member of Team..",
-        });
+        throw new Error("Moderator must be a member of Team.");
       }
     }
 

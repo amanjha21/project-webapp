@@ -15,10 +15,7 @@ module.exports = async (req, res) => {
     //check if organization already exists in database
     const result = await Schemas.Organization.findOne({ email_format }).exec();
     if (result) {
-      return res.status(400).json({
-        success: false,
-        message: "Organization Already Exists",
-      });
+      throw new Error("Organization Already Exists");
     }
     //create a token with above details
     const approveToken = jwt.sign(

@@ -29,17 +29,11 @@ module.exports = async (req, res) => {
     }).exec();
 
     if (!organization) {
-      return res.status(400).json({
-        success: false,
-        message: "Organization doesn't exist",
-      });
+      throw new Error("Organization doesn't exist");
     }
     //check if new name is dfferent from old name
     if (name != organization.name) {
-      return res.status(403).json({
-        success: false,
-        message: "Invalid Request",
-      });
+      throw new Error("Invalid Request");
     }
     //check if user is admin
     const team = await Schemas.Team.findOne({
@@ -48,10 +42,7 @@ module.exports = async (req, res) => {
     });
 
     if (userId != team.admin) {
-      return res.status(403).json({
-        success: false,
-        message: "Invalid Request",
-      });
+      throw new Error("Invalid Request");
     }
     const admin = await Schemas.User({ _id: team.admin });
     //create a token with above details

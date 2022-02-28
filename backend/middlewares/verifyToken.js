@@ -18,10 +18,7 @@ module.exports = async (req, res, next) => {
     const dbToken = dbUser.token;
 
     if (!dbToken || dbToken != token) {
-      return res.status(400).json({
-        success: false,
-        message: "Access Denied",
-      });
+      throw new Error("Access Denied");
     }
 
     req.user = user;

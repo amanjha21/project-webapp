@@ -13,10 +13,7 @@ module.exports = async (req, res) => {
       .exec();
 
     if (organization.length == 0 || !organization) {
-      return res.status(400).json({
-        success: false,
-        message: "No Organization To Show",
-      });
+      throw new Error("No Organization To Show");
     }
 
     res.status(200).json(organization);
