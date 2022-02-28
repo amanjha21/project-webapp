@@ -35,7 +35,7 @@ router.post(
 );
 // update user route
 router.post(
-  "/update/:id",
+  "/update",
   validation(validationSchema.updateUserValidation),
   verifyToken,
   updateUser
