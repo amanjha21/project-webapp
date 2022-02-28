@@ -25,6 +25,8 @@ const updateUserValidation = Joi.object({
   name: Joi.string().optional(),
   teams: Joi.array().items(Joi.string().length(24)),
   newAdminId: Joi.string().email().optional(),
+  description: Joi.string().optional(),
+  deleteImageUrl: Joi.boolean().optional(),
 });
 
 const resetUserPasswordValidation = Joi.object({
