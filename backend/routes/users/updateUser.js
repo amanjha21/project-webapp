@@ -1,12 +1,13 @@
 const Schemas = require("../../models/index");
 const logger = require("../../helpers/logger");
-const uploader = require("../../helpers/uploader");
+
+const deleteImage = require("../../helpers/deleteImage");
 module.exports = async (req, res) => {
   const ip = req.header("x-forwarded-for") || req.connection.remoteAddress;
   const userId = req.params.id;
   const name = req.body.name;
   const description = req.body.description;
-  const imageData = req.body.imageData;
+  const imageData = req.files;
   //checking if the userId length is proper or not
   if (userId.length != 24) {
     return res.status(400).json({
@@ -46,10 +47,11 @@ module.exports = async (req, res) => {
 
     // if imageData is passed from the body then we will change the value of the user imageUrl in the database
 
-    if (imageData === "0") {
+    if (imageData.length == "0") {
+      deleteImage(user.imageUrl);
       user.imageUrl = "";
-    } else if (imageData) {
-      const url = await uploader(imageData);
+    } else if (imageData.length > 0) {
+      const url = await uploadImage(imageData, `./user/${userId}`);
       //Save url in database
       user.imageUrl = url;
     }
