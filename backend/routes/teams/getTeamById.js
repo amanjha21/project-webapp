@@ -16,10 +16,7 @@ module.exports = async (req, res) => {
     const team = await Schemas.Team.findOne({ _id: teamId }).exec();
 
     if (!team) {
-      return res.status(400).json({
-        success: false,
-        message: "Team doesn't exist",
-      });
+      throw new Error("Team doesn't exist");
     }
 
     //return team
