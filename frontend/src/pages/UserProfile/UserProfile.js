@@ -1,6 +1,6 @@
 import Navbar from "../../components/Navbar/Navbar";
-import Profile from "../../components/Profile/Profiles";
-import ProfileNavbar from "../../components/Profile/ProfileNavbars/ProfileNavbar";
+import Profile from "../../components/Profile/Profile";
+import ProfileNavbar from "../../components/Profile/ProfileNavbar/ProfileNavbar";
 
 const UserProfile = () => {
   return (
