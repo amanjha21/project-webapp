@@ -53,6 +53,9 @@ const Navbar = () => {
       .getElementById("myDropdown")
       .classList.toggle("show-dropdown-contents");
   }
+  const navProfileHandler = (e) => {
+    e.preventDefault();
+  };
   return (
     <div className="navbar-main">
       <nav>
@@ -77,15 +80,15 @@ const Navbar = () => {
         </form>
         <div className="nav-items">
           <li>
-            <a href="/">
-              <div className="nav-profile">
+            <div>
+              <div className="nav-profile" onClick={() => navProfileHandler}>
                 <img
                   src="http://cp91279.biography.com/1000509261001/1000509261001_1822909398001_BIO-Biography-29-Innovators-Mark-Zuckerberg-115956-SF.jpg"
                   alt=""
                 />{" "}
                 <span className="nav-userName">UserName</span>
               </div>
-            </a>
+            </div>
           </li>
           <li>
             <div onClick={() => setShowUserSettings(true)}>

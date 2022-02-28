@@ -808,6 +808,7 @@ const userDetails = (userId) => {
         organization: 1,
         teams: 1,
         posts: "$posts._id",
+        imageUrl: "$posts.image_link",
         reactions: 1,
       },
     },
@@ -825,6 +826,7 @@ const userDetails = (userId) => {
         organization: 1,
         posts: 1,
         reactions: "$reactions._id",
+        imageUrl: 1,
       },
     },
     {
@@ -841,6 +843,9 @@ const userDetails = (userId) => {
         },
         Posts: {
           $first: "$posts",
+        },
+        imageUrl: {
+          $first: "$imageUrl",
         },
         reactions: {
           $addToSet: "$reactions",
