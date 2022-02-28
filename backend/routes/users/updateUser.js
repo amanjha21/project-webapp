@@ -51,7 +51,8 @@ module.exports = async (req, res) => {
       deleteImage(user.imageUrl);
       user.imageUrl = "";
     } else if (imageData.length > 0) {
-      const url = await uploadImage(imageData, `./user/${userId}`);
+      deleteImage(user.imageUrl);
+      const url = await uploadImage(imageData[0], `./user/${userId}`);
       //Save url in database
       user.imageUrl = url;
     }
