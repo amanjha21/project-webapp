@@ -24,18 +24,12 @@ module.exports = async (req, res) => {
     }).exec();
 
     if (!team) {
-      return res.status(400).json({
-        success: false,
-        message: "Team doesn't exist",
-      });
+      throw new Error("Team doesn't exist");
     }
 
     //Check if Logged In user is admin of team or not
     if (userId != team.admin) {
-      return res.status(400).json({
-        success: false,
-        message: "Invalid Request",
-      });
+      throw new Error("Invalid Request");
     }
     const admin = await Schemas.User.findOne({
       _id: userId,
@@ -48,18 +42,12 @@ module.exports = async (req, res) => {
     });
 
     if (!user) {
-      return res.status(400).json({
-        success: false,
-        message: "user doesn't exist",
-      });
+      throw new Error("User doesn't exist");
     }
 
     //check if user is already a memeber of team
     if (user.teams.includes(teamId)) {
-      return res.status(400).json({
-        success: false,
-        message: "User is already a member of Team",
-      });
+      throw new Error("User is already a member of Team");
     }
 
     //if user exists create a token
