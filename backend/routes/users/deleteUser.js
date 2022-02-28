@@ -7,88 +7,88 @@ module.exports = async (req, res) => {
   const newAdminId = req.body.newadmin;
 
   try {
-    const user = await Schemas.User.findOne({
-      _id: userId,
-    }).exec();
-    if (!user) {
-      res.status(404).json({
-        success: false,
-        message: "User doesnot exist!!",
-      });
-    }
+    // const user = await Schemas.User.findOne({
+    //   _id: userId,
+    // }).exec();
+    // if (!user) {
+    //   res.status(404).json({
+    //     success: false,
+    //     message: "User doesnot exist!!",
+    //   });
+    // }
     const userDetails = await Schemas.User.aggregate(
       pipeline.userDetails(userId)
     );
 
     // if user is admin and hasnt passed successor adminId
     // send err request as new admin email required
-    const adminCheck = await Schemas.Team.find({
-      admin: userId,
-    });
-    if (adminCheck.length > 0) {
-      if (!newAdminId) {
-        return res.status(400).json({
-          success: false,
-          message: "new admin email required!!",
-        });
-      } else {
-        await Schemas.Team.findManyandUpdate(
-          {
-            admin: userId,
-          },
-          {
-            admin: newAdminId,
-          }
-        );
-      }
-    }
+    // const adminCheck = await Schemas.Team.find({
+    //   admin: userId,
+    // });
+    // if (adminCheck.length > 0) {
+    //   if (!newAdminId) {
+    //     return res.status(400).json({
+    //       success: false,
+    //       message: "new admin email required!!",
+    //     });
+    //   } else {
+    //     await Schemas.Team.findManyandUpdate(
+    //       {
+    //         admin: userId,
+    //       },
+    //       {
+    //         admin: newAdminId,
+    //       }
+    //     );
+    //   }
+    // }
     // check if moderator exists
-    const modCheck = await Schemas.Team.find({
-      moderator: {
-        $in: userId,
-      },
-    });
+    // const modCheck = await Schemas.Team.find({
+    //   moderator: {
+    //     $in: userId,
+    //   },
+    // });
     //if true  change userId of Notice to admin's userId of that particular team member//
-    if (modCheck.length > 0) {
-      const adminFetch = modCheck.map((obj) => obj.admin);
-      for (let i = 0; i < modCheck.length; i++) {
-        // find and update all the userId for the Notices sent by the mod to admin's id
-        await Schemas.Notice.findManyandUpdate(
-          {
-            user: userId,
-            team: modCheck[i]._id,
-          },
-          {
-            user: adminFetch[i],
-          }
-        );
+    // if (modCheck.length > 0) {
+    //   const adminFetch = modCheck.map((obj) => obj.admin);
+    //   for (let i = 0; i < modCheck.length; i++) {
+    //     // find and update all the userId for the Notices sent by the mod to admin's id
+    //     await Schemas.Notice.findManyandUpdate(
+    //       {
+    //         user: userId,
+    //         team: modCheck[i]._id,
+    //       },
+    //       {
+    //         user: adminFetch[i],
+    //       }
+    //     );
 
-        await Schemas.Notice_Reaction.findManyandUpdate(
-          {
-            user: userId,
-            team: modCheck[i]._id,
-          },
-          {
-            user: adminFetch[i],
-          }
-        );
+    //     await Schemas.Notice_Reaction.findManyandUpdate(
+    //       {
+    //         user: userId,
+    //         team: modCheck[i]._id,
+    //       },
+    //       {
+    //         user: adminFetch[i],
+    //       }
+    //     );
 
-        const index = modCheck[i].moderator.indexOf(userId);
-        modCheck[i].moderator.splice(index, 1);
-      }
-      await modCheck.save();
-    }
-
+    //     const index = modCheck[i].moderator.indexOf(userId);
+    //     modCheck[i].moderator.splice(index, 1);
+    //   }
+    //   await modCheck.save();
+    // }
+    console.log(userDetails);
     // change the userId for notices and notice_reactions sent by old admin to the newly appointed one
 
     // delete notice_reaction by userId of the mod
 
-    await deleteUser(userDetails[0]);
-    logger({
-      email: user.email,
-      message: `User deleted successfully with userId: ${userId} `,
-      ip,
-    });
+    // await deleteUser(userDetails[0]);
+    // logger({
+    //   email: user.email,
+    //   message: `User deleted successfully with userId: ${userId} `,
+    //   ip,
+    // });
 
     res.status(200).json({
       success: true,
