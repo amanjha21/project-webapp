@@ -32,10 +32,7 @@ module.exports = async (req, res) => {
       },
     ]);
     if (result.length == 0) {
-      return res.status(400).json({
-        success: false,
-        message: `Post/s doesn't exist`,
-      });
+      throw new Error("Post/s doesn't exist");
     } else {
       const postIdArray = result[0].posts;
       result[0].imageUrl.map((linkArray) => {
