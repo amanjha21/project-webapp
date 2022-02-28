@@ -1,5 +1,6 @@
 import Navbar from "../../components/Navbar/Navbar";
 import Profile from "../../components/Profile/Profile";
+import ProfileNavbar from "../../components/Profile/ProfileNavbars/ProfileNavbar";
 
 const UserProfile = () => {
   return (
@@ -7,6 +8,7 @@ const UserProfile = () => {
       <div className="user-profile-grid-container">
         <Navbar className="navbar-grid" />
         <Profile className="profile-grid" />
+        <ProfileNavbar className="profile-navbar-grid" />
       </div>
     </>
   );
