@@ -3,7 +3,7 @@ const uploadImage = require("../../helpers/uploadImage");
 const logger = require("../../helpers/logger");
 module.exports = async (req, res) => {
   const userId = req.user._id;
-  const content = req.body.content || "abcd";
+  const content = req.body.content;
   const imageData = req.files;
   const ip = req.header("x-forwarded-for") || req.connection.remoteAddress;
   try {
