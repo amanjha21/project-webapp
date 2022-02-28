@@ -1,5 +1,6 @@
 const Schemas = require("../../models/index");
 const logger = require("../../helpers/logger");
+const deleteImage = require("../../helpers/deleteImage");
 
 module.exports = async (req, res) => {
   const teamId = req.params.id;
@@ -34,10 +35,18 @@ module.exports = async (req, res) => {
     const adminId = team.admin;
 
     //find all notices posted by team
-    const noticeIdArray = await Schemas.Notice.find(
+    const noticeArray = await Schemas.Notice.find(
       { team: team._id },
-      { _id: 1 }
+      { _id: 1, image_link: 1 }
     );
+
+    const noticeIdArray = noticeArray.map((notice) => {
+      return notice._id;
+    });
+
+    const noticeImageArray = noticeArray.map((notice) => {
+      return notice.image_link;
+    });
 
     //delete all reactions on notices
     await Schemas.Notice_Reaction.deleteMany({
@@ -46,6 +55,10 @@ module.exports = async (req, res) => {
 
     //delete all notices posted by teams
     await Schemas.Notice.deleteMany({ _id: { $in: noticeIdArray } });
+    //delete all image notics posted by teams
+    noticeImageArray.map((imageArray) => {
+      deleteImage("", imageArray);
+    });
 
     //remove team from all users(user.teams)
     await Schemas.User.updateMany(
