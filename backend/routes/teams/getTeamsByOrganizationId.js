@@ -6,6 +6,7 @@ module.exports = async (req, res) => {
   page--;
   const limit = parseInt(req.query.limit) || 10;
 
+  //Check if organization exists
   if (organizationId.length != 24) {
     return res.status(400).json({
       success: false,
@@ -14,6 +15,7 @@ module.exports = async (req, res) => {
   }
 
   try {
+    //find all teams
     const team = await Schemas.Team.find({
       organization: organizationId,
     })
@@ -22,6 +24,7 @@ module.exports = async (req, res) => {
       .limit(limit)
       .exec();
 
+    //check if teams exist
     if (team.length == 0 || !team) {
       return res.status(400).json({
         success: false,
@@ -29,6 +32,7 @@ module.exports = async (req, res) => {
       });
     }
 
+    //return team
     res.status(200).json(team);
   } catch (err) {
     res.status(404).json({

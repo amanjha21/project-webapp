@@ -1,43 +1,36 @@
 const Schemas = require("../../models/index");
-const uploader = require("../../helpers/uploader");
+const uploadImage = require("../../helpers/uploadImage");
+const deleteImage = require("../../helpers/deleteImage");
 const logger = require("../../helpers/logger");
 module.exports = async (req, res) => {
   const userId = req.user._id;
   const postId = req.body.postId;
   const content = req.body.content;
-  const imageData = req.body.imageData;
+  const imageData = req.files;
   const ip = req.header("x-forwarded-for") || req.connection.remoteAddress;
 
-  if (!content && !imageData) {
-    return res.status(403).json({
-      success: false,
-      message: "Nothing to update",
-    });
-  }
   try {
+    if (!content && !imageData) {
+      throw new Error("Nothing to update");
+    }
     //check if this post exists and belongs to this user
     const post = await Schemas.Post.findOne({ _id: postId }).exec();
-    if (!post) {
-      return res.status(400).json({
-        success: false,
-        message: `Post doesn't exist`,
-      });
+    if (!post || post.user != userId) {
+      throw new Error("Post doesn't exist");
     }
-    if (post.user != userId) {
-      return res.status(400).json({
-        success: false,
-        message: "Post doesn't exist ",
-      });
-    }
+
     //update content if exists
-    if (content) {
+    if (content && content != post.content) {
       post.content = content;
     }
-    // update image if exixts
-    if (imageData) {
+    // if image data exists
+    if (imageData.length > 0) {
+      // delete old images
+      deleteImage("", post.image_link);
+      //add new images
       let imageUrl = await Promise.all(
         imageData.map(async (data) => {
-          const url = await uploader(data);
+          const url = await uploadImage(data, `/user/${userId}/post-images/`);
           return url;
         })
       );

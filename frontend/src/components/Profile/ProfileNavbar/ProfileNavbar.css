@@ -1,9 +1,13 @@
+.profile-navbar-head {
+  display: flex;
+  justify-content: center;
+}
+
 .profile-navbar {
-  /* width: 70vw; */
+  width: 70vw;
   background-color: var(--main-color1);
   max-width: 900px;
   max-height: 200px;
-  position: relative;
 }
 
 .profile-navbar .profile-nav {

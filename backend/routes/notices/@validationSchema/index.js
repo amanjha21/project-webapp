@@ -13,7 +13,6 @@ const getNoticesByTeamId = Joi.object({
   limit: Joi.number().min(1).optional(),
 });
 const getNoticesByUserId = Joi.object({
-  teamId: Joi.string().length(24).required(),
   page: Joi.number().min(1).optional(),
   limit: Joi.number().min(1).optional(),
 });

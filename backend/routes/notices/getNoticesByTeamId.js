@@ -30,7 +30,7 @@ module.exports = async (req, res) => {
     if (notices.length == 0) {
       return res.status(400).json({
         success: false,
-        message: "Invalid Request",
+        message: "Nothing to show",
       });
     }
     res.status(200).json(notices);

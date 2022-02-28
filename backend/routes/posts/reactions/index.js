@@ -6,6 +6,7 @@ const validation = require("../../../middlewares/validation");
 const validationSchema = require("./@validationSchema");
 const verifyToken = require("../../../middlewares/verifyToken");
 const getCommentsByPostId = require("./getCommentsByPostId");
+const getReactionsByPostId = require("./getReactionsByPostId");
 
 router.post(
   "/",
@@ -18,6 +19,12 @@ router.get(
   validation(validationSchema.getCommentsValidation, "params"),
   verifyToken,
   getCommentsByPostId
+);
+router.get(
+  "/:id",
+  validation(validationSchema.getCommentsValidation, "params"),
+  verifyToken,
+  getReactionsByPostId
 );
 router.post(
   "/update",

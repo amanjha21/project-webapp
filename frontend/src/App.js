@@ -1,7 +1,7 @@
 import "./App.css";
 import Login from "./pages/Login";
 import Post from "./components/Post/Post";
-import Profile from "./components/Profile/profile";
+import UserProfile from "./pages/UserProfile/UserProfile";
 import Navbar from "./components/Navbar/Navbar";
 import UserTeams from "./components/UserTeams/UserTeams";
 
@@ -11,7 +11,7 @@ function App() {
       {/* <Navbar />
       <Post />
       <UserTeams />*/}
-      <Profile />
+      <UserProfile />
       {/* <Login /> */}
     </div>
   );
