@@ -1,5 +1,5 @@
 import "./About.css";
-import Member from "../Memberss/Member";
+import Member from "../Members/Member";
 import { useState } from "react";
 
 const About = () => {
