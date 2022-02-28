@@ -1,0 +1,80 @@
+.profile-navbar-head {
+  display: flex;
+  justify-content: center;
+}
+
+.profile-navbar {
+  width: 70vw;
+  background-color: var(--main-color1);
+  max-width: 900px;
+  max-height: 200px;
+}
+
+.profile-navbar .profile-nav {
+  display: table;
+  margin: 0 auto;
+  color: var(--font-color-light);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 1.8rem;
+  font-weight: 300;
+  list-style-type: none;
+  padding: 0;
+  text-align: center;
+}
+
+.profile-navbar .profile-nav li {
+  display: inline-block;
+  padding: 15px 100px;
+}
+
+.profile-navbar .profile-nav li.profile-navbar__active {
+  color: var(--font-color);
+}
+
+.profile-navbar .profile-nav li:after {
+  content: "";
+  position: relative;
+  display: block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50px;
+  background: var(--font-color-light);
+  transform-origin: 50% 50%;
+  bottom: -10px;
+  left: 50%;
+  transition: all 0.2s ease-out;
+  transform: translate(-50%, -50%);
+}
+
+.profile-navbar .profile-nav li.profile-navbar__active:after {
+  content: "";
+  position: relative;
+  display: block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50px;
+  background: var(--font-color);
+  transform-origin: 50% 50%;
+  bottom: -10px;
+  left: 50%;
+  transition: all 0.2s ease-out;
+  transform: translate(-50%, -50%);
+}
+
+.profile-navbar .profile-nav li:hover:after {
+  width: 50px;
+  height: 6px;
+  border-radius: 50px;
+}
+
+.profile-navbar .profile-nav li .profile-navbar__active:hover:after {
+  width: 50px;
+  height: 6px;
+  background: var(--font-color);
+  border-radius: 50px;
+}
+
+.profile-navbar .profile-nav li:hover {
+  cursor: pointer;
+}
