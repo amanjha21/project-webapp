@@ -1,11 +1,3 @@
-.about-container {
-  background: var(--background-color);
-  max-width: 900px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
 .about-container .about-team-head {
   text-align: center;
   margin: 0;
@@ -16,7 +8,6 @@
 
 .about-container .about-view-container {
   text-align: center;
-  background-color: var(--background-color);
 }
 
 .about-container .button-view {
@@ -30,11 +21,12 @@
   min-height: 3px;
   color: var(--button-font-color-light);
   cursor: pointer;
+  position: absolute;
+  bottom: 1%;
 }
 
 .member-list-container {
   display: flex;
-  max-width: 900px;
   height: 150px;
   font-size: 1.5rem;
   font-weight: 400;
@@ -42,19 +34,15 @@
 }
 
 .member-list-container .main--team {
-  background-color: var(--background-color);
   width: 100%;
 }
 
-.member-list-container .has-top-border {
+.about-container .has-top-border {
   border-top: 1px solid #e3edf2;
 }
 
 .member-list-container .member-container {
-  display: flex;
-  justify-content: center;
-  padding: 1.5rem;
-  background-color: var(--background-color);
+  padding: 0.5rem;
 }
 
 .member-list-container .member-list {
@@ -62,9 +50,7 @@
   text-align: center;
   flex-direction: column;
   list-style-type: none;
-  margin: 0;
   padding: 0;
-  width: 60vw;
 }
 .member-list-container .member-list li {
   display: flex;
