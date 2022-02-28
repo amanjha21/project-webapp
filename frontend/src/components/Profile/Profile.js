@@ -6,7 +6,7 @@ import { IoMdAddCircle, IoMdExit } from "react-icons/io";
 import Confirmation from "../Confirmation";
 
 import Popup from "../Popup";
-import ProfileNavbar from "./ProfileNavbars/ProfileNavbar";
+import ProfileNavbar from "./ProfileNavbar/ProfileNavbar";
 import EditProfileImage from "./EditProfileImage/EditProfileImage";
 import EditProfile from "./EditProfile/EditProfile";
 
