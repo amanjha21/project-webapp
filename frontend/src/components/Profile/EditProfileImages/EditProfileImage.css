@@ -1,0 +1,102 @@
+.custom-file-upload {
+  display: inline-block;
+  position: relative;
+  box-shadow: var(--default-profile-box-border);
+  margin-bottom: 25px;
+  margin-top: 15px;
+}
+
+.custom-file-upload .img-wrap {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.custom-file-upload .img-upload:before {
+  content: "\2191";
+  font-size: 7rem;
+  position: absolute;
+  padding-top: 80px;
+  top: 80%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: var(--font-color-light);
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  opacity: 1;
+  transition: 0.5s ease;
+  font-weight: 700;
+}
+
+.custom-file-upload .upload-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.custom-file-upload #photo-upload[type="file"] {
+  display: none;
+}
+
+.custom-file-upload #photo-upload::placeholder {
+  color: var(--sec-color);
+}
+
+.card {
+  width: 50vw;
+  min-height: 450px;
+  max-width: 500px;
+  margin-top: 15px;
+  border-radius: var(--default-border-radius);
+  display: flex;
+  justify-content: center;
+  background-color: var(--sec-background-color);
+}
+
+.card .card-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.card .card-form h1 {
+  font-size: 2.1rem;
+  margin-top: 0;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--font-color-header);
+  opacity: 0.5;
+}
+
+.card .card-form-btn {
+  background: none;
+  border: none;
+  font-family: var(--button-font-family);
+  font-weight: 600;
+  font-size: 1.9rem;
+  margin: 10px 10px;
+  min-width: 181px;
+  border-radius: 50px;
+  min-height: 40px;
+  color: var(--default-btn-txt-colour);
+  cursor: pointer;
+}
+
+.card .button--delete {
+  min-width: 101px;
+  margin-bottom: 0;
+  padding-bottom: 0;
+  background: linear-gradient(45deg, #d5135a, #f05924);
+}
+
+.card .button--save {
+  background: var(--button-background-color-light);
+}
