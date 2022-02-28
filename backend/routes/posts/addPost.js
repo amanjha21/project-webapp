@@ -15,7 +15,7 @@ module.exports = async (req, res) => {
     if (imageData) {
       let imageUrl = await Promise.all(
         imageData.map(async (data) => {
-          const url = await uploadImage(data);
+          const url = await uploadImage(data, `/user/${userId}/post-images/`);
           return url;
         })
       );
