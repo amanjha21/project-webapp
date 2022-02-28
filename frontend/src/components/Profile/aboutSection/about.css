@@ -41,6 +41,10 @@
   border-top: 1px solid #e3edf2;
 }
 
+.member-list-container .member-container {
+  padding: 0.5rem;
+}
+
 .member-list-container .member-list {
   display: flex;
   text-align: center;
