@@ -1,5 +1,5 @@
 import Navbar from "../../components/Navbar/Navbar";
-import Profile from "../../components/Profile/Profile";
+import Profile from "../../components/Profile/Profiles";
 import ProfileNavbar from "../../components/Profile/ProfileNavbars/ProfileNavbar";
 
 const UserProfile = () => {
