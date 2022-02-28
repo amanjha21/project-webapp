@@ -21,10 +21,7 @@ module.exports = async (req, res) => {
       pipeline.posts(userId, page, noOfPosts)
     );
     if (post.length == 0) {
-      return res.status(400).json({
-        success: false,
-        message: "Invalid Request",
-      });
+      throw new Error("No post/s to show");
     }
     res.status(200).json(post);
   } catch (err) {
