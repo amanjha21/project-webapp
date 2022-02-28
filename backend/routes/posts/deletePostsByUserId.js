@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const ObjectId = mongoose.Types.ObjectId;
 const Schemas = require("../../models/index");
 const logger = require("../../helpers/logger");
+const deleteImage = require("../../helpers/deleteImage");
 module.exports = async (req, res) => {
   const userId = req.user._id;
   const ip = req.header("x-forwarded-for") || req.connection.remoteAddress;
@@ -19,6 +20,9 @@ module.exports = async (req, res) => {
           posts: {
             $push: "$_id",
           },
+          imageUrl: {
+            $push: "$image_link",
+          },
         },
       },
       {
@@ -28,12 +32,12 @@ module.exports = async (req, res) => {
       },
     ]);
     if (result.length == 0) {
-      return res.status(400).json({
-        success: false,
-        message: `Post/s doesn't exist`,
-      });
+      throw new Error("Post/s doesn't exist");
     } else {
       const postIdArray = result[0].posts;
+      result[0].imageUrl.map((linkArray) => {
+        deleteImage("", linkArray);
+      });
       await deletePostsByUserId(postIdArray);
       logger({
         userId: userId,

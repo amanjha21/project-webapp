@@ -6,13 +6,10 @@ module.exports = async (req, res) => {
   const postId = req.params.id;
   const token = req.header("Authorization").split(" ")[1] || "";
   let userId = "";
-  if (postId.length != 24) {
-    return res.status(400).json({
-      success: false,
-      message: "Post doesn't exist",
-    });
-  }
   try {
+    if (postId.length != 24) {
+      throw new Error("Post doesn't exist");
+    }
     //if token exists validate and extract userid
     if (token) {
       const user = jwt.verify(token, process.env.USER_TOKEN_SECRET);
@@ -27,10 +24,7 @@ module.exports = async (req, res) => {
       pipeline.postById(postId, userId)
     );
     if (post.length == 0) {
-      return res.status(400).json({
-        success: false,
-        message: "Post doesn't exist",
-      });
+      throw new Error("Post doesn't exist");
     }
     res.status(200).json(post);
   } catch (err) {

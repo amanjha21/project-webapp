@@ -7,21 +7,15 @@ module.exports = async (req, res) => {
   const currentUserId = req.user._id;
   const page = parseInt(req.query.page);
   const noOfPosts = parseInt(req.query.limit);
-  if (userId.length != 24) {
-    return res.status(400).json({
-      success: false,
-      message: "Post/s doesn't exist",
-    });
-  }
   try {
+    if (userId.length != 24) {
+      throw new Error("Post/s doesn't exist");
+    }
     const post = await Schemas.Post.aggregate(
       pipeline.postsByUserId(userId, currentUserId, page, noOfPosts)
     );
     if (post.length == 0) {
-      return res.status(400).json({
-        success: false,
-        message: "Post/s doesn't exist",
-      });
+      throw new Error("Post doesn't exist");
     }
     res.status(200).json(post);
   } catch (err) {

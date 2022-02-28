@@ -1,6 +1,6 @@
 const cloudinary = require("./cloudinary");
 const sharp = require("sharp");
-const uploadImage = async (data) => {
+const uploadImage = async (data, folder = "") => {
   //file type check
   if (
     data.mimetype !== "image/jpeg" &&
@@ -21,10 +21,9 @@ const uploadImage = async (data) => {
   }
   //buffer to base 64
   const base64Data = "data:image/jpeg;base64," + data.buffer.toString("base64");
-  // const fileName = "synoarx-" + data.originalname.split(".")[0] + ".jpg";
   //upload image
   const result = await cloudinary.uploader.upload(base64Data, {
-    folder: "synoarx",
+    folder: `synoarx${folder}`,
   });
   return result.secure_url;
 };
