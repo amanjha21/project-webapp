@@ -21,8 +21,6 @@
   min-height: 3px;
   color: var(--button-font-color-light);
   cursor: pointer;
-  position: absolute;
-  bottom: 1%;
 }
 
 .member-list-container {
