@@ -14,7 +14,7 @@
   height: 50px;
   padding: 0 20vw;
   border-bottom: 2px solid var(--border-color);
-  box-shadow: 0px 0px 20px 5px var(--border-color);
+  box-shadow: 0px 8px 20px -20px grey;
 }
 .navbar-main nav .logo {
   color: var(--main-color1);
