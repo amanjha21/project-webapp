@@ -34,6 +34,7 @@
   --clickable-font-color: #444;
   --default-font-family: "Montserrat", sans-serif;
   --selected-bgcolor: #ccc;
+  --hover-bgcolor: #f7f7f7;
 }
 * {
   box-sizing: border-box;
