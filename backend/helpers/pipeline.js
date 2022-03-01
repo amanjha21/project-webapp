@@ -91,7 +91,7 @@ const postById = (postId, userId = "000000000000000000000000") => {
           $sum: {
             $cond: [
               {
-                $eq: ["$reaction.type", "like"],
+                $eq: ["$reaction.type", "dislike"],
               },
               1,
               0,
@@ -232,7 +232,7 @@ const posts = (userId = "000000000000000000000000", pageInput, number) => {
           $sum: {
             $cond: [
               {
-                $eq: ["$reaction.type", "like"],
+                $eq: ["$reaction.type", "dislike"],
               },
               1,
               0,
@@ -383,7 +383,7 @@ const postsByUserId = (
           $sum: {
             $cond: [
               {
-                $eq: ["$reaction.type", "like"],
+                $eq: ["$reaction.type", "dislike"],
               },
               1,
               0,
@@ -495,7 +495,7 @@ const commentsByPostId = (
               comment: 1,
               "user._id": 1,
               "user.name": 1,
-              "user.imgUrl": 1,
+              "user.imageUrl": 1,
               createdAt: 1,
             },
           },
@@ -551,7 +551,7 @@ const commentsByPostId = (
               comment: 1,
               "user._id": 1,
               "user.name": 1,
-              "user.imgUrl": 1,
+              "user.imageUrl": 1,
               createdAt: 1,
             },
           },
@@ -621,7 +621,7 @@ const reactionsByPostId = (
         type: 1,
         "user._id": 1,
         "user.name": 1,
-        "user.imgUrl": 1,
+        "user.imageUrl": 1,
         createdAt: 1,
       },
     },
@@ -968,7 +968,7 @@ const noticeById = (noticeId, currentUserId) => {
           $sum: {
             $cond: [
               {
-                $eq: ["$reaction.type", "like"],
+                $eq: ["$reaction.type", "dislike"],
               },
               1,
               0,
@@ -1123,7 +1123,7 @@ const noticesByUserId = (
           $sum: {
             $cond: [
               {
-                $eq: ["$reaction.type", "like"],
+                $eq: ["$reaction.type", "dislike"],
               },
               1,
               0,
@@ -1269,7 +1269,7 @@ const noticesByTeamId = (teamId, currentUserId, pageInput, number) => {
           $sum: {
             $cond: [
               {
-                $eq: ["$reaction.type", "like"],
+                $eq: ["$reaction.type", "dislike"],
               },
               1,
               0,

@@ -8,9 +8,9 @@ module.exports = async (req, res) => {
   const content = req.body.content;
   const imageData = req.files;
   const ip = req.header("x-forwarded-for") || req.connection.remoteAddress;
-
+  const deleteImageUrl = req.body.deleteImageUrl || false;
   try {
-    if (!content && !imageData) {
+    if (!content && imageData.length == 0 && !deleteImageUrl) {
       throw new Error("Nothing to update");
     }
     //check if this post exists and belongs to this user
@@ -23,8 +23,14 @@ module.exports = async (req, res) => {
     if (content && content != post.content) {
       post.content = content;
     }
+    //if deleteImageUrl
+    if (deleteImageUrl) {
+      // delete old images
+      deleteImage("", post.image_link);
+      post.image_link = "";
+    }
     // if image data exists
-    if (imageData.length > 0) {
+    else if (imageData.length > 0) {
       // delete old images
       deleteImage("", post.image_link);
       //add new images

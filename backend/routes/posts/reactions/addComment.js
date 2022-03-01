@@ -8,10 +8,7 @@ module.exports = async (req, res) => {
       _id: post,
     });
     if (!dbPost) {
-      return res.status(404).json({
-        success: false,
-        message: "Post doesnt exist",
-      });
+      throw new Error("Post doesnt exist");
     }
     const reaction = Schemas.Reaction({
       type: "comment",

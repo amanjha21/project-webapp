@@ -6,8 +6,7 @@ const addCommentValidation = Joi.object({
 });
 
 const deleteCommentValidation = Joi.object({
-  noticeId: Joi.string().length(24).required(),
-  comment: Joi.string().required(),
+  id: Joi.string().length(24).required(),
 });
 
 const updateCommentValidation = Joi.object({
