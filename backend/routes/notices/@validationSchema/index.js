@@ -2,7 +2,6 @@ const Joi = require("@hapi/joi");
 const addNoticeValidation = Joi.object({
   teamId: Joi.string().length(24).required(),
   content: Joi.string().required(),
-  imageData: Joi.array().items(Joi.string()).optional(),
 });
 
 const deleteNoticesByTeamIdValidation = Joi.object({
@@ -19,7 +18,7 @@ const getNoticesByUserId = Joi.object({
 const updateNoticeValidation = Joi.object({
   noticeId: Joi.string().length(24).required(),
   content: Joi.string().optional(),
-  imageData: Joi.array().items(Joi.string()).optional(),
+  deleteImageUrl: Joi.boolean().optional(),
 });
 module.exports = {
   addNoticeValidation,
