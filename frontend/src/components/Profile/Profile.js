@@ -6,7 +6,6 @@ import { IoMdAddCircle, IoMdExit } from "react-icons/io";
 import Confirmation from "../Confirmation";
 
 import Popup from "../Popup";
-import ProfileNavbar from "./ProfileNavbar/ProfileNavbar";
 import EditProfileImage from "./EditProfileImage/EditProfileImage";
 import EditProfile from "./EditProfile/EditProfile";
 
@@ -14,7 +13,7 @@ const Profile = () => {
   const [viewEditProfileImg, setViewEditProfileImg] = useState(false);
   const [viewEditProfile, setViewEditProfile] = useState(false);
   const [showAddMember, setshowAddMember] = useState(false);
-  const [logout, setLogout] = useState(false);
+  const [leaveTeam, setLeaveTeam] = useState(false);
 
   return (
     <>
@@ -27,9 +26,12 @@ const Profile = () => {
             alt="profile card"
           />
         </div>
-        <div className="profile-card-logout">
-          <button className="profile-card-btn logout-btn" onClick={setLogout}>
-            Leave Team <IoMdExit className="logout-icon" />
+        <div className="profile-card-leaveTeam">
+          <button
+            className="profile-card-btn leaveTeam-btn"
+            onClick={setLeaveTeam}
+          >
+            Leave Team <IoMdExit className="leaveTeam-icon" />
           </button>
         </div>
 
@@ -59,8 +61,8 @@ const Profile = () => {
         </div>
       </div>
       <Confirmation
-        visible={logout}
-        setVisible={setLogout}
+        visible={leaveTeam}
+        setVisible={setLeaveTeam}
         message="Are you Sure you want to leave this Team?"
         option="Confirm"
         onConfirm={() => console.log("Request Sent Successfully")}
