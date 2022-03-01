@@ -3,19 +3,17 @@ const ObjectId = mongoose.Types.ObjectId;
 const Schemas = require("../../models/index");
 const logger = require("../../helpers/logger");
 const auth = require("../../helpers/auth/index");
+const deleteImage = require("../../helpers/deleteImage");
 module.exports = async (req, res) => {
   const teamId = req.body.teamId;
   const userId = req.user._id;
   const ip = req.header("x-forwarded-for") || req.connection.remoteAddress;
-  const hasAuth =
-    (await auth.isAdminOfTeam(userId, teamId)) ||
-    (await auth.isModeratorOfTeam(userId, teamId));
-  if (!hasAuth)
-    return res.status(401).json({
-      success: false,
-      message: "you donot have auth to access this resource",
-    });
   try {
+    const hasAuth =
+      (await auth.isAdminOfTeam(userId, teamId)) ||
+      (await auth.isModeratorOfTeam(userId, teamId));
+    if (!hasAuth)
+      throw new Error("you donot have auth to access this resource");
     //find all notices by this teamId and get a array of noticeId
     const result = await Schemas.Notice.aggregate([
       {
@@ -29,6 +27,9 @@ module.exports = async (req, res) => {
           notices: {
             $push: "$_id",
           },
+          imageUrl: {
+            $push: "$image_link",
+          },
         },
       },
       {
@@ -38,12 +39,12 @@ module.exports = async (req, res) => {
       },
     ]);
     if (result.length == 0) {
-      return res.status(400).json({
-        success: false,
-        message: `Notice/s doesn't exist`,
-      });
+      throw new Error("Notice/s doesn't exist");
     } else {
       const noticeIdArray = result[0].notices;
+      result[0].imageUrl.map((linkArray) => {
+        deleteImage("", linkArray);
+      });
       await deleteNoticeByTeamId(noticeIdArray);
       logger({
         userId: userId,
