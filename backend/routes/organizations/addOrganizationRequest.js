@@ -26,7 +26,7 @@ module.exports = async (req, res) => {
       }
     );
     //create a link with token
-    const approveLink = `${fullUrl}/sendVerificationEmail/${approveToken}`;
+    const approveLink = `${fullUrl}/organization/add/token/${approveToken}`;
     //send link to admin's email
     await mailer({
       email: process.env.ADMIN_EMAIL,

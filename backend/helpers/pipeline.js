@@ -663,6 +663,7 @@ const organizationDetails = (organizationId) => {
         name: 1,
         email_format: 1,
         user: "$users._id",
+        userImage: "$users.imageUrl",
         createdAt: 1,
         updatedAt: 1,
         teams: 1,
@@ -689,9 +690,11 @@ const organizationDetails = (organizationId) => {
         email_format: 1,
         user: 1,
         post: "$posts._id",
+        postImageArray: "$posts.image_link",
         createdAt: 1,
         updatedAt: 1,
         teams: 1,
+        userImage: 1,
       },
     },
     {
@@ -708,8 +711,11 @@ const organizationDetails = (organizationId) => {
         user: 1,
         post: 1,
         team: "$teams._id",
+        teamImage: "$teams.imageUrl",
         createdAt: 1,
         updatedAt: 1,
+        userImage: 1,
+        postImageArray: 1,
       },
     },
     {
@@ -735,8 +741,12 @@ const organizationDetails = (organizationId) => {
         post: 1,
         team: 1,
         notice: "$notices._id",
+        noticeImageArray: "$notices.image_link",
         createdAt: 1,
         updatedAt: 1,
+        userImage: 1,
+        postImageArray: 1,
+        teamImage: 1,
       },
     },
     {
@@ -765,6 +775,18 @@ const organizationDetails = (organizationId) => {
         },
         notices: {
           $addToSet: "$notice",
+        },
+        userImage: {
+          $addToSet: "$userImage",
+        },
+        teamImage: {
+          $addToSet: "$teamImage",
+        },
+        postImageArray: {
+          $addToSet: "$postImageArray",
+        },
+        noticeImageArray: {
+          $addToSet: "$noticeImageArray",
         },
       },
     },
