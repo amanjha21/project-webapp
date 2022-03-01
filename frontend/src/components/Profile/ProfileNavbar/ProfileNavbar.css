@@ -4,9 +4,7 @@
 }
 
 .profile-navbar {
-  width: 71vw;
-  background-color: var(--main-color1);
-  max-width: 900px;
+  background-color: var(--main-color1) !important;
   max-height: 200px;
   border-radius: 2px;
 }
@@ -86,10 +84,11 @@
   align-items: center;
 }
 
+.profile-navbar,
 .post-section,
 .about-section {
-  width: 71vw;
-  max-width: 900px;
+  width: 63vw;
+  /* max-width: 900px; */
   margin: auto;
   background-color: var(--background-color);
 }
