@@ -87,11 +87,6 @@
   font-size: 0.875em;
 }
 
-.member-list-container .make-role {
-  position: absolute;
-  right: 0%;
-}
-
 .member-list-container .make-role-btn {
   border: none;
   margin-bottom: 3px;
