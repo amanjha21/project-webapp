@@ -26,7 +26,7 @@
   object-fit: cover;
 }
 
-.profile-card .profile-card-logout {
+.profile-card .profile-card-leaveTeam {
   position: absolute;
   top: 0.5%;
   right: 0%;
@@ -86,7 +86,7 @@
   justify-content: center;
 }
 
-.profile-card .logout-btn {
+.profile-card .leaveTeam-btn {
   background: none;
   color: var(--sec-color2);
   font-size: 1.4rem;
@@ -95,13 +95,12 @@
   display: flex;
   align-items: center;
 }
-.profile-card .logout-btn:hover {
-  background-color: var(--sec-color2);
-  color: var(--button-font-color-light);
+.profile-card .leaveTeam-btn:hover {
+  background-color: var(--hover-bgcolor);
 }
 
 .profile-card .profile-card__cnt .profile-card-ctr .profile-card-btn .add-icon,
-.profile-card .logout-icon {
+.profile-card .leaveTeam-icon {
   font-size: 2.8rem;
   padding-left: 0.5rem;
 }
@@ -135,14 +134,14 @@
 }
 
 @media screen and (max-width: 767px) {
-  .profile-card .logout-btn {
+  .profile-card .leaveTeam-btn {
     font-size: 1rem;
     min-width: 60px;
     min-height: 25px;
     display: flex;
     align-items: center;
   }
-  .profile-card .logout-icon {
+  .profile-card .leaveTeam-icon {
     padding-left: 0.5rem;
     font-size: 2rem;
   }
