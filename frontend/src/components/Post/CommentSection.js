@@ -15,10 +15,10 @@ const CommentSection = ({
       e.preventDefault();
       if (!e.target.value) return;
       const newComment = {
-        name: currentUser.username,
+        name: currentUser.name,
         text: e.target.value,
         createdAt: "1s",
-        userImageUrl: currentUser.imgUrl,
+        userImageUrl: currentUser.imageUrl,
       };
       setComments((oldComments) => [newComment, ...oldComments]);
       e.target.value = "";
@@ -49,7 +49,7 @@ const CommentSection = ({
         </p>
       )}
       <div className="comment-input">
-        <img className="circle" src={currentUser.imgUrl} alt="user profile" />
+        <img className="circle" src={currentUser.imageUrl} alt="user profile" />
         <textarea
           className="rounded-corner"
           onKeyPress={handleKeyPress}
