@@ -8,31 +8,22 @@ module.exports = async (req, res) => {
   const currentUserId = req.user._id;
   const page = parseInt(req.query.page);
   const noOfPosts = parseInt(req.query.limit);
-  if (userId.length != 24 || teamId.length != 24) {
-    return res.status(400).json({
-      success: false,
-      message: "Invalid Request",
-    });
-  }
-
-  const hasAuth =
-    (await auth.isMemberOfTeam(userId, teamId)) ||
-    (await auth.isModeratorOfTeam(userId, teamId)) ||
-    (await auth.isAdminOfTeam(userId, teamId));
-  if (!hasAuth)
-    return res.status(401).json({
-      success: false,
-      message: "you donot have auth to access this resource",
-    });
   try {
+    if (userId.length != 24 || teamId.length != 24) {
+      throw new Error("Notice doesn't exist");
+    }
+
+    const hasAuth =
+      (await auth.isMemberOfTeam(currentUserId, teamId)) ||
+      (await auth.isModeratorOfTeam(currentUserId, teamId)) ||
+      (await auth.isAdminOfTeam(currentUserId, teamId));
+    if (!hasAuth)
+      throw new Error("you donot have auth to access this resource");
     const notices = await Schemas.Notice.aggregate(
       pipeline.noticesByUserId(userId, teamId, currentUserId, page, noOfPosts)
     );
     if (notices.length == 0) {
-      return res.status(400).json({
-        success: false,
-        message: "Invalid Request",
-      });
+      throw new Error("Notice/s doesn't exist");
     }
     res.status(200).json(notices);
   } catch (err) {

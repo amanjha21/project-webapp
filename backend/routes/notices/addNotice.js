@@ -1,32 +1,29 @@
 const Schemas = require("../../models/index");
-const uploader = require("../../helpers/uploader");
+const uploadImage = require("../../helpers/uploadImage");
 const logger = require("../../helpers/logger");
 const auth = require("../../helpers/auth/index");
 module.exports = async (req, res) => {
   const userId = req.user._id;
   const teamId = req.body.teamId;
   const content = req.body.content;
-  const imageData = req.body.imageData;
+  const imageData = req.files;
   const ip = req.header("x-forwarded-for") || req.connection.remoteAddress;
-  const hasAuth =
-    (await auth.isAdminOfTeam(userId, teamId)) ||
-    (await auth.isModeratorOfTeam(userId, teamId));
-  if (!hasAuth)
-    return res.status(401).json({
-      success: false,
-      message: "you donot have auth to access this resource",
-    });
   try {
+    const hasAuth =
+      (await auth.isAdminOfTeam(userId, teamId)) ||
+      (await auth.isModeratorOfTeam(userId, teamId));
+    if (!hasAuth)
+      throw new Error("you donot have auth to access this resource");
     const notice = new Schemas.Notice({
       content,
       image_link: "",
       user: userId,
       team: teamId,
     });
-    if (imageData) {
+    if (imageData.length > 0) {
       let imageUrl = await Promise.all(
         imageData.map(async (data) => {
-          const url = await uploader(data);
+          const url = await uploadImage(data, `/team/${teamId}/notice-images/`);
           return url;
         })
       );

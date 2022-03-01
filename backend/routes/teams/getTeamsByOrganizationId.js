@@ -26,10 +26,7 @@ module.exports = async (req, res) => {
 
     //check if teams exist
     if (team.length == 0 || !team) {
-      return res.status(400).json({
-        success: false,
-        message: "Team doesn't exist",
-      });
+      throw new Error("Team doesn't exist");
     }
 
     //return team

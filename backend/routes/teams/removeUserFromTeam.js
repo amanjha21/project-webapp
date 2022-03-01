@@ -14,18 +14,12 @@ module.exports = async (req, res) => {
     }).exec();
 
     if (!team) {
-      return res.status(400).json({
-        success: false,
-        message: "Team doesn't exist",
-      });
+      throw new Error("Team doesn't exist");
     }
 
     //Check if logged in user is admin
     if (userId != team.admin) {
-      return res.status(400).json({
-        success: false,
-        message: "Invalid Request",
-      });
+      throw new Error("Invalid Request");
     }
 
     //find teamMember to remove
@@ -35,10 +29,7 @@ module.exports = async (req, res) => {
 
     //check if user exists
     if (!teamMember) {
-      return res.status(400).json({
-        success: false,
-        message: "Invalid Request",
-      });
+      throw new Error("Invalid Request");
     }
 
     //remove team from teamMember.teams
@@ -56,10 +47,7 @@ module.exports = async (req, res) => {
       teamMember.teams.splice(index, 1);
       await teamMember.save();
     } else {
-      return res.status(400).json({
-        success: false,
-        message: "Invalid Request",
-      });
+      throw new Error("Invalid Request");
     }
 
     logger({

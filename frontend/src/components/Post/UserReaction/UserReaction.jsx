@@ -1,20 +1,18 @@
-import SingleReaction from './SingleReaction';
-import './UserReaction.css'
-const UserReaction = ({reactions,setReactions}) => {
+import SingleReaction from "./SingleReaction";
+import "./UserReaction.css";
+const UserReaction = ({ reactions, setReactions }) => {
   return (
     <>
       <div className="user-reaction-container rounded-corner">
-      {reactions.map((reaction, i) => 
-             (
-              <SingleReaction
-                key={i}
-                name={reaction.name}
-                type={reaction.type}
-                time={reaction.createdAt}
-                imgUrl={reaction.userImageUrl}
-              />
-            ))}
-        
+        {reactions.map((reaction, i) => (
+          <SingleReaction
+            key={i}
+            name={reaction.user.name}
+            type={reaction.type}
+            time={reaction.createdAt}
+            imgUrl={reaction.user.imageUrl}
+          />
+        ))}
       </div>
     </>
   );

@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const addComment = require("./addComment");
 const deleteComment = require("./deleteComment");
+const updateCommentById = require("./updateCommentById");
 const updateReaction = require("./updateReaction");
 const verifyToken = require("../../../middlewares/verifyToken");
 const validation = require("../../../middlewares/validation");
@@ -20,10 +21,16 @@ router.post(
   updateReaction
 );
 router.delete(
-  "/",
-  validation(validationSchema.deleteCommentValidation),
+  "/comment/delete/:id",
+  validation(validationSchema.deleteCommentValidation, "params"),
   verifyToken,
   deleteComment
+);
+router.post(
+  "/comment/update/:id",
+  validation(validationSchema.deleteCommentValidation, "params"),
+  verifyToken,
+  updateCommentById
 );
 router.get(
   "/comment/:id",

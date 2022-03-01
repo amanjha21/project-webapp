@@ -1,10 +1,12 @@
 const Schemas = require("../../models/index");
 const logger = require("../../helpers/logger");
-const uploader = require("../../helpers/uploader");
+const uploadImage = require("../../helpers/uploadImage");
+const deleteImage = require("../../helpers/deleteImage");
 
 module.exports = async (req, res) => {
   const teamId = req.params.id;
-  const profileImage = req.body.imageData;
+  const profileImage = req.files;
+  const deleteImageUrl = req.body.deleteImageUrl || false;
   const name = req.body.name;
   const description = req.body.description;
   const admin = req.body.admin;
@@ -35,10 +37,7 @@ module.exports = async (req, res) => {
     }).exec();
 
     if (!team) {
-      return res.status(400).json({
-        success: false,
-        message: "Team doesn't exist",
-      });
+      throw new Error("Team doesn't exist");
     }
 
     const organization = await Schemas.Organization.findOne({
@@ -47,41 +46,33 @@ module.exports = async (req, res) => {
 
     //check if logged in user is admin
     if (userId != team.admin) {
-      return res.status(400).json({
-        success: false,
-        message: "Invalid Request",
-      });
+      throw new Error("Access Denied");
     }
 
-    //if profileImage == 0 delete team.imageUrl else if profileImage then update team.imageUrl
-    if (profileImage === "0") {
+    //if deleteImageUrl is true from body then  delete team.imageUrl else if profileImage then update team.imageUrl
+    if (deleteImageUrl) {
+      deleteImage(team.imageUrl);
       team.imageUrl = "";
-      await team.save();
-    } else if (profileImage) {
-      const url = await uploader(profileImage);
+    } else if (!deleteImageUrl && profileImage.length > 0) {
+      deleteImage(team.imageUrl);
+      const url = await uploadImage(profileImage[0], `/team/${teamId}`);
       //Save url in database
       team.imageUrl = url;
-      await team.save();
     }
 
     //check if team name is not same as team.organization name
-    if (team.name == organization.name && name != team.name) {
-      return res.status(400).json({
-        success: false,
-        message: "Invalid Request",
-      });
-    } else {
-      //update team.name
-      if (name && name != team.name) {
+    if (name) {
+      if (team.name == organization.name) {
+        throw new Error("Cannot change name of organization team");
+      } else if (name != team.name) {
+        //update team.name
         team.name = name;
-        await team.save();
       }
     }
 
     //updat team.description
     if (description && description !== team.description) {
       team.description = description;
-      await team.save();
     }
 
     //if admin and admin is member of team and admin != team.admin then update team.admin
@@ -96,12 +87,8 @@ module.exports = async (req, res) => {
           const index = team.moderator.indexOf(adminUser._id);
           team.moderator.splice(index, 1);
         }
-        await team.save();
       } else {
-        return res.status(400).json({
-          success: false,
-          message: "Admin must be a member of Team..",
-        });
+        throw new Error("Admin must be a member of Team.");
       }
     }
 
@@ -116,22 +103,18 @@ module.exports = async (req, res) => {
           modUser._id != team.admin
         ) {
           team.moderator.push(modUser._id);
-
-          await team.save();
         } else {
           if (team.moderator.includes(modUser._id)) {
             const index = team.moderator.indexOf(modUser._id);
             team.moderator.splice(index, 1);
-            await team.save();
           }
         }
       } else {
-        return res.status(400).json({
-          success: false,
-          message: "Moderator must be a member of Team..",
-        });
+        throw new Error("Moderator must be a member of Team.");
       }
     }
+
+    await team.save();
 
     logger({
       userId: team.admin,
@@ -145,6 +128,7 @@ module.exports = async (req, res) => {
       message: "Team Updated Successfully",
     });
   } catch (err) {
+    console.log(err);
     res.status(404).json({
       success: false,
       message: err.message,

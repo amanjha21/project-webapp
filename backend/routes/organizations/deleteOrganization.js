@@ -1,6 +1,7 @@
 const Schemas = require("../../models/index");
 const pipeline = require("../../helpers/pipeline");
 const logger = require("../../helpers/logger");
+const deleteImage = require("../../helpers/deleteImage");
 
 module.exports = async (req, res) => {
   const organizationId = req.organization.id;
@@ -20,10 +21,7 @@ module.exports = async (req, res) => {
     }).exec();
 
     if (!organization) {
-      return res.status(400).json({
-        success: false,
-        message: "Organization Doesn't Exist",
-      });
+      throw new Error("Organization Doesn't Exist");
     }
 
     //To get AdminID For Logger
@@ -50,6 +48,7 @@ module.exports = async (req, res) => {
       message: "Organization deleted successfully",
     });
   } catch (err) {
+    console.log(err);
     res.status(404).json({
       success: false,
       message: err.message,
@@ -65,6 +64,12 @@ const deleteOrganization = async (organizationDetails) => {
       post: { $in: postIdArray },
     });
 
+    //Delete Post Images
+    const postImageArray = organizationDetails.postImageArray;
+    postImageArray.map((imageArray) => {
+      deleteImage("", imageArray);
+    });
+
     //Delete Posts
     await Schemas.Post.deleteMany({
       _id: { $in: postIdArray },
@@ -76,12 +81,30 @@ const deleteOrganization = async (organizationDetails) => {
       notice: { $in: noticeIdArray },
     });
 
+    //Delete Notice Images
+    const noticeImageArray = organizationDetails.noticeImageArray;
+    noticeImageArray.map((imageArray) => {
+      deleteImage("", imageArray);
+    });
+
     //Delete Notices
     await Schemas.Notice.deleteMany({ _id: { $in: noticeIdArray } });
+
+    //Delete Users Profile Image
+    const userImage = organizationDetails.userImage;
+    userImage.map((image) => {
+      deleteImage(image);
+    });
 
     //Delete Users
     const userIdArray = organizationDetails.users;
     await Schemas.User.deleteMany({ _id: { $in: userIdArray } });
+
+    //Delete Teams Profile Image
+    const teamImage = organizationDetails.teamImage;
+    teamImage.map((image) => {
+      deleteImage(image);
+    });
 
     //Delete Team
     const teamIdArray = organizationDetails.teams;

@@ -4,11 +4,11 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 module.exports = async (req, res) => {
   const postId = req.params.id;
-  const token = req.header("Authorization").split(" ")[1] || "";
-  let userId = "";
+  const token = req.header("Authorization")?.split(" ")[1] || "";
+  let userId = "000000000000000000000000";
   try {
     if (postId.length != 24) {
-      throw new Error("Post doesn't exist");
+      throw new Error("Invalid Post Id");
     }
     //if token exists validate and extract userid
     if (token) {
