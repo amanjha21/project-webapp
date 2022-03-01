@@ -40,7 +40,7 @@ const Member = ({ name, imgUrl, role = "member" }) => {
                       className="make-role-btn"
                       onClick={makeAdminHandler}
                     >
-                      Make Admin
+                      Make admin
                     </button>
 
                     <button
@@ -54,14 +54,14 @@ const Member = ({ name, imgUrl, role = "member" }) => {
                       className="make-role-btn"
                       onClick={makeMemberHandler}
                     >
-                      Make Member
+                      Make member
                     </button>
 
                     <button
                       className="make-role-btn"
                       onClick={makeMemberHandler}
                     >
-                      Remove
+                      remove
                     </button>
                   </div>
                 </Options>
