@@ -91,7 +91,7 @@ const postById = (postId, userId = "000000000000000000000000") => {
           $sum: {
             $cond: [
               {
-                $eq: ["$reaction.type", "like"],
+                $eq: ["$reaction.type", "dislike"],
               },
               1,
               0,
@@ -232,7 +232,7 @@ const posts = (userId = "000000000000000000000000", pageInput, number) => {
           $sum: {
             $cond: [
               {
-                $eq: ["$reaction.type", "like"],
+                $eq: ["$reaction.type", "dislike"],
               },
               1,
               0,
@@ -383,7 +383,7 @@ const postsByUserId = (
           $sum: {
             $cond: [
               {
-                $eq: ["$reaction.type", "like"],
+                $eq: ["$reaction.type", "dislike"],
               },
               1,
               0,
@@ -946,7 +946,7 @@ const noticeById = (noticeId, currentUserId) => {
           $sum: {
             $cond: [
               {
-                $eq: ["$reaction.type", "like"],
+                $eq: ["$reaction.type", "dislike"],
               },
               1,
               0,
@@ -1101,7 +1101,7 @@ const noticesByUserId = (
           $sum: {
             $cond: [
               {
-                $eq: ["$reaction.type", "like"],
+                $eq: ["$reaction.type", "dislike"],
               },
               1,
               0,
@@ -1247,7 +1247,7 @@ const noticesByTeamId = (teamId, currentUserId, pageInput, number) => {
           $sum: {
             $cond: [
               {
-                $eq: ["$reaction.type", "like"],
+                $eq: ["$reaction.type", "dislike"],
               },
               1,
               0,
