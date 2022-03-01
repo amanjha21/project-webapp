@@ -1,7 +1,7 @@
 .profile-card {
-  width: 71vw;
+  width: 63vw;
   min-height: 300px;
-  max-width: 900px;
+  /* max-width: 900px; */
   margin: auto;
   background: var(--background-color);
   position: relative;
