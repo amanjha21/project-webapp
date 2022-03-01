@@ -4,6 +4,7 @@
   margin: auto;
   background: var(--background-color);
   position: relative;
+  box-shadow: 0px 8px 20px -20px grey;
 }
 
 .profile-card .profile-card__img {
