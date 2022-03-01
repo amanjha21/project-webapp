@@ -1,11 +1,11 @@
 .create-post-wrapper {
   background-color: var(--background-color);
   border-radius: 8px;
-  border: 1px solid var(--border-color);
-  width: 50vw;
+  border: 2px solid var(--border-color);
+  /* width: 50vw; */
   min-width: 300px;
-  max-width: 500px;
-  margin: 5px;
+  /* max-width: 500px; */
+  margin: 10px;
 }
 .create-post-wrapper .postContainer {
   display: none;
@@ -97,9 +97,6 @@
   margin: 10px;
 }
 .create-post-wrapper .body {
-  width: 50vw;
-  min-width: 300px;
-  max-width: 500px;
   padding: 0 16px;
   margin-bottom: 20px;
 }

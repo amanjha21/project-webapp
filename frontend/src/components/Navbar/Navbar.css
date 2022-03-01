@@ -7,21 +7,24 @@
   font-family: "Montserrat", sans-serif;
 } */
 .navbar-main nav {
-  background: var(--main-color1);
+  background: #fff;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 70px;
+  height: 50px;
   padding: 0 20vw;
+  border-bottom: 2px solid var(--border-color);
+  box-shadow: 0px 0px 20px 5px var(--border-color);
 }
 .navbar-main nav .logo {
-  color: #fff;
+  color: var(--main-color1);
   font-size: 30px;
-  font-weight: 600;
+  font-weight: 800;
   letter-spacing: -1px;
   cursor: pointer;
 }
 .navbar-main nav .nav-items {
+  color: var(--main-color1);
   display: flex;
   padding: 0 0 0 40px;
   align-items: center;
@@ -32,7 +35,6 @@
 }
 
 .navbar-main nav .nav-items li div {
-  color: #fff;
   font-size: 2.2rem;
   font-weight: 500;
   text-decoration: none;
@@ -44,16 +46,15 @@
   justify-content: center;
   border-radius: 22px;
   padding: 5px;
-  color: var(--font-color-light);
+  color: var(--sec-color2);
 }
 .navbar-main .nav-dropdown:hover {
-  color: var(--font-color-light);
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: var(--hover-bgcolor);
 }
 
 .navbar-main nav form {
   display: flex;
-  height: 50px;
+  height: 40px;
   padding: 2px;
   margin-left: 60px;
   background: var(--main-color1);
@@ -77,7 +78,7 @@
 }
 .navbar-main nav form button {
   padding: 0 15px;
-  color: #fff;
+  color: var(--sec-color2);
   font-size: 17px;
   background: transparent;
   border: none;
@@ -85,7 +86,7 @@
   cursor: pointer;
 }
 .navbar-main nav form button:hover {
-  color: var(--sec-color2);
+  color: var(--font-color);
 }
 .navbar-main nav .menu-icon,
 nav .cancel-icon,
@@ -94,7 +95,7 @@ nav .search-icon {
   text-align: center;
   margin: 0 50px;
   font-size: 18px;
-  color: #fff;
+  color: var(--main-color1);
   cursor: pointer;
   display: none;
 }
@@ -110,15 +111,16 @@ nav .search-icon {
   .navbar-main nav .nav-items {
     position: fixed;
     z-index: 99;
-    top: 70px;
+    top: 50px;
     width: 100%;
     left: -100%;
     height: 100%;
     padding: 10px 50px 0 50px;
     text-align: center;
-    background: var(--main-color1);
+    background: var(--background-color);
     display: inline-block;
     transition: left 0.3s ease;
+    border-radius: var(--default-border-radius);
   }
   .navbar-main nav .nav-items.active {
     left: 0px;
@@ -139,6 +141,7 @@ nav .search-icon {
     opacity: 0;
     pointer-events: none;
     transition: top 0.3s ease, opacity 0.1s ease;
+    z-index: 90;
   }
   .navbar-main nav form.active {
     background-color: var(--background-color);
@@ -250,17 +253,17 @@ nav .search-icon {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 8px 15px 8px 8px;
+  padding: 4px 15px 4px 8px;
   border-radius: 22px;
 }
 
 .navbar-main .nav-userName {
   margin-left: 10px;
   font-size: 1.6rem;
-  font-weight: bold;
+  font-weight: 600;
 
-  color: var(--border-color);
+  color: var(--sec-color2);
 }
 .navbar-main .nav-profile:hover {
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: var(--hover-bgcolor);
 }
