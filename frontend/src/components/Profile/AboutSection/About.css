@@ -89,14 +89,14 @@
 
 .member-list-container .make-role-btn {
   border: none;
-  margin-bottom: 3px;
+  margin-bottom: 2px;
   font-family: var(--button-font-family);
-  border-radius: 20px;
+  border-radius: 10px;
   cursor: pointer;
   font-size: 1.2rem;
   color: var(--button-font-color-light);
   background: var(--button-background-color-light);
-  width: 101px;
+  width: 13vw;
   height: 30px;
 }
 
