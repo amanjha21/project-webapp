@@ -6,9 +6,15 @@ const UserProfile = () => {
   return (
     <>
       <div className="user-profile-grid-container">
-        <Navbar className="navbar-grid" />
-        <Profile className="profile-grid" />
-        <ProfileNavbar className="profile-navbar-grid" />
+        <div className="navbar-grid">
+          <Navbar />
+        </div>
+        <div className="profile-card-grid">
+          <Profile />
+        </div>
+        <div className="profile-navbar-grid">
+          <ProfileNavbar />
+        </div>
       </div>
     </>
   );
