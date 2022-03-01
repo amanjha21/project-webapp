@@ -34,7 +34,7 @@
   --clickable-font-color: #444;
   --default-font-family: "Montserrat", sans-serif;
   --selected-bgcolor: #ccc;
-  --hover-bgcolor: #f7f7f7;
+  --hover-bgcolor: #eee;
 }
 * {
   box-sizing: border-box;
@@ -44,6 +44,7 @@ body {
   font-family: "Montserrat", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #eee;
 }
 
 html {
