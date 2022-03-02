@@ -4,10 +4,9 @@
 }
 
 .profile-navbar {
-  width: 70vw;
-  background-color: var(--main-color1);
-  max-width: 900px;
+  background-color: var(--main-color1) !important;
   max-height: 200px;
+  border-radius: 2px;
 }
 
 .profile-navbar .profile-nav {
@@ -25,7 +24,7 @@
 
 .profile-navbar .profile-nav li {
   display: inline-block;
-  padding: 15px 100px;
+  padding: 15px 10px;
 }
 
 .profile-navbar .profile-nav li.profile-navbar__active {
@@ -77,4 +76,19 @@
 
 .profile-navbar .profile-nav li:hover {
   cursor: pointer;
+}
+
+.post-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profile-navbar,
+.post-section,
+.about-section {
+  width: 63vw;
+  /* max-width: 900px; */
+  margin: auto;
+  background-color: var(--background-color);
 }
