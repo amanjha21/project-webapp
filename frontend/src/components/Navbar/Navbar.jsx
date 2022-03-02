@@ -56,6 +56,10 @@ const Navbar = () => {
   const navProfileHandler = (e) => {
     e.preventDefault();
   };
+  const searchHandler = (e) => {
+    e.preventDefault();
+    console.log("searchHandler");
+  };
   return (
     <div className="navbar-main">
       <nav>
@@ -67,7 +71,7 @@ const Navbar = () => {
         <div className="logo">
           <span>S</span>yno<span>A</span>rx
         </div>
-        <form action="#">
+        <form onSubmit={searchHandler}>
           <input
             type="search"
             className="search-data"
@@ -85,7 +89,7 @@ const Navbar = () => {
                 <img
                   src="http://cp91279.biography.com/1000509261001/1000509261001_1822909398001_BIO-Biography-29-Innovators-Mark-Zuckerberg-115956-SF.jpg"
                   alt=""
-                />{" "}
+                />
                 <span className="nav-userName">UserName</span>
               </div>
             </div>

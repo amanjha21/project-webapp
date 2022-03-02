@@ -14,7 +14,7 @@
   height: 50px;
   padding: 0 20vw;
   border-bottom: 2px solid var(--border-color);
-  box-shadow: 0px 0px 20px 5px var(--border-color);
+  box-shadow: 0px 8px 20px -20px grey;
 }
 .navbar-main nav .logo {
   color: var(--main-color1);
@@ -99,8 +99,17 @@ nav .search-icon {
   cursor: pointer;
   display: none;
 }
-
 @media (max-width: 1140px) {
+  .navbar-main nav {
+    padding: 0px 100px;
+  }
+}
+@media (max-width: 850px) {
+  .navbar-main nav {
+    padding: 0px 40px;
+  }
+}
+@media (max-width: 700px) {
   .navbar-main nav {
     padding: 0px;
   }
@@ -189,6 +198,7 @@ nav .search-icon {
     display: block;
   }
 }
+
 .content {
   position: absolute;
   top: 50%;
