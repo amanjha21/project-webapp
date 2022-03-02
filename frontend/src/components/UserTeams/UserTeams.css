@@ -79,7 +79,7 @@
   background-color: var(--selected-bgcolor);
 }
 
-@media screen and (max-width: 1140px) {
+@media screen and (max-width: 700px) {
   .user-team-container {
     flex-direction: row;
     padding: 3px;
