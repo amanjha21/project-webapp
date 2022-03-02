@@ -39,12 +39,15 @@ const ProfileNavbar = () => {
         </div>
       </div>
 
-      <div className={isPost ? "" : "hidden"}>
-        <CreatePost className="about-section" />
+      <div className={isPost ? "post-section" : "hidden"}>
+        <CreatePost />
+        <Post />
+        <Post />
+        <Post />
         <Post />
       </div>
-      <div className={isAbout ? "" : "hidden"}>
-        <About className="about-section" />
+      <div className={isAbout ? "about-section" : "hidden"}>
+        <About />
       </div>
     </>
   );

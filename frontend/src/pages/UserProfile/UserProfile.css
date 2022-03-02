@@ -1,1 +1,21 @@
+.user-profile-grid-container {
+  display: grid;
+  grid-template-columns: 1fr 3.5fr 1fr;
+  grid-gap: 10px;
+  grid-template-areas:
+    "header header header"
+    "sidebar content sidebar"
+    "sidebar content sidebar";
+}
 
+.navbar-grid {
+  grid-area: header;
+}
+
+.profile-card-grid {
+  grid-area: content;
+}
+
+.profile-navbar-grid {
+  grid-area: content;
+}

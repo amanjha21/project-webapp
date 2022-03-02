@@ -34,41 +34,37 @@ const Member = ({ name, imgUrl, role = "member" }) => {
                   <span className="name cursor">{name}</span>
                   <span className="role">{makeRole}</span>
                 </div>
-                <div className="make-role">
-                  <span>
-                    <Options>
-                      <div className="option-sec">
-                        <button
-                          className="make-role-btn"
-                          onClick={makeAdminHandler}
-                        >
-                          Make Admin
-                        </button>
+                <Options>
+                  <div className="option-sec">
+                    <button
+                      className="make-role-btn"
+                      onClick={makeAdminHandler}
+                    >
+                      Make admin
+                    </button>
 
-                        <button
-                          className="make-role-btn"
-                          onClick={makeModeratorHandler}
-                        >
-                          Make moderator
-                        </button>
+                    <button
+                      className="make-role-btn"
+                      onClick={makeModeratorHandler}
+                    >
+                      Make moderator
+                    </button>
 
-                        <button
-                          className="make-role-btn"
-                          onClick={makeMemberHandler}
-                        >
-                          Make Member
-                        </button>
+                    <button
+                      className="make-role-btn"
+                      onClick={makeMemberHandler}
+                    >
+                      Make member
+                    </button>
 
-                        <button
-                          className="make-role-btn"
-                          onClick={makeMemberHandler}
-                        >
-                          Remove
-                        </button>
-                      </div>
-                    </Options>
-                  </span>
-                </div>
+                    <button
+                      className="make-role-btn"
+                      onClick={makeMemberHandler}
+                    >
+                      remove
+                    </button>
+                  </div>
+                </Options>
               </li>
             </ul>
           </div>
