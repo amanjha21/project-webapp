@@ -6,38 +6,8 @@ import Popup from "../Popup";
 import UserReaction from "./UserReaction/UserReaction";
 import PostOptions from "./PostOptions";
 
-const Post = ({ type = "post" }) => {
-  let postData = {
-    _id: "621d07fd0ef9bb6d9855fd84",
-    content: `this is my 2nd post Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt amet fugiat tempore, voluptates architecto molestias aliquam necessitatibus quo ea deleniti, rerum at autem officiis fuga. Praesentium molestiae dicta hic consectetur.
-    Molestias recusandae nesciunt sunt consequatur inventore, qui fugiat necessitatibus possimus, quam quos quisquam explicabo culpa officiis alias neque non aperiam dolor minus numquam ut reiciendis vel assumenda voluptas. Quidem, ut?
-    Libero maxime tenetur iste impedit aut sunt sit sequi mollitia est nam adipisci debitis temporibus voluptas assumenda exercitationem cumque dolores sed consequuntur, qui labore odio officiis officia. Sunt, atque perspiciatis.
-    Commodi architecto hic ut eos facilis vero dicta saepe? A illo qui minima molestias reiciendis ea culpa fuga officia tempora obcaecati. Fugit sit atque voluptatum numquam quod quia facilis iusto!
-    Ipsam neque quo, explicabo sunt incidunt ratione odio, voluptatum obcaecati enim corporis adipisci ut eius inventore quasi, ex atque officiis aut placeat aliquid quas? Aliquid minus odit quia enim odio?
-    Alias ratione numquam totam libero sunt dolor blanditiis? Magnam nostrum neque rerum eum deleniti quam debitis eos? Aspernatur minima ut quo ea sed dolorum corporis incidunt. Laboriosam repudiandae ex ducimus.
-    Vero error nesciunt natus facilis ex earum aspernatur debitis, eligendi atque minima quibusdam neque facere beatae asperiores eaque architecto libero deleniti odit incidunt autem dignissimos sequi! Tempore dolore repudiandae iusto?
-    Reprehenderit quia quae mollitia doloribus ut eius, possimus ullam minima consectetur expedita laboriosam rerum voluptatibus alias error pariatur est a quibusdam. Omnis officiis excepturi fugit, sint aliquam ut. Ut, voluptas!
-    Eaque, amet. Itaque vero architecto dolores quisquam, deleniti excepturi magnam accusantium natus eaque rerum sed tempora adipisci unde eveniet vel aperiam inventore! Mollitia dolorum sed laborum, iusto quod sint aspernatur!
-    Tempora officiis nihil enim aperiam sunt nulla quidem suscipit natus sit ullam ipsum ratione numquam ad, porro aliquid nemo dolorem nesciunt quam consectetur officia error, architecto repudiandae. Suscipit, quam ex.`,
-    image_link: [
-      "https://res.cloudinary.com/amanjha/image/upload/v1646069763/synoarx/user/62041a8360c7f0fb3032531d/post-images/i5f6cddaw3tc2ynwmqjg.jpg",
-      "https://res.cloudinary.com/amanjha/image/upload/v1646069764/synoarx/user/62041a8360c7f0fb3032531d/post-images/xrivhdy9zhsyzrnyy1pz.jpg",
-    ],
-    createdAt: "2022-02-28T17:36:03.614Z",
-    updatedAt: "2022-02-28T17:36:03.614Z",
-    like: 1,
-    dislike: 1,
-    user: {
-      _id: "62041a8360c7f0fb3032531d",
-      name: "Vaibhav Kedia",
-      imageUrl:
-        "https://res.cloudinary.com/amanjha/image/upload/v1646067254/synoarx/user/62041a8360c7f0fb3032531d/loiekgcdfstfzblxzn50.jpg",
-    },
-    user_reaction: {
-      type: "like",
-      createdAt: "2022-03-01T14:02:23.516Z",
-    },
-  };
+const Post = ({ type = "post", data }) => {
+  let postData = data;
   const defaultTextLength = 150;
   const defaultNotFoundImgProfile =
     "https://heatherchristenaschmidt.files.wordpress.com/2011/09/facebook_no_profile_pic2-jpg.gif";
@@ -45,7 +15,7 @@ const Post = ({ type = "post" }) => {
     name: "Aman Jha",
     imageUrl: defaultNotFoundImgProfile,
   };
-  let postUser = postData.user;
+  let postUser = { ...postData.user };
   if (!postUser.imageUrl) {
     postUser.imageUrl = defaultNotFoundImgProfile;
   }
@@ -144,7 +114,7 @@ const Post = ({ type = "post" }) => {
         currentUser={currentUser}
         like={postData.like}
         dislike={postData.dislike}
-        userReaction={postData.user_reaction.type}
+        userReaction={postData.user_reaction?.type}
       />
       <Popup visible={viewReactions} setVisible={setViewReactions}>
         <UserReaction reactions={reactions} setReactions={setReactions} />
