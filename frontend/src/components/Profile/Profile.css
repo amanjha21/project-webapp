@@ -1,5 +1,5 @@
 .profile-card {
-  width: 63vw;
+  width: 100vw;
   min-height: 300px;
   /* max-width: 900px; */
   margin: auto;
@@ -13,7 +13,7 @@
   height: 150px;
   margin-left: auto;
   margin-right: auto;
-  transform: translateY(18%);
+  /* transform: translateY(18%); */
   overflow: hidden;
   position: relative;
   z-index: 4;
@@ -27,13 +27,13 @@
 }
 
 .profile-card .profile-card-leaveTeam {
-  position: absolute;
-  top: 0.5%;
-  right: 0%;
+  display: flex;
+  justify-content: center;
+  margin-left: 53%;
 }
 
 .profile-card .profile-card__cnt {
-  margin-top: 50px;
+  margin-top: 20px;
   text-align: center;
   padding: 0 20px;
   padding-bottom: 40px;

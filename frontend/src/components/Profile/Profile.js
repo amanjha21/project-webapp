@@ -18,14 +18,6 @@ const Profile = () => {
   return (
     <>
       <div className="profile-card">
-        <div className="profile-card__img circle">
-          <img
-            className="profile__img"
-            onClick={() => setViewEditProfileImg(true)}
-            src="https://www.whatsappprofiledpimages.com/wp-content/uploads/2021/08/Profile-Photo-Wallpaper.jpg"
-            alt="profile card"
-          />
-        </div>
         <div className="profile-card-leaveTeam">
           <button
             className="profile-card-btn leaveTeam-btn"
@@ -33,6 +25,14 @@ const Profile = () => {
           >
             Leave Team <IoMdExit className="leaveTeam-icon" />
           </button>
+        </div>
+        <div className="profile-card__img circle">
+          <img
+            className="profile__img"
+            onClick={() => setViewEditProfileImg(true)}
+            src="https://www.whatsappprofiledpimages.com/wp-content/uploads/2021/08/Profile-Photo-Wallpaper.jpg"
+            alt="profile card"
+          />
         </div>
 
         <div className="profile-card__cnt">

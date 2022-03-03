@@ -1,4 +1,4 @@
-.user-profile-grid-container {
+/* .user-profile-grid-container {
   display: grid;
   grid-template-columns: 1fr 3.5fr 1fr;
   grid-gap: 10px;
@@ -18,4 +18,4 @@
 
 .profile-navbar-grid {
   grid-area: content;
-}
+} */
