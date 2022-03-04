@@ -1,10 +1,19 @@
 import Comment from "./Comment/Comment";
-import { useState } from "react";
-const CommentSection = ({ defaultTextLength, comments, currentUser }) => {
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getCommentsByPostId } from "../../redux/post";
+const CommentSection = ({ defaultTextLength, currentUser, postId }) => {
+  const dispatch = useDispatch();
+  const commentsDataArray = useSelector((state) => {
+    return state.postComments.data.filter(
+      (comment) => comment.postId === postId
+    );
+  });
+  const commentsData = commentsDataArray[0];
+  const isLoading = useSelector((state) => state.postComments.isLoading);
+  const error = useSelector((state) => state.postComments.error);
   const [commentLimit, setCommentLimit] = useState(1);
-  const [commentsArray, setCommentsArray] = useState(
-    comments[0].comments.concat(comments[0].user_comments)
-  );
+
   const handleViewMore = () => {
     setCommentLimit((oldLimit) => oldLimit + 1);
   };
@@ -23,29 +32,58 @@ const CommentSection = ({ defaultTextLength, comments, currentUser }) => {
       // setCommentLimit((oldLimit) => oldLimit + 1);
     }
   };
+  useEffect(() => {
+    if (!commentsData) {
+      dispatch(getCommentsByPostId(postId));
+    }
+  }, []);
   return (
     <div>
       <div className="comment-section">
-        {commentsArray.map((comment, i) => {
-          if (i < commentLimit) {
-            return (
-              <Comment
-                key={i}
-                name={comment.user.name}
-                text={comment.comment}
-                time={comment.createdAt}
-                imgUrl={comment.user.imageUrl}
-                defaultTextLength={defaultTextLength}
-              />
-            );
-          }
-        })}
+        {isLoading && <h1>Loading...</h1>}
+        {error && <h1>error</h1>}
+        {commentsData &&
+          commentsData.comments &&
+          commentsData.comments.map((comment, i) => {
+            if (i < commentLimit) {
+              return (
+                <Comment
+                  key={i}
+                  name={comment.user.name}
+                  text={comment.comment}
+                  time={comment.createdAt}
+                  imgUrl={comment.user.imageUrl}
+                  defaultTextLength={defaultTextLength}
+                />
+              );
+            } else {
+              return <></>;
+            }
+          })}
+        {commentsData &&
+          commentsData.user_comments &&
+          commentsData.user_comments.map((comment, i) => {
+            if (i < commentLimit) {
+              return (
+                <Comment
+                  key={i}
+                  name={comment.user.name}
+                  text={comment.comment}
+                  time={comment.createdAt}
+                  imgUrl={comment.user.imageUrl}
+                  defaultTextLength={defaultTextLength}
+                />
+              );
+            }
+          })}
       </div>
-      {commentLimit < commentsArray.length && (
-        <p id="viewmore" onClick={handleViewMore}>
-          View More
-        </p>
-      )}
+      {commentsData &&
+        commentLimit <
+          commentsData.comments.length + commentsData.user_comments.length && (
+          <p id="viewmore" onClick={handleViewMore}>
+            View More
+          </p>
+        )}
       <div className="comment-input">
         <img className="circle" src={currentUser.imageUrl} alt="user profile" />
         <textarea
