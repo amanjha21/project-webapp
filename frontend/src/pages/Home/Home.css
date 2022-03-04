@@ -1,0 +1,61 @@
+.homepage-grid-main {
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1.5fr 1fr 1fr;
+  gap: 10px;
+  grid-template-areas:
+    "navbar navbar navbar navbar"
+    "empty post-container user-team empty2";
+}
+.homepage-nav {
+  grid-area: navbar;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  z-index: 150;
+}
+.homepage-center {
+  padding: 10px;
+  grid-area: post-container;
+}
+.homepage-right {
+  padding: 20px;
+  grid-area: user-team;
+  position: -webkit-sticky;
+  position: sticky;
+  align-self: start;
+  top: 100px;
+}
+@media screen and (max-width: 1400px) {
+  .homepage-grid-main {
+    grid-template-columns: 0.5fr 1.5fr 1fr 0.5fr;
+    grid-template-areas:
+      "navbar navbar navbar navbar"
+      "empty post-container user-team empty2";
+  }
+}
+@media screen and (max-width: 1010px) {
+  .homepage-grid-main {
+    grid-template-columns: 0.1fr 1.5fr 1fr 0.1fr;
+    grid-template-areas:
+      "navbar navbar navbar navbar"
+      "empty post-container user-team empty2";
+  }
+}
+@media screen and (max-width: 700px) {
+  .homepage-grid-main {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "navbar"
+      "user-team"
+      "post-container";
+  }
+  .homepage-right {
+    padding: 0px 20px;
+    top: 50px;
+    z-index: 151;
+    min-width: 470px;
+    width: 99vw;
+  }
+}
