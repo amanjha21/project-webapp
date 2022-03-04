@@ -109,6 +109,7 @@ const Post = ({ type = "post", data }) => {
         <MediaCarousel images={images} />
       </div>
       <ReactionBar
+        postId={postData._id}
         defaultTextLength={defaultTextLength}
         viewReactionHandler={viewReactionHandler}
         currentUser={currentUser}
