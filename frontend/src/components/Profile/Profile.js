@@ -9,7 +9,7 @@ import Popup from "../Popup";
 import EditProfileImage from "./EditProfileImage/EditProfileImage";
 import EditProfile from "./EditProfile/EditProfile";
 
-const Profile = () => {
+const Profile = ({ profileImage, name, roll, organization }) => {
   const [viewEditProfileImg, setViewEditProfileImg] = useState(false);
   const [viewEditProfile, setViewEditProfile] = useState(false);
   const [showAddMember, setshowAddMember] = useState(false);
@@ -30,18 +30,16 @@ const Profile = () => {
           <img
             className="profile__img"
             onClick={() => setViewEditProfileImg(true)}
-            src="https://www.whatsappprofiledpimages.com/wp-content/uploads/2021/08/Profile-Photo-Wallpaper.jpg"
+            src={profileImage}
             alt="profile card"
           />
         </div>
 
         <div className="profile-card__cnt">
-          <div className="profile-card__name">Amisha semwal</div>
-          <div className="profile-card__roll">2019ugcs118</div>
+          <div className="profile-card__name">{name}</div>
+          <div className="profile-card__roll">{roll}</div>
           <div className="profile-card__txt">
-            <strong className="profile__desc">
-              National Institute Of Technology Jamshedpur
-            </strong>
+            <strong className="profile__desc">{organization}</strong>
           </div>
 
           <div className="profile-card-ctr">
