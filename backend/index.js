@@ -22,7 +22,10 @@ app.use(compression());
 app.use(helmet());
 
 // CORS
-app.use(cors());
+const corsOptions = {
+  exposedHeaders: "authorization",
+};
+app.use(cors(corsOptions));
 
 // Response time
 app.use(responseTime({ suffix: false }));
