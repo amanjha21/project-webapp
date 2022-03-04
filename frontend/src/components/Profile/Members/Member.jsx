@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Options from "../../Options";
 import Confirmation from "../../Confirmation";
+import UserProfile from "../../../pages/UserProfile/UserProfile";
 
 const Member = ({ name, imgUrl, role = "member" }) => {
   const [makeRole, setMakeRole] = useState(role);
@@ -19,6 +20,10 @@ const Member = ({ name, imgUrl, role = "member" }) => {
     setMakeRole("member");
   };
 
+  const UserProfileHandler = () => {
+    console.log(`${name}'s Profile`);
+  };
+
   return (
     <>
       <div className="member-list-container">
@@ -31,7 +36,9 @@ const Member = ({ name, imgUrl, role = "member" }) => {
                   <img className="circle" src={imgUrl} alt="" />
                 </div>
                 <div className="member-meta">
-                  <span className="name cursor">{name}</span>
+                  <span className="name cursor" onClick={UserProfileHandler}>
+                    {name}
+                  </span>
                   <span className="role">{makeRole}</span>
                 </div>
                 <Options>
