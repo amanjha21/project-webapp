@@ -2,7 +2,7 @@ const Schemas = require("../../models/index");
 const pipeline = require("../../helpers/pipeline");
 const jwt = require("jsonwebtoken");
 module.exports = async (req, res) => {
-  const token = req.header("Authorization")?.split(" ")[1] || "";
+  const token = req.header("authorization")?.split(" ")[1] || "";
   let userId = "000000000000000000000000";
   const page = parseInt(req.query.page);
   const noOfPosts = parseInt(req.query.limit);
