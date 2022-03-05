@@ -15,7 +15,7 @@ const Post = ({ type = "post", data }) => {
     name: "Aman Jha",
     imageUrl: defaultNotFoundImgProfile,
   };
-  let postUser = { ...postData.user };
+  let postUser = { ...postData?.user };
   if (!postUser.imageUrl) {
     postUser.imageUrl = defaultNotFoundImgProfile;
   }
@@ -27,11 +27,13 @@ const Post = ({ type = "post", data }) => {
       name: "Team Name",
       user: "Aman 2",
     };
-  const text = postData.content;
-  const images = postData.image_link.map((link) => {
-    return { original: link };
-  });
-
+  const text = postData?.content || "";
+  const images =
+    postData?.image_link
+      .filter((image) => image !== "")
+      .map((link) => {
+        return { original: link };
+      }) || [];
   const [reactions, setReactions] = useState([]);
   const [message, setMessage] = useState(text.slice(0, 150));
   const handleViewMore = () => {
@@ -71,56 +73,76 @@ const Post = ({ type = "post", data }) => {
     //show reactions
     setViewReactions(true);
   };
+
+  const currentUserId = JSON.parse(localStorage.getItem("currentUserId")) || "";
   return (
-    <div className="post-container rounded-corner">
-      <div className="creator">
-        <img
-          className="post-creator-image circle"
-          alt="user profile"
-          src={type === "post" ? postUser.imageUrl : noticeTeam.imgUrl}
-        />
-        <div className="post-user-details">
-          <p>{type === "post" ? postUser.name : noticeTeam.name}</p>
-          {type === "notice" && (
-            <p className="notice-user">
-              <span className="create">{"created by:- "}</span>
-              <span className="name">{noticeTeam.user}</span>
-            </p>
+    <>
+      {postData && (
+        <div className="post-container rounded-corner">
+          <div className="creator">
+            <img
+              className="post-creator-image circle"
+              alt="user profile"
+              src={type === "post" ? postUser.imageUrl : noticeTeam.imgUrl}
+            />
+            <div className="post-user-details">
+              <p>{type === "post" ? postUser.name : noticeTeam.name}</p>
+              {type === "notice" && (
+                <p className="notice-user">
+                  <span className="create">{"created by:- "}</span>
+                  <span className="name">{noticeTeam.user}</span>
+                </p>
+              )}
+              <p>{postData.createdAt}</p>
+            </div>
+            {postUser._id === currentUserId && (
+              <PostOptions
+                text={text}
+                images={images}
+                postUserId={postUser._id}
+                postId={postData._id}
+              />
+            )}
+          </div>
+          <p className="post-message">
+            {message}
+            {text.length > defaultTextLength &&
+              message.length <= defaultTextLength && (
+                <span id="viewmore" onClick={handleViewMore}>
+                  . . . View More
+                </span>
+              )}
+            {message.length > defaultTextLength && (
+              <span id="viewmore" onClick={handleViewLess}>
+                View Less
+              </span>
+            )}
+          </p>
+          {images.length > 0 && (
+            <div className="post-image">
+              <MediaCarousel images={images} />
+            </div>
           )}
-          <p>3h ago</p>
+          <ReactionBar
+            postId={postData._id}
+            defaultTextLength={defaultTextLength}
+            viewReactionHandler={viewReactionHandler}
+            currentUser={currentUser}
+            like={postData.like}
+            dislike={postData.dislike}
+            userReaction={postData.user_reaction?.type}
+            type={type}
+          />
+          <Popup visible={viewReactions} setVisible={setViewReactions}>
+            <UserReaction
+              reactions={reactions}
+              setReactions={setReactions}
+              postId={postData._id}
+            />
+          </Popup>
         </div>
-        <PostOptions text={text} images={images} />
-      </div>
-      <p className="post-message">
-        {message}
-        {text.length > defaultTextLength &&
-          message.length <= defaultTextLength && (
-            <span id="viewmore" onClick={handleViewMore}>
-              . . . View More
-            </span>
-          )}
-        {message.length > defaultTextLength && (
-          <span id="viewmore" onClick={handleViewLess}>
-            View Less
-          </span>
-        )}
-      </p>
-      <div className="post-image">
-        <MediaCarousel images={images} />
-      </div>
-      <ReactionBar
-        postId={postData._id}
-        defaultTextLength={defaultTextLength}
-        viewReactionHandler={viewReactionHandler}
-        currentUser={currentUser}
-        like={postData.like}
-        dislike={postData.dislike}
-        userReaction={postData.user_reaction?.type}
-      />
-      <Popup visible={viewReactions} setVisible={setViewReactions}>
-        <UserReaction reactions={reactions} setReactions={setReactions} />
-      </Popup>
-    </div>
+      )}
+    </>
   );
 };
 
