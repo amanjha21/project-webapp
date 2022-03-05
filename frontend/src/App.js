@@ -1,20 +1,19 @@
 import "./App.css";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Home from "./pages/Home/Home";
 import Login from "./pages/Login";
-import Post from "./components/Post/Post";
 import UserProfile from "./pages/UserProfile/UserProfile";
-import Navbar from "./components/Navbar/Navbar";
-import UserTeams from "./components/UserTeams/UserTeams";
-
 function App() {
   return (
-    <div className="App">
-      {/* <Navbar />
-      <Post />
-      <UserTeams />*/}
-      <UserProfile />
-      {/* <Login /> */}
-    </div>
+    <Router>
+      <div className="App">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/user" element={<UserProfile />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
-
 export default App;
