@@ -16,8 +16,9 @@ const getPosts =
       dispatch(setLoading(false));
       dispatch(setPosts(response.data));
     } catch (err) {
+      const errorResponse = err?.response?.data?.message || err.message || "";
       dispatch(setLoading(false));
-      dispatch(setError(err.message));
+      dispatch(setError(errorResponse));
     }
   };
 
