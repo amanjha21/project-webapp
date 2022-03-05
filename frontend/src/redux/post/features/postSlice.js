@@ -11,7 +11,7 @@ export const postSlice = createSlice({
   initialState,
   reducers: {
     setPosts: (state, action) => {
-      state.data = action.payload;
+      state.data = [...state.data, ...action.payload];
     },
     setLoading: (state, action) => {
       state.isLoading = action.payload;
