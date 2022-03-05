@@ -8,10 +8,6 @@ const UserTeams = () => {
   const [visible, setVisible] = useState(false);
 
   const [selectedTeam, setSelectedTeam] = useState("");
-  const selectTeamHandler = (i) => {
-    console.log(i);
-    setSelectedTeam(i);
-  };
 
   const teams = [
     {
@@ -40,6 +36,11 @@ const UserTeams = () => {
         "http://cp91279.biography.com/1000509261001/1000509261001_1822909398001_BIO-Biography-29-Innovators-Mark-Zuckerberg-115956-SF.jpg",
     },
   ];
+  const selectTeamHandler = (i) => {
+    if (selectedTeam === i) {
+      setSelectedTeam(teams.length + 1);
+    } else setSelectedTeam(i);
+  };
   return (
     <>
       <div className="user-team-container rounded-corner">
@@ -49,13 +50,20 @@ const UserTeams = () => {
         >
           Create Team <IoAddSharp className="add-team-icon" />
         </div>
-        <div className="all-teams team-single rounded-corner">All Teams</div>
+        <div
+          className={`all-teams team-single rounded-corner ${
+            selectedTeam === 0 ? "team-selected" : ""
+          }`}
+          onClick={() => selectTeamHandler(0)}
+        >
+          All Teams
+        </div>
         {teams.map((team, i) => (
           <div
             className={`team-single  rounded-corner ${
-              selectedTeam === i ? "team-selected" : ""
+              selectedTeam === i + 1 ? "team-selected" : ""
             }`}
-            onClick={() => selectTeamHandler(i)}
+            onClick={() => selectTeamHandler(i + 1)}
           >
             <SingleTeam key={i} name={team.name} imgUrl={team.imgUrl} />
           </div>
