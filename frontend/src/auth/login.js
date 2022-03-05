@@ -20,7 +20,13 @@ export const login = async (email, password) => {
       console.log(token);
       if (token) {
         let currentUser = { authToken: token };
+        let userDetails = res.data.userDetails;
         localStorage.setItem("currentUser", JSON.stringify(currentUser));
+        localStorage.setItem("currentUserId", JSON.stringify(userDetails._id));
+        localStorage.setItem(
+          "currentUserEmail",
+          JSON.stringify(userDetails.email)
+        );
         return true;
       }
       return false;
@@ -31,17 +37,3 @@ export const login = async (email, password) => {
     return false;
   }
 };
-
-// function logout() {
-//     // remove user from local storage to log user out
-//     localStorage.removeItem('user');
-// }
-
-// function getAll() {
-//     const requestOptions = {
-//         method: 'GET',
-//         headers: authHeader()
-//     };
-
-//     return fetch(`${config.apiUrl}/users`, requestOptions).then(handleResponse);
-// }
