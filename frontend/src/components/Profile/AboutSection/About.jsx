@@ -60,7 +60,7 @@ const About = () => {
         {memberList.length > 5 && limit < memberList.length && (
           <div className="about-view-container">
             <button className="button-view" onClick={viewMoreHandler}>
-              view more
+              View more
             </button>
           </div>
         )}
