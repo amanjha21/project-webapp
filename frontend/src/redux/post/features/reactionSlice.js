@@ -11,7 +11,10 @@ export const reactionSlice = createSlice({
   initialState,
   reducers: {
     setReactions: (state, action) => {
-      state.data = action.payload;
+      state.data = [
+        ...state.data,
+        { reactions: action.payload.data, postId: action.payload.id },
+      ];
     },
     setLoading: (state, action) => {
       state.isLoading = action.payload;
