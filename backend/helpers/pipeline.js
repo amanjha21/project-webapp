@@ -146,6 +146,11 @@ const posts = (userId = "000000000000000000000000", pageInput, number) => {
   page--;
   let pipeline = [
     {
+      $sort: {
+        createdAt: -1,
+      },
+    },
+    {
       $skip: page * noOfPosts,
     },
     {
@@ -294,6 +299,11 @@ const postsByUserId = (
     {
       $match: {
         user: new ObjectId(userId),
+      },
+    },
+    {
+      $sort: {
+        createdAt: -1,
       },
     },
     {
@@ -1037,6 +1047,11 @@ const noticesByUserId = (
       },
     },
     {
+      $sort: {
+        createdAt: -1,
+      },
+    },
+    {
       $skip: page * noOfPosts,
     },
     {
@@ -1180,6 +1195,11 @@ const noticesByTeamId = (teamId, currentUserId, pageInput, number) => {
     {
       $match: {
         team: new ObjectId(teamId),
+      },
+    },
+    {
+      $sort: {
+        createdAt: -1,
       },
     },
     {
