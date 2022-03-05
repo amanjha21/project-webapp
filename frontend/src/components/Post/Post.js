@@ -1,4 +1,5 @@
 import "./Post.css";
+import "./MediaCarousel.css";
 import { useState } from "react";
 import ReactionBar from "./ReactionBar";
 import MediaCarousel from "./MediaCarousel";
