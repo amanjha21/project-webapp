@@ -1,6 +1,9 @@
 import { MdThumbUp, MdThumbDown, MdChatBubble, MdShare } from "react-icons/md";
 import CommentSection from "./CommentSection";
 import { useState } from "react";
+import { SERVER_ENDPOINT } from "../../helpers/Constants";
+import axios from "axios";
+import { authHeader } from "../../helpers/authHeader";
 const ReactionBar = ({
   defaultTextLength,
   viewReactionHandler,
@@ -8,6 +11,8 @@ const ReactionBar = ({
   like,
   dislike,
   userReaction,
+  postId,
+  type,
 }) => {
   const [showComments, setShowComments] = useState(false);
   let userLiked = userReaction === "like";
@@ -54,10 +59,38 @@ const ReactionBar = ({
   const likeClickHandler = () => {
     setLiked(!liked);
     if (disliked) setDisliked(false);
+    const data = new FormData();
+    data.append("type", "like");
+    data.append("postId", postId);
+    //send like to server
+    axios
+      .post(`${SERVER_ENDPOINT}/${type}/reaction/update`, data, {
+        headers: { "Content-Type": "multipart/form-data", ...authHeader() },
+      })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err?.response?.data);
+      });
   };
   const dislikeClickHandler = () => {
     setDisliked(!disliked);
     if (liked) setLiked(false);
+    const data = new FormData();
+    data.append("type", "dislike");
+    data.append("postId", postId);
+    //send like to server
+    axios
+      .post(`${SERVER_ENDPOINT}/${type}/reaction/update`, data, {
+        headers: { "Content-Type": "multipart/form-data", ...authHeader() },
+      })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err?.response?.data);
+      });
   };
 
   return (
@@ -103,6 +136,8 @@ const ReactionBar = ({
       </div>
       {showComments && (
         <CommentSection
+          postId={postId}
+          type={type}
           currentUser={currentUser}
           comments={comments}
           defaultTextLength={defaultTextLength}

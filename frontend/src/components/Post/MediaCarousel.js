@@ -1,7 +1,7 @@
 import ImageGallery from "react-image-gallery";
 import { MdFileDownload } from "react-icons/md";
 import { useState, useRef, useEffect } from "react";
-
+import "./MediaCarousel.css";
 const MediaCarousel = ({ images, currentIndex }) => {
   const onErrorImageUrl = "/errorImg.jpg";
   const getCurrentIndex = useRef(null);
@@ -12,26 +12,14 @@ const MediaCarousel = ({ images, currentIndex }) => {
   const hideDownload = () => {
     setDisplay("none");
   };
-  const toDataURL = (url) => {
-    const data = fetch(url)
-      .then((response) => {
-        return response.blob();
-      })
-      .then((blob) => {
-        return URL.createObjectURL(blob);
-      })
-      .catch(() => {
-        return false;
-      });
-    return data;
-  };
   const downloadImage = async () => {
     const currentIndex = getCurrentIndex.current.state.currentIndex;
     const url = images[currentIndex].original;
     const data = await toDataURL(url);
-    if (!data) return;
+    const imgData = data.url;
+    if (!imgData) return;
     let a = document.createElement("a");
-    a.href = data;
+    a.href = imgData;
     a.download = url.split("/").pop();
     document.body.appendChild(a);
     a.click();
@@ -77,4 +65,20 @@ const MediaCarousel = ({ images, currentIndex }) => {
   );
 };
 
+const toDataURL = (url) => {
+  const data = fetch(url)
+    .then((response) => {
+      return response.blob();
+    })
+    .then((blob) => {
+      const url = URL.createObjectURL(blob);
+      return { url, blob };
+    })
+    .catch(() => {
+      return false;
+    });
+  return data;
+};
+
 export default MediaCarousel;
+export { toDataURL };

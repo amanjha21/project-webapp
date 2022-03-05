@@ -2,16 +2,73 @@ import { useEffect, useState } from "react";
 import "./CreatePost.css";
 import { MdPermMedia } from "react-icons/md";
 import MediaCarousel from "../MediaCarousel";
-const CreatePost = ({ postText = "", images = [], type = "update" }) => {
+import { toDataURL } from "../MediaCarousel";
+import axios from "axios";
+import { SERVER_ENDPOINT } from "../../../helpers/Constants";
+import { authHeader } from "../../../helpers/authHeader";
+import { useDispatch } from "react-redux";
+import { getPosts } from "../../../redux/post";
+const CreatePost = ({
+  postText = "",
+  images = [],
+  type = "update",
+  postId = "",
+  onUpdateConfirm,
+}) => {
+  const dispatch = useDispatch();
   const [newImageList, setNewImageList] = useState([""]);
   const [text, setText] = useState("");
-  const onSubmitHandler = () => {
-    console.log("submitted", text, newImageList);
+
+  const onSubmitHandler = async () => {
+    const data = new FormData();
+    data.append("content", text);
+    if (newImageList.length > 0) {
+      await Promise.all(
+        newImageList.map(async (image) => {
+          const imageData = await toDataURL(image.original);
+          const blob = imageData.blob;
+          data.append("imageData", blob);
+        })
+      );
+    } else if (type === "update") {
+      data.append("deleteImageUrl", true);
+    }
+
+    if (type === "update") {
+      data.append("postId", postId);
+      axios
+        .post(`${SERVER_ENDPOINT}/post/update`, data, {
+          headers: { "Content-Type": "multipart/form-data", ...authHeader() },
+        })
+        .then((res) => {
+          console.log(res.data);
+          onUpdateConfirm();
+          dispatch(getPosts());
+        })
+        .catch((err) => {
+          console.log(err?.response?.data);
+        });
+    } else if (type === "create") {
+      axios
+        .post(`${SERVER_ENDPOINT}/post`, data, {
+          headers: { "Content-Type": "multipart/form-data", ...authHeader() },
+        })
+        .then((res) => {
+          console.log(res.data);
+          setNewImageList("");
+          setText("");
+          dispatch(getPosts());
+        })
+        .catch((err) => {
+          console.log(err?.response?.data);
+        });
+    }
   };
   const imageInputChangeHandler = (e) => {
     e.preventDefault();
     let reader = new FileReader();
     let file = e.target.files[0];
+    console.log(file);
     e.target.value = null;
     reader.onloadend = () => {
       let newImage = { original: reader.result, thumbnail: reader.result };
@@ -92,7 +149,7 @@ const CreatePost = ({ postText = "", images = [], type = "update" }) => {
                 }}
                 className={`postButton ${text ? "" : "disabled"}`}
               >
-                Post
+                {type === "update" ? "Update Post" : "Post"}
               </button>
             </div>
           </div>

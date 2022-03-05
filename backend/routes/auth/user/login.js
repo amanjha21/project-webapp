@@ -40,5 +40,6 @@ module.exports = async (req, res) => {
     .json({
       success: true,
       message: "Logged In Successfully",
+      userDetails: { _id: user._id, email: user.email },
     });
 };

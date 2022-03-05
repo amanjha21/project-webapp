@@ -5,32 +5,32 @@ import { useState } from "react";
 const About = () => {
   const memberList = [
     {
-      name: "Vaibhav",
+      name: "Vaibhav Kedia",
       imgUrl: "http://i.pravatar.cc/150?img=53",
       role: "admin",
     },
     {
-      name: "Vaibhav",
+      name: "Vaibhav Kedia",
       imgUrl: "http://i.pravatar.cc/150?img=53",
       role: "moderator",
     },
     {
-      name: "Vaibhav",
+      name: "Vaibhav Kedia",
       imgUrl: "http://i.pravatar.cc/150?img=53",
       role: "moderator",
     },
     {
-      name: "Vaibhav",
+      name: "Vaibhav Kedia",
       imgUrl: "http://i.pravatar.cc/150?img=53",
       role: "member",
     },
     {
-      name: "Vaibhav",
+      name: "Vaibhav Kedia",
       imgUrl: "http://i.pravatar.cc/150?img=53",
       role: "member",
     },
     {
-      name: "Vaibhav",
+      name: "Vaibhav Kedia",
       imgUrl: "http://i.pravatar.cc/150?img=53",
       role: "member",
     },

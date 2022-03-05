@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 module.exports = async (req, res) => {
   const postId = req.params.id;
-  const token = req.header("Authorization")?.split(" ")[1] || "";
+  const token = req.header("authorization")?.split(" ")[1] || "";
   let userId = "000000000000000000000000";
   try {
     if (postId.length != 24) {

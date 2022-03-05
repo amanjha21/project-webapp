@@ -1,10 +1,25 @@
 import Comment from "./Comment/Comment";
-import { useState } from "react";
-const CommentSection = ({ defaultTextLength, comments, currentUser }) => {
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getCommentsByPostId } from "../../redux/post";
+import { SERVER_ENDPOINT } from "../../helpers/Constants";
+import axios from "axios";
+import { authHeader } from "../../helpers/authHeader";
+const CommentSection = ({ defaultTextLength, currentUser, postId, type }) => {
+  const dispatch = useDispatch();
+  const commentsDataArray = useSelector((state) => {
+    return state.postComments.data.filter(
+      (comment) => comment.postId === postId
+    );
+  });
+  const commentsData = commentsDataArray[0];
+  let commentsArray = [];
+  if (commentsData) {
+    commentsArray = [...commentsData.user_comments, ...commentsData.comments];
+  }
+  const isLoading = useSelector((state) => state.postComments.isLoading);
+  const error = useSelector((state) => state.postComments.error);
   const [commentLimit, setCommentLimit] = useState(1);
-  const [commentsArray, setCommentsArray] = useState(
-    comments[0].comments.concat(comments[0].user_comments)
-  );
   const handleViewMore = () => {
     setCommentLimit((oldLimit) => oldLimit + 1);
   };
@@ -12,36 +27,71 @@ const CommentSection = ({ defaultTextLength, comments, currentUser }) => {
     if (e.key === "Enter") {
       e.preventDefault();
       if (!e.target.value) return;
-      // const newComment = {
-      //   name: currentUser.name,
-      //   text: e.target.value,
-      //   createdAt: "1s",
-      //   userImageUrl: currentUser.imageUrl,
-      // };
-      // setComments((oldComments) => [newComment, ...oldComments]);
-      e.target.value = "";
-      // setCommentLimit((oldLimit) => oldLimit + 1);
+      const data = new FormData();
+      data.append("comment", e.target.value);
+      data.append("postId", postId);
+      //send comment to server
+      axios
+        .post(`${SERVER_ENDPOINT}/${type}/reaction/`, data, {
+          headers: { "Content-Type": "multipart/form-data", ...authHeader() },
+        })
+        .then((res) => {
+          console.log(res.data);
+          e.target.value = "";
+        })
+        .catch((err) => {
+          console.log(err?.response?.data);
+        });
     }
   };
+  useEffect(() => {
+    if (!commentsData) {
+      dispatch(getCommentsByPostId(postId));
+    }
+  }, []);
   return (
     <div>
       <div className="comment-section">
-        {commentsArray.map((comment, i) => {
-          if (i < commentLimit) {
-            return (
-              <Comment
-                key={i}
-                name={comment.user.name}
-                text={comment.comment}
-                time={comment.createdAt}
-                imgUrl={comment.user.imageUrl}
-                defaultTextLength={defaultTextLength}
-              />
-            );
-          }
-        })}
+        {isLoading && <h1>Loading...</h1>}
+        {error && <h1>{error}</h1>}
+        {commentsData &&
+          !isLoading &&
+          !error &&
+          commentsData.comments.length + commentsData.user_comments.length ===
+            0 && <h1>no comments</h1>}
+        {commentsData &&
+          commentsArray.map((comment, i) => {
+            if (i < commentLimit) {
+              return (
+                <Comment
+                  key={i}
+                  name={comment.user.name}
+                  text={comment.comment}
+                  time={comment.createdAt}
+                  imgUrl={comment.user.imageUrl}
+                  defaultTextLength={defaultTextLength}
+                />
+              );
+            }
+          })}
+        {/* {commentsData &&
+          commentsData.comments &&
+          commentsData.comments.map((comment, i) => {
+            if (i < commentLimit) {
+              return (
+                <Comment
+                  key={i}
+                  name={comment.user.name}
+                  text={comment.comment}
+                  time={comment.createdAt}
+                  imgUrl={comment.user.imageUrl}
+                  defaultTextLength={defaultTextLength}
+                />
+              );
+            }
+          })} */}
       </div>
-      {commentLimit < commentsArray.length && (
+      {commentsData && commentLimit < commentsArray.length && (
         <p id="viewmore" onClick={handleViewMore}>
           View More
         </p>
