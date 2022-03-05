@@ -2,11 +2,14 @@ import { useState } from "react";
 import FormInput from "./FormInput";
 import "./LoginComponent.css";
 import LoginImageSection from "./LoginImageSection";
+import { login } from "../../auth";
+import { useNavigate } from "react-router-dom";
 const Login = () => {
   const [showLogin, setShowLogin] = useState("fadeIn");
   const [showSignup, setShowSignup] = useState("fadeOut");
   const [showResetPassword, setShowResetPassword] = useState("fadeOut");
   const [showResetNotification, setShowResetNotification] = useState("fadeOut");
+  const navigate = useNavigate();
   const getFormData = (e) => {
     const data = new FormData(e.target);
     return Object.fromEntries(data.entries());
@@ -18,11 +21,15 @@ const Login = () => {
       input.setAttribute("focused", "false");
     }
   };
-  const loginHandler = (e) => {
+  const loginHandler = async (e) => {
     e.preventDefault();
     const data = getFormData(e);
     console.log("login", data);
-    resetForm(e);
+    const loginReq = await login(data.email, data.password);
+    if (loginReq) {
+      resetForm(e);
+      navigate("/");
+    }
   };
   const signupHandler = (e) => {
     e.preventDefault();
