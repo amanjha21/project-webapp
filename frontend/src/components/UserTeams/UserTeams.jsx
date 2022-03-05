@@ -43,9 +43,13 @@ const UserTeams = () => {
   return (
     <>
       <div className="user-team-container rounded-corner">
-        <div className="create-team team-single team-user" onClick={setVisible}>
+        <div
+          className="create-team team-single team-user rounded-corner"
+          onClick={setVisible}
+        >
           Create Team <IoAddSharp className="add-team-icon" />
         </div>
+        <div className="all-teams team-single rounded-corner">All Teams</div>
         {teams.map((team, i) => (
           <div
             className={`team-single  rounded-corner ${
