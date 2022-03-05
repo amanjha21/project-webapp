@@ -20,6 +20,8 @@ module.exports = async (req, res) => {
         })
       );
       post.image_link = imageUrl;
+    } else {
+      post.image_link = "";
     }
     const newPost = await post.save();
     logger({
