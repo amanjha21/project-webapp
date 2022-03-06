@@ -2,43 +2,20 @@ import SingleTeam from "./SingleTeam";
 import { IoAddSharp } from "react-icons/io5";
 import { useState } from "react";
 import Confirmation from "../Confirmation";
-
+import { defaultTeamNotFoundImgUrl } from "../../helpers/Constants";
 import "./UserTeams.css";
+import { useSelector } from "react-redux";
 const UserTeams = () => {
   const [visible, setVisible] = useState(false);
 
   const [selectedTeam, setSelectedTeam] = useState("");
+  const userTeams = useSelector((state) => state.currentUser.data?.teams) || [];
+  const isLoading = useSelector((state) => state.currentUser.isLoading);
+  const error = useSelector((state) => state.currentUser.error);
 
-  const teams = [
-    {
-      name: "Team1",
-      imgUrl:
-        "http://cp91279.biography.com/1000509261001/1000509261001_1822909398001_BIO-Biography-29-Innovators-Mark-Zuckerberg-115956-SF.jpg",
-    },
-    {
-      name: "Team2",
-      imgUrl:
-        "http://cp91279.biography.com/1000509261001/1000509261001_1822909398001_BIO-Biography-29-Innovators-Mark-Zuckerberg-115956-SF.jpg",
-    },
-    {
-      name: "Team3",
-      imgUrl:
-        "http://cp91279.biography.com/1000509261001/1000509261001_1822909398001_BIO-Biography-29-Innovators-Mark-Zuckerberg-115956-SF.jpg",
-    },
-    {
-      name: "Team4",
-      imgUrl:
-        "http://cp91279.biography.com/1000509261001/1000509261001_1822909398001_BIO-Biography-29-Innovators-Mark-Zuckerberg-115956-SF.jpg",
-    },
-    {
-      name: "Team5",
-      imgUrl:
-        "http://cp91279.biography.com/1000509261001/1000509261001_1822909398001_BIO-Biography-29-Innovators-Mark-Zuckerberg-115956-SF.jpg",
-    },
-  ];
   const selectTeamHandler = (i) => {
     if (selectedTeam === i) {
-      setSelectedTeam(teams.length + 1);
+      setSelectedTeam(userTeams.length + 1);
     } else setSelectedTeam(i);
   };
   return (
@@ -58,14 +35,21 @@ const UserTeams = () => {
         >
           All Teams
         </div>
-        {teams.map((team, i) => (
+        {isLoading && <h1>Loading...</h1>}
+        {error && <h1>{error}</h1>}
+        {userTeams.map((team, i) => (
           <div
             className={`team-single  rounded-corner ${
               selectedTeam === i + 1 ? "team-selected" : ""
             }`}
             onClick={() => selectTeamHandler(i + 1)}
           >
-            <SingleTeam key={i} name={team.name} imgUrl={team.imgUrl} />
+            <SingleTeam
+              key={i}
+              teamId={team._id}
+              name={team.name}
+              imgUrl={team.imageUrl || defaultTeamNotFoundImgUrl}
+            />
           </div>
         ))}
       </div>
