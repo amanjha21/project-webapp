@@ -6,7 +6,7 @@ import Post from "../../components/Post/Post";
 import UserTeams from "../../components/UserTeams/UserTeams";
 import { getPosts } from "../../redux/post";
 import "./Home.css";
-import { getCurrentUserById } from "../../redux/userTeams/getCurrentUserById";
+
 const Home = () => {
   const dispatch = useDispatch();
   const posts = useSelector((state) => state.posts);
@@ -16,10 +16,6 @@ const Home = () => {
     setPage((prev) => prev + 1);
   };
   useEffect(() => {
-    const userId = JSON.parse(localStorage.getItem("currentUserId"));
-    if (userId) {
-      dispatch(getCurrentUserById(userId));
-    }
     dispatch(getPosts(page, defaultLimit));
   }, [page]);
   return (

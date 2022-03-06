@@ -3,6 +3,7 @@ import axios from "axios";
 import { authHeader } from "../helpers/authHeader";
 
 export const logout = async () => {
+  console.log(authHeader());
   try {
     const res = await axios.post(`${SERVER_ENDPOINT}/logout`, {
       headers: authHeader(),
