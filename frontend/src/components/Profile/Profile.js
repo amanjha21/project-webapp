@@ -66,7 +66,7 @@ const Profile = ({ profileImage, name, roll, organization }) => {
         onConfirm={() => console.log("Request Sent Successfully")}
       />
       <Popup visible={viewEditProfileImg} setVisible={setViewEditProfileImg}>
-        <EditProfileImage />
+        <EditProfileImage profileImage={profileImage} />
       </Popup>
       <Popup visible={viewEditProfile} setVisible={setViewEditProfile}>
         <EditProfile />
