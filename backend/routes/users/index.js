@@ -18,7 +18,7 @@ const addUserVerifyEmail = require("./addUserVerifyEmail");
 const verifyApproveToken = require("../../middlewares/verifyApproveToken");
 const leaveTeam = require("./leaveTeam");
 // get user route
-router.get("/:id", getUserById);
+router.get("/:id", verifyToken, getUserById);
 
 router.post(
   "/updatePassword/:id",
