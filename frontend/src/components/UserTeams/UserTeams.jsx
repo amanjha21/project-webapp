@@ -2,44 +2,22 @@ import SingleTeam from "./SingleTeam";
 import { IoAddSharp } from "react-icons/io5";
 import { useState } from "react";
 import Confirmation from "../Confirmation";
-
+import { defaultTeamNotFoundImgUrl } from "../../helpers/Constants";
 import "./UserTeams.css";
+import { useSelector } from "react-redux";
 const UserTeams = () => {
   const [visible, setVisible] = useState(false);
 
   const [selectedTeam, setSelectedTeam] = useState("");
-  const selectTeamHandler = (i) => {
-    console.log(i);
-    setSelectedTeam(i);
-  };
+  const userTeams = useSelector((state) => state.currentUser.data?.teams) || [];
+  const isLoading = useSelector((state) => state.currentUser.isLoading);
+  const error = useSelector((state) => state.currentUser.error);
 
-  const teams = [
-    {
-      name: "Team1",
-      imgUrl:
-        "http://cp91279.biography.com/1000509261001/1000509261001_1822909398001_BIO-Biography-29-Innovators-Mark-Zuckerberg-115956-SF.jpg",
-    },
-    {
-      name: "Team2",
-      imgUrl:
-        "http://cp91279.biography.com/1000509261001/1000509261001_1822909398001_BIO-Biography-29-Innovators-Mark-Zuckerberg-115956-SF.jpg",
-    },
-    {
-      name: "Team3",
-      imgUrl:
-        "http://cp91279.biography.com/1000509261001/1000509261001_1822909398001_BIO-Biography-29-Innovators-Mark-Zuckerberg-115956-SF.jpg",
-    },
-    {
-      name: "Team4",
-      imgUrl:
-        "http://cp91279.biography.com/1000509261001/1000509261001_1822909398001_BIO-Biography-29-Innovators-Mark-Zuckerberg-115956-SF.jpg",
-    },
-    {
-      name: "Team5",
-      imgUrl:
-        "http://cp91279.biography.com/1000509261001/1000509261001_1822909398001_BIO-Biography-29-Innovators-Mark-Zuckerberg-115956-SF.jpg",
-    },
-  ];
+  const selectTeamHandler = (i) => {
+    if (selectedTeam === i) {
+      setSelectedTeam(userTeams.length + 1);
+    } else setSelectedTeam(i);
+  };
   return (
     <>
       <div className="user-team-container rounded-corner">
@@ -49,15 +27,29 @@ const UserTeams = () => {
         >
           Create Team <IoAddSharp className="add-team-icon" />
         </div>
-        <div className="all-teams team-single rounded-corner">All Teams</div>
-        {teams.map((team, i) => (
+        <div
+          className={`all-teams team-single rounded-corner ${
+            selectedTeam === 0 ? "team-selected" : ""
+          }`}
+          onClick={() => selectTeamHandler(0)}
+        >
+          All Teams
+        </div>
+        {isLoading && <h1>Loading...</h1>}
+        {error && <h1>{error}</h1>}
+        {userTeams.map((team, i) => (
           <div
             className={`team-single  rounded-corner ${
-              selectedTeam === i ? "team-selected" : ""
+              selectedTeam === i + 1 ? "team-selected" : ""
             }`}
-            onClick={() => selectTeamHandler(i)}
+            onClick={() => selectTeamHandler(i + 1)}
           >
-            <SingleTeam key={i} name={team.name} imgUrl={team.imgUrl} />
+            <SingleTeam
+              key={i}
+              teamId={team._id}
+              name={team.name}
+              imgUrl={team.imageUrl || defaultTeamNotFoundImgUrl}
+            />
           </div>
         ))}
       </div>

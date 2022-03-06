@@ -35,6 +35,7 @@ module.exports = async (req, res) => {
       name,
       organization,
       admin,
+      imageUrl: "",
     });
 
     const newTeam = await team.save();
