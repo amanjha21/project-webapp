@@ -18,3 +18,4 @@ const getTeamsByUserId = (userId) => async (dispatch) => {
     dispatch(setError(errorResponse));
   }
 };
+export { getTeamsByUserId };
