@@ -52,7 +52,7 @@
   font-size: 2.1rem;
   margin-bottom: 1rem;
   text-transform: uppercase;
-  color: var(--font-color-light);
+  color: var(--font-color);
 }
 
 .profile-card .profile-card__cnt .profile-card__txt {
