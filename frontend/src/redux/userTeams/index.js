@@ -1,0 +1,1 @@
+export { getTeamsByUserId } from "./getTeamByUserId";
