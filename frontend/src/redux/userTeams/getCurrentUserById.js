@@ -12,7 +12,6 @@ const getCurrentUserById = (userId) => async (dispatch) => {
     if (!userId) {
       return;
     }
-    console.log("try running");
     dispatch(setError(""));
 
     dispatch(setLoading(true));
