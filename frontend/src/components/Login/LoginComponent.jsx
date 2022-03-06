@@ -3,9 +3,13 @@ import FormInput from "./FormInput";
 import "./LoginComponent.css";
 import LoginImageSection from "./LoginImageSection";
 import { login } from "../../auth";
+
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { getCurrentUserById } from "../../redux/userTeams/getCurrentUserById";
 const Login = () => {
   const [showLogin, setShowLogin] = useState("fadeIn");
+  const dispatch = useDispatch();
   const [showSignup, setShowSignup] = useState("fadeOut");
   const [showResetPassword, setShowResetPassword] = useState("fadeOut");
   const [showResetNotification, setShowResetNotification] = useState("fadeOut");
@@ -29,6 +33,8 @@ const Login = () => {
     if (loginReq) {
       resetForm(e);
       navigate("/");
+      const userId = JSON.parse(localStorage.getItem("currentUserId"));
+      dispatch(getCurrentUserById(userId));
     }
   };
   const signupHandler = (e) => {

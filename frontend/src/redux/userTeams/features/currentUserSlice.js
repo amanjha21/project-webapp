@@ -2,16 +2,16 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   isLoading: false,
-  data: [],
-  errors: "",
+  data: {},
+  error: "",
 };
 
-export const teamListSlice = createSlice({
+export const currentUserSlice = createSlice({
   name: "teamNames",
   initialState,
   reducers: {
-    setTeams: (state, action) => {
-      state.data = { ...state.data, ...action.payload.data };
+    setCurrentUser: (state, action) => {
+      state.data = action.payload;
     },
     setLoading: (state, action) => {
       state.isLoading = action.payload;
@@ -22,5 +22,6 @@ export const teamListSlice = createSlice({
   },
 });
 
-export const { setTeams, setError, setLoading } = teamListSlice;
-export default teamListSlice.reducer;
+export const { setCurrentUser, setError, setLoading } =
+  currentUserSlice.actions;
+export default currentUserSlice.reducer;
