@@ -2,7 +2,7 @@ import axios from "axios";
 import { authHeader } from "../../helpers/authHeader";
 import { SERVER_ENDPOINT } from "../../helpers/Constants";
 import { setComments, setError, setLoading } from "./features/commentSlice";
-
+import { setCurrentUser } from "../userTeams/features/currentUserSlice";
 const getCommentsByPostId = (id) => async (dispatch) => {
   try {
     dispatch(setError(""));
@@ -17,6 +17,9 @@ const getCommentsByPostId = (id) => async (dispatch) => {
     const errorResponse = err?.response?.data?.message || err.message || "";
     dispatch(setLoading(false));
     dispatch(setError(errorResponse));
+    if (errorResponse === "Access Denied") {
+      dispatch(setCurrentUser({}));
+    }
   }
 };
 
