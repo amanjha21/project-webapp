@@ -8,10 +8,12 @@ import "./Navbar.css";
 import { useNavigate } from "react-router-dom";
 import UserSettings from "./UserSettings";
 import Popup from "../Popup";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getCurrentUserById } from "../../redux/userTeams/getCurrentUserById";
+
 const Navbar = () => {
   const [showUserSettings, setShowUserSettings] = useState(false);
-
+  const dispatch = useDispatch();
   useEffect(() => {
     const menuBtn = document.querySelector(".menu-icon span");
     const searchBtn = document.querySelector(".search-icon");
@@ -50,10 +52,14 @@ const Navbar = () => {
         }
       }
     });
+    const userId = JSON.parse(localStorage.getItem("currentUserId"));
+    if (userId) {
+      dispatch(getCurrentUserById(userId));
+    }
   }, []);
 
   const navUser = useSelector((state) => state.currentUser.data);
-
+  console.log(!navUser);
   const navigate = useNavigate();
 
   const navProfileHandler = (e) => {
@@ -117,14 +123,16 @@ const Navbar = () => {
             </div>
           </li>
           <li>
-            <div>
-              <div
-                className="nav-login-btn rounded-corner"
-                onClick={navLoginBtnHandler}
-              >
-                <span className="nav-login-text">Login</span>
+            {Object.keys(navUser).length === 0 && (
+              <div>
+                <div
+                  className="nav-login-btn rounded-corner"
+                  onClick={navLoginBtnHandler}
+                >
+                  <span className="nav-login-text">Login</span>
+                </div>
               </div>
-            </div>
+            )}
           </li>
         </div>
         <div className="search-icon">
