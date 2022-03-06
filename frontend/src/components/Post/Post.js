@@ -6,8 +6,10 @@ import MediaCarousel from "./MediaCarousel";
 import Popup from "../Popup";
 import UserReaction from "./UserReaction/UserReaction";
 import PostOptions from "./PostOptions";
+import { useNavigate } from "react-router-dom";
 
 const Post = ({ type = "post", data }) => {
+  const navigate = useNavigate();
   let postData = data;
   const defaultTextLength = 150;
   const defaultNotFoundImgProfile =
@@ -35,7 +37,6 @@ const Post = ({ type = "post", data }) => {
       .map((link) => {
         return { original: link };
       }) || [];
-  const [reactions, setReactions] = useState([]);
   const [message, setMessage] = useState(text.slice(0, 150));
   const handleViewMore = () => {
     setMessage(text);
@@ -47,30 +48,11 @@ const Post = ({ type = "post", data }) => {
   const viewReactionHandler = () => {
     //show loading
     //load reaction
-    setReactions([
-      {
-        _id: "621d09530ef9bb6d9855fdb1",
-        type: "like",
-        createdAt: "2022-02-28T17:41:39.018Z",
-        user: {
-          _id: "62041a8360c7f0fb3032531d",
-          name: "Vaibhav Kedia",
-          imageUrl:
-            "https://res.cloudinary.com/amanjha/image/upload/v1646067254/synoarx/user/62041a8360c7f0fb3032531d/loiekgcdfstfzblxzn50.jpg",
-        },
-      },
-      {
-        _id: "621d09530ef9bb6d9855fdb1",
-        type: "dislike",
-        createdAt: "2022-01-28T17:41:39.018Z",
-        user: {
-          _id: "621cf4fbbed10fdb469adfc0",
-          name: "Aman Jha",
-          imageUrl:
-            "https://res.cloudinary.com/amanjha/image/upload/v1646067092/synoarx/user/621cf4fbbed10fdb469adfc0/qkbosv9sst4v0wbdlckb.jpg",
-        },
-      },
-    ]);
+    const userId = JSON.parse(localStorage.getItem("currentUserId"));
+    if (!userId) {
+      navigate("/login");
+      return;
+    }
     //show reactions
     setViewReactions(true);
   };
@@ -135,11 +117,7 @@ const Post = ({ type = "post", data }) => {
             type={type}
           />
           <Popup visible={viewReactions} setVisible={setViewReactions}>
-            <UserReaction
-              reactions={reactions}
-              setReactions={setReactions}
-              postId={postData._id}
-            />
+            <UserReaction postId={postData._id} />
           </Popup>
         </div>
       )}

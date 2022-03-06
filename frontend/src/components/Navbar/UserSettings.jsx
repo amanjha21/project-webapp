@@ -1,5 +1,5 @@
 const UserSettings = () => {
-  const options = ["First Option", "Second Option", "Third Option"];
+  const options = ["First Option", "Second Option", "LogOut"];
   return (
     <div className="user-settings-container rounded-corner">
       {options &&

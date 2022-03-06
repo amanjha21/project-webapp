@@ -22,11 +22,11 @@
 .create-team:hover {
   background-color: var(--hover-bgcolor);
 }
-.all-teams,
-.all-teams-icon {
+.all-teams {
+  display: flex;
   align-items: center;
-
-  font-size: 1.2rem;
+  justify-content: center;
+  font-size: 1.5rem;
   font-weight: bold;
   color: var(--main-color1);
 }

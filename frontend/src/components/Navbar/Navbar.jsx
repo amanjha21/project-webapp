@@ -3,12 +3,15 @@ import { MdOutlineSearch } from "react-icons/md";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { AiOutlineClose } from "react-icons/ai";
 import { ImCog } from "react-icons/im";
-
+import { defaultTeamNotFoundImgUrl } from "../../helpers/Constants";
 import "./Navbar.css";
+import { useNavigate } from "react-router-dom";
 import UserSettings from "./UserSettings";
 import Popup from "../Popup";
+import { useSelector } from "react-redux";
 const Navbar = () => {
   const [showUserSettings, setShowUserSettings] = useState(false);
+
   useEffect(() => {
     const menuBtn = document.querySelector(".menu-icon span");
     const searchBtn = document.querySelector(".search-icon");
@@ -34,7 +37,6 @@ const Navbar = () => {
       searchBtn.classList.add("hide");
       cancelBtn.classList.add("show");
     });
-
     // Close the dropdown menu if the user clicks outside of it
     window.addEventListener("click", (event) => {
       if (!event.target.matches(".dropbtn")) {
@@ -49,17 +51,28 @@ const Navbar = () => {
       }
     });
   }, []);
-  // function showDropdownHandler() {
-  //   document
-  //     .getElementById("myDropdown")
-  //     .classList.toggle("show-dropdown-contents");
-  // }
+
+  const navUser = useSelector((state) => state.currentUser.data);
+
+  const navigate = useNavigate();
+
   const navProfileHandler = (e) => {
     e.preventDefault();
+    navigate("/user");
   };
   const searchHandler = (e) => {
     e.preventDefault();
     console.log("searchHandler");
+  };
+
+  const navLoginBtnHandler = (e) => {
+    e.preventDefault();
+    navigate("/login");
+  };
+
+  const navSiteLogoHandler = (e) => {
+    e.preventDefault();
+    navigate("/");
   };
   return (
     <div className="navbar-main">
@@ -69,7 +82,7 @@ const Navbar = () => {
             <GiHamburgerMenu />
           </span>
         </div>
-        <div className="logo">
+        <div className="logo" onClick={navSiteLogoHandler}>
           <span>S</span>yno<span>A</span>rx
         </div>
         <form onSubmit={searchHandler}>
@@ -86,12 +99,12 @@ const Navbar = () => {
         <div className="nav-items">
           <li>
             <div>
-              <div className="nav-profile" onClick={() => navProfileHandler}>
+              <div className="nav-profile" onClick={navProfileHandler}>
                 <img
-                  src="http://cp91279.biography.com/1000509261001/1000509261001_1822909398001_BIO-Biography-29-Innovators-Mark-Zuckerberg-115956-SF.jpg"
+                  src={navUser.imageUrl || defaultTeamNotFoundImgUrl}
                   alt=""
                 />
-                <span className="nav-userName">UserName</span>
+                <span className="nav-userName">{navUser.name}</span>
               </div>
             </div>
           </li>
@@ -107,7 +120,7 @@ const Navbar = () => {
             <div>
               <div
                 className="nav-login-btn rounded-corner"
-                onClick={() => navProfileHandler}
+                onClick={navLoginBtnHandler}
               >
                 <span className="nav-login-text">Login</span>
               </div>
