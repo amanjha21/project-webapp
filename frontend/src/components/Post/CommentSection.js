@@ -5,8 +5,10 @@ import { getCommentsByPostId } from "../../redux/post";
 import { SERVER_ENDPOINT } from "../../helpers/Constants";
 import axios from "axios";
 import { authHeader } from "../../helpers/authHeader";
+import { useNavigate } from "react-router-dom";
 const CommentSection = ({ defaultTextLength, currentUser, postId, type }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const commentsDataArray = useSelector((state) => {
     return state.postComments.data.filter(
       (comment) => comment.postId === postId
@@ -27,6 +29,11 @@ const CommentSection = ({ defaultTextLength, currentUser, postId, type }) => {
     if (e.key === "Enter") {
       e.preventDefault();
       if (!e.target.value) return;
+      const userId = JSON.parse(localStorage.getItem("currentUserId"));
+      if (!userId) {
+        navigate("/login");
+        return;
+      }
       const data = new FormData();
       data.append("comment", e.target.value);
       data.append("postId", postId);
@@ -45,7 +52,8 @@ const CommentSection = ({ defaultTextLength, currentUser, postId, type }) => {
     }
   };
   useEffect(() => {
-    if (!commentsData) {
+    const userId = JSON.parse(localStorage.getItem("currentUserId"));
+    if (!commentsData && userId) {
       dispatch(getCommentsByPostId(postId));
     }
   }, []);
@@ -54,11 +62,9 @@ const CommentSection = ({ defaultTextLength, currentUser, postId, type }) => {
       <div className="comment-section">
         {isLoading && <h1>Loading...</h1>}
         {error && <h1>{error}</h1>}
-        {commentsData &&
-          !isLoading &&
-          !error &&
-          commentsData.comments.length + commentsData.user_comments.length ===
-            0 && <h1>no comments</h1>}
+        {commentsData && !isLoading && !error && commentsArray.length === 0 && (
+          <h1>no comments</h1>
+        )}
         {commentsData &&
           commentsArray.map((comment, i) => {
             if (i < commentLimit) {
@@ -74,22 +80,6 @@ const CommentSection = ({ defaultTextLength, currentUser, postId, type }) => {
               );
             }
           })}
-        {/* {commentsData &&
-          commentsData.comments &&
-          commentsData.comments.map((comment, i) => {
-            if (i < commentLimit) {
-              return (
-                <Comment
-                  key={i}
-                  name={comment.user.name}
-                  text={comment.comment}
-                  time={comment.createdAt}
-                  imgUrl={comment.user.imageUrl}
-                  defaultTextLength={defaultTextLength}
-                />
-              );
-            }
-          })} */}
       </div>
       {commentsData && commentLimit < commentsArray.length && (
         <p id="viewmore" onClick={handleViewMore}>
