@@ -5,7 +5,7 @@ module.exports = async (req, res, next) => {
   if (!token)
     return res.status(400).json({
       success: false,
-      message: "reset token is required",
+      message: "Access Denied",
     });
   try {
     //check if token is valid
@@ -15,7 +15,7 @@ module.exports = async (req, res, next) => {
   } catch (err) {
     res.status(404).json({
       success: false,
-      message: err.message,
+      message: "Access Denied",
     });
   }
 };
