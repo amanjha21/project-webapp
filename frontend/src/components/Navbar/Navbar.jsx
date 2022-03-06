@@ -3,7 +3,7 @@ import { MdOutlineSearch } from "react-icons/md";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { AiOutlineClose } from "react-icons/ai";
 import { ImCog } from "react-icons/im";
-import { CgLogIn } from "react-icons/cg";
+
 import "./Navbar.css";
 import UserSettings from "./UserSettings";
 import Popup from "../Popup";
@@ -105,9 +105,11 @@ const Navbar = () => {
           </li>
           <li>
             <div>
-              <div className="nav-profile" onClick={() => navProfileHandler}>
-                <CgLogIn />
-                <span className="nav-userName">Login</span>
+              <div
+                className="nav-login-btn rounded-corner"
+                onClick={() => navProfileHandler}
+              >
+                <span className="nav-login-text">Login</span>
               </div>
             </div>
           </li>
