@@ -3,6 +3,7 @@ import { MdOutlineSearch } from "react-icons/md";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { AiOutlineClose } from "react-icons/ai";
 import { ImCog } from "react-icons/im";
+import { CgLogIn } from "react-icons/cg";
 import "./Navbar.css";
 import UserSettings from "./UserSettings";
 import Popup from "../Popup";
@@ -48,11 +49,11 @@ const Navbar = () => {
       }
     });
   }, []);
-  function showDropdownHandler() {
-    document
-      .getElementById("myDropdown")
-      .classList.toggle("show-dropdown-contents");
-  }
+  // function showDropdownHandler() {
+  //   document
+  //     .getElementById("myDropdown")
+  //     .classList.toggle("show-dropdown-contents");
+  // }
   const navProfileHandler = (e) => {
     e.preventDefault();
   };
@@ -94,10 +95,19 @@ const Navbar = () => {
               </div>
             </div>
           </li>
+
           <li>
             <div onClick={() => setShowUserSettings(true)}>
               <div className="nav-dropdown">
                 <ImCog />
+              </div>
+            </div>
+          </li>
+          <li>
+            <div>
+              <div className="nav-profile" onClick={() => navProfileHandler}>
+                <CgLogIn />
+                <span className="nav-userName">Login</span>
               </div>
             </div>
           </li>
