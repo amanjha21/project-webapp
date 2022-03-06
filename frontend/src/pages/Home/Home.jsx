@@ -17,7 +17,9 @@ const Home = () => {
   };
   useEffect(() => {
     const userId = JSON.parse(localStorage.getItem("currentUserId"));
-    dispatch(getCurrentUserById(userId));
+    if (userId) {
+      dispatch(getCurrentUserById(userId));
+    }
     dispatch(getPosts(page, defaultLimit));
   }, [page]);
   return (
