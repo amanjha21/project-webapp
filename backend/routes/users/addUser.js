@@ -5,6 +5,7 @@ module.exports = async (req, res, next) => {
   const userEmail = req.organization.email;
   const email_format = userEmail.split("@").pop();
   const reqType = req.organization.reqType;
+
   if (reqType != "addUser")
     return res.status(400).json({
       success: false,
@@ -43,6 +44,7 @@ module.exports = async (req, res, next) => {
         email: userEmail,
         organization: organization._id,
         teams: [organizationTeam._id],
+        imageUrl: "",
       });
 
       const newUser = await user.save();

@@ -277,3 +277,15 @@ nav .search-icon {
 .navbar-main .nav-profile:hover {
   background-color: var(--hover-bgcolor);
 }
+
+.nav-login-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--font-color-light);
+  background-color: var(--main-color1);
+  padding: 8px 12px 8px 12px;
+}
+.nav-login-text {
+  font-size: 1.6rem;
+}
