@@ -4,10 +4,14 @@ import { MdPermMedia } from "react-icons/md";
 import MediaCarousel from "../MediaCarousel";
 import { toDataURL } from "../MediaCarousel";
 import axios from "axios";
-import { SERVER_ENDPOINT } from "../../../helpers/Constants";
+import {
+  defaultUserNotFoundImgUrl,
+  SERVER_ENDPOINT,
+} from "../../../helpers/Constants";
 import { authHeader } from "../../../helpers/authHeader";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getPosts } from "../../../redux/post";
+import { useNavigate } from "react-router-dom";
 const CreatePost = ({
   postText = "",
   images = [],
@@ -16,10 +20,17 @@ const CreatePost = ({
   onUpdateConfirm,
 }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const currentUser = useSelector((state) => state.currentUser.data) || [];
   const [newImageList, setNewImageList] = useState([""]);
   const [text, setText] = useState("");
 
   const onSubmitHandler = async () => {
+    const userId = JSON.parse(localStorage.getItem("currentUserId"));
+    if (!userId) {
+      navigate("/login");
+      return;
+    }
     const data = new FormData();
     data.append("content", text);
     if (newImageList.length > 0) {
@@ -66,6 +77,11 @@ const CreatePost = ({
   };
   const imageInputChangeHandler = (e) => {
     e.preventDefault();
+    const userId = JSON.parse(localStorage.getItem("currentUserId"));
+    if (!userId) {
+      navigate("/login");
+      return;
+    }
     let reader = new FileReader();
     let file = e.target.files[0];
     console.log(file);
@@ -98,13 +114,11 @@ const CreatePost = ({
               <img
                 className="post-creator-image circle"
                 alt="user profile"
-                src={
-                  "http://cp91279.biography.com/1000509261001/1000509261001_1822909398001_BIO-Biography-29-Innovators-Mark-Zuckerberg-115956-SF.jpg"
-                }
+                src={currentUser.imageUrl || defaultUserNotFoundImgUrl}
               />
               <div className="post-user-details">
-                <p>Aman Jha</p>
-                <p>3h ago</p>
+                <p>{currentUser.name || "-"}</p>
+                <p>Just now</p>
               </div>
             </div>
             <textarea
