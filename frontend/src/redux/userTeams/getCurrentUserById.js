@@ -9,6 +9,9 @@ import {
 
 const getCurrentUserById = (userId) => async (dispatch) => {
   try {
+    if (!userId) {
+      return;
+    }
     console.log("try running");
     dispatch(setError(""));
 
