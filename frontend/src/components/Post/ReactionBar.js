@@ -4,6 +4,7 @@ import { useState } from "react";
 import { SERVER_ENDPOINT } from "../../helpers/Constants";
 import axios from "axios";
 import { authHeader } from "../../helpers/authHeader";
+import { useNavigate } from "react-router-dom";
 const ReactionBar = ({
   defaultTextLength,
   viewReactionHandler,
@@ -14,6 +15,7 @@ const ReactionBar = ({
   postId,
   type,
 }) => {
+  const navigate = useNavigate();
   const [showComments, setShowComments] = useState(false);
   let userLiked = userReaction === "like";
   let userDisiked = userReaction === "dislike";
@@ -57,6 +59,11 @@ const ReactionBar = ({
     setShowComments(!showComments);
   };
   const likeClickHandler = () => {
+    const userId = JSON.parse(localStorage.getItem("currentUserId"));
+    if (!userId) {
+      navigate("/login");
+      return;
+    }
     setLiked(!liked);
     if (disliked) setDisliked(false);
     const data = new FormData();
@@ -75,6 +82,11 @@ const ReactionBar = ({
       });
   };
   const dislikeClickHandler = () => {
+    const userId = JSON.parse(localStorage.getItem("currentUserId"));
+    if (!userId) {
+      navigate("/login");
+      return;
+    }
     setDisliked(!disliked);
     if (liked) setLiked(false);
     const data = new FormData();
