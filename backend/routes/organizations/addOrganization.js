@@ -35,6 +35,7 @@ module.exports = async (req, res) => {
       email: adminEmail,
       organization: newOrganization._id,
       teams: [],
+      imageUrl: "",
     });
 
     const newAdmin = await admin.save();
@@ -52,6 +53,7 @@ module.exports = async (req, res) => {
       organization: newOrganization._id,
       admin: newAdmin._id,
       moderator: [],
+      imageUrl: "",
     });
 
     const newTeam = await team.save();
