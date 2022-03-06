@@ -18,7 +18,8 @@ const UserReaction = ({ postId }) => {
   const error = useSelector((state) => state.postReactions.error);
 
   useEffect(() => {
-    if (reactionsData.length === 0) {
+    const userId = JSON.parse(localStorage.getItem("currentUserId"));
+    if (reactionsData.length === 0 && userId) {
       dispatch(getReactionsByPostId(postId));
     }
   }, []);
