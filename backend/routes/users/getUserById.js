@@ -1,7 +1,7 @@
 const Schemas = require("../../models/index");
 const pipeline = require("../../helpers/pipeline");
 module.exports = async (req, res) => {
-  const userId = req.user._id;
+  const userId = req.params.id;
   if (userId.length != 24) {
     return res.status(400).json({
       success: false,
