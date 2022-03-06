@@ -1336,6 +1336,80 @@ const noticesByTeamId = (teamId, currentUserId, pageInput, number) => {
       },
     },
   ];
+
+  return pipeline;
+};
+const getUserById = (userId) => {
+  const pipeline = [
+    {
+      $match: {
+        _id: new ObjectId(userId),
+      },
+    },
+    {
+      $unwind: {
+        path: "$teams",
+        preserveNullAndEmptyArrays: true,
+      },
+    },
+    {
+      $lookup: {
+        from: "teams",
+        localField: "teams",
+        foreignField: "_id",
+        as: "teams",
+      },
+    },
+    {
+      $project: {
+        _id: 1,
+        name: 1,
+        organization: 1,
+        email: 1,
+        description: 1,
+        imageUrl: 1,
+        teams: {
+          $arrayElemAt: ["$teams", 0],
+        },
+      },
+    },
+    {
+      $group: {
+        _id: "$_id",
+        name: {
+          $first: "$name",
+        },
+        organization: {
+          $first: "$organization",
+        },
+        email: {
+          $first: "$email",
+        },
+        discription: {
+          $first: "$description",
+        },
+        imageUrl: {
+          $first: "$imageUrl",
+        },
+        teams: {
+          $push: "$teams",
+        },
+      },
+    },
+    {
+      $project: {
+        _id: 1,
+        name: 1,
+        organization: 1,
+        email: 1,
+        description: 1,
+        imageUrl: 1,
+        "teams._id": 1,
+        "teams.name": 1,
+        "teams.imageUrl": 1,
+      },
+    },
+  ];
   return pipeline;
 };
 module.exports = {
@@ -1349,4 +1423,5 @@ module.exports = {
   userDetails,
   commentsByPostId,
   reactionsByPostId,
+  getUserById,
 };
