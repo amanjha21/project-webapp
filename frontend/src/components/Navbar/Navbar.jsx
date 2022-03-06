@@ -59,7 +59,7 @@ const Navbar = () => {
   }, []);
 
   const navUser = useSelector((state) => state.currentUser.data);
-  console.log(!navUser);
+
   const navigate = useNavigate();
 
   const navProfileHandler = (e) => {
