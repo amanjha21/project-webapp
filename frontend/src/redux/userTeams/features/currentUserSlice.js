@@ -11,6 +11,11 @@ export const currentUserSlice = createSlice({
   initialState,
   reducers: {
     setCurrentUser: (state, action) => {
+      if (action.payload === {}) {
+        localStorage.remove("currentUser");
+        localStorage.remove("currentUserId");
+        localStorage.remove("currentUserEmail");
+      }
       state.data = action.payload;
     },
     setLoading: (state, action) => {
