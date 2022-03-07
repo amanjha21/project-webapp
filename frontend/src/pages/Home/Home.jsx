@@ -10,6 +10,7 @@ import "./Home.css";
 const Home = () => {
   const dispatch = useDispatch();
   const posts = useSelector((state) => state.posts);
+  const currentUser = useSelector((state) => state.currentUser.data);
   const [page, setPage] = useState(1);
   const defaultLimit = 5;
   const loadMoreHandler = () => {
@@ -17,7 +18,7 @@ const Home = () => {
   };
   useEffect(() => {
     dispatch(getPosts(page, defaultLimit));
-  }, [page]);
+  }, [page, currentUser]);
   return (
     <div className="homepage-grid-main">
       <div className="homepage-nav">
