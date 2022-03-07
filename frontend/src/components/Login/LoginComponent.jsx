@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FormInput from "./FormInput";
 import "./LoginComponent.css";
 import LoginImageSection from "./LoginImageSection";
@@ -118,6 +118,12 @@ const Login = () => {
       errorMessage: "Email Address must be a valid email",
     },
   ];
+  useEffect(() => {
+    const currentUser = localStorage.getItem("currentUser");
+    if (currentUser) {
+      navigate("/");
+    }
+  }, []);
   return (
     <>
       <div className="signin-container">
