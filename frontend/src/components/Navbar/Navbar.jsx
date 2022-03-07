@@ -129,7 +129,7 @@ const Navbar = () => {
                   className="nav-login-btn rounded-corner"
                   onClick={navLoginBtnHandler}
                 >
-                  <span className="nav-login-text">Login</span>
+                  <span className="nav-login-text">Login/SignUp</span>
                 </div>
               </div>
             )}
