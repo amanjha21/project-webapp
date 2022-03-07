@@ -16,14 +16,14 @@ export const logout = async () => {
     const successResponse = res.data;
     console.log(res);
     if (successResponse.success) {
-      localStorage.removeItem("currentUser");
-      localStorage.removeItem("currentUserId");
-      localStorage.removeItem("currentUserEmail");
       return true;
     }
   } catch (error) {
     const errorResponse = error?.response?.data || {};
     console.log(errorResponse, error);
+    if (errorResponse === "Access Denied") {
+      return true;
+    }
     return false;
   }
 };
