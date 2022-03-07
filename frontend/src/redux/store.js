@@ -4,6 +4,7 @@ import postCommentReducer from "./post/features/commentSlice";
 import postReactionReducer from "./post/features/reactionSlice";
 import currentUserReducer from "./userTeams/features/currentUserSlice";
 import userProfileReducer from "./UserProfile/features/userSlice";
+import teamProfileReducer from "./TeamProfile/features/teamSlice";
 
 const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ const store = configureStore({
     postReactions: postReactionReducer,
     currentUser: currentUserReducer,
     userProfile: userProfileReducer,
+    teamProfile: teamProfileReducer,
   },
 });
 
