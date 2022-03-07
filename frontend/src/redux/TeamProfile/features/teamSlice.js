@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   isLoading: false,
-  data: {},
+  data: [],
   error: "",
 };
 
@@ -11,7 +11,7 @@ export const teamSlice = createSlice({
   initialState,
   reducers: {
     setTeam: (state, action) => {
-      state.data = [...state.data, ...action.payload];
+      state.data = [...state.data, action.payload];
     },
     setLoading: (state, action) => {
       state.isLoading = action.payload;
