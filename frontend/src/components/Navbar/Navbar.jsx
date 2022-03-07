@@ -59,7 +59,7 @@ const Navbar = () => {
   }, []);
 
   const navUser = useSelector((state) => state.currentUser.data);
-  console.log(!navUser);
+
   const navigate = useNavigate();
 
   const navProfileHandler = (e) => {
@@ -147,7 +147,7 @@ const Navbar = () => {
         </div>
       </nav>
       <Popup visible={showUserSettings} setVisible={setShowUserSettings}>
-        <UserSettings />
+        <UserSettings setVisible={setShowUserSettings} />
       </Popup>
     </div>
   );
