@@ -2,11 +2,20 @@ import { useState } from "react";
 import Popup from "../Popup";
 import EditProfile from "../Profile/EditProfile/EditProfile";
 import { logout } from "../../auth";
-const UserSettings = () => {
+import { useDispatch } from "react-redux";
+import { setCurrentUser } from "../../redux/userTeams/features/currentUserSlice";
+
+const UserSettings = ({ setVisible }) => {
   const [showEditProfile, setShowEditProfile] = useState(false);
-  const logoutHandler = (e) => {
+
+  const dispatch = useDispatch();
+  const logoutHandler = async (e) => {
     e.preventDefault();
-    logout();
+    const loggedOut = await logout();
+    if (loggedOut) {
+      dispatch(setCurrentUser({}));
+      setVisible(false);
+    }
   };
   const editProfileHandler = (e) => {
     e.preventDefault();
