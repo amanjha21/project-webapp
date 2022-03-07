@@ -24,9 +24,12 @@ const getCurrentUserById = (userId) => async (dispatch) => {
     dispatch(setCurrentUser(response.data[0]));
   } catch (err) {
     const errorResponse = err?.response?.data?.message || err.message || "";
-
     dispatch(setLoading(false));
-    dispatch(setError(errorResponse));
+    if (errorResponse === "Access Denied") {
+      dispatch(setCurrentUser({}));
+    } else {
+      dispatch(setError(errorResponse));
+    }
   }
 };
 export { getCurrentUserById };
