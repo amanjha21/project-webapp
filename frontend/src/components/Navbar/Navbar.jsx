@@ -147,7 +147,7 @@ const Navbar = () => {
         </div>
       </nav>
       <Popup visible={showUserSettings} setVisible={setShowUserSettings}>
-        <UserSettings />
+        <UserSettings setVisible={setShowUserSettings} />
       </Popup>
     </div>
   );
