@@ -4,17 +4,17 @@ import EditProfile from "../Profile/EditProfile/EditProfile";
 import { logout } from "../../auth";
 import { useDispatch } from "react-redux";
 import { setCurrentUser } from "../../redux/userTeams/features/currentUserSlice";
-import { useNavigate } from "react-router-dom";
-const UserSettings = () => {
+
+const UserSettings = ({ setVisible }) => {
   const [showEditProfile, setShowEditProfile] = useState(false);
-  const navigate = useNavigate();
+
   const dispatch = useDispatch();
   const logoutHandler = async (e) => {
     e.preventDefault();
     const loggedOut = await logout();
     if (loggedOut) {
       dispatch(setCurrentUser({}));
-      navigate("/");
+      setVisible(false);
     }
   };
   const editProfileHandler = (e) => {
