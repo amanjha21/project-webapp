@@ -25,9 +25,15 @@ module.exports = async (req, res) => {
     }
     res.status(200).json(post);
   } catch (err) {
+    if (err.message === "jwt expired") {
+      return res.status(404).json({
+        success: false,
+        message: "Access Denied",
+      });
+    }
     res.status(404).json({
       success: false,
-      message: "Access Denied",
+      message: err.message,
     });
   }
 };

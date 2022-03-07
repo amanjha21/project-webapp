@@ -21,40 +21,8 @@ const ReactionBar = ({
   let userDisiked = userReaction === "dislike";
   const [liked, setLiked] = useState(userLiked);
   const [disliked, setDisliked] = useState(userDisiked);
-  const [comments, setComments] = useState([]);
   const commentClickHandler = () => {
     //show loading animation
-    //load comments
-    setComments([
-      {
-        comments: [
-          {
-            _id: "621d087a0ef9bb6d9855fd8f",
-            comment: "Awesome",
-            createdAt: "2022-02-28T17:38:02.428Z",
-            user: {
-              _id: "62041a8360c7f0fb3032531d",
-              name: "Vaibhav Kedia",
-              imageUrl:
-                "https://res.cloudinary.com/amanjha/image/upload/v1646067254/synoarx/user/62041a8360c7f0fb3032531d/loiekgcdfstfzblxzn50.jpg",
-            },
-          },
-        ],
-        user_comments: [
-          {
-            _id: "621e1b072490a77ba4d49781",
-            comment: "this a check comment",
-            createdAt: "2022-03-01T13:09:27.837Z",
-            user: {
-              _id: "621cf4fbbed10fdb469adfc0",
-              name: "Aman Jha",
-              imageUrl:
-                "https://res.cloudinary.com/amanjha/image/upload/v1646067092/synoarx/user/621cf4fbbed10fdb469adfc0/qkbosv9sst4v0wbdlckb.jpg",
-            },
-          },
-        ],
-      },
-    ]);
     //show comments
     setShowComments(!showComments);
   };
@@ -151,7 +119,6 @@ const ReactionBar = ({
           postId={postId}
           type={type}
           currentUser={currentUser}
-          comments={comments}
           defaultTextLength={defaultTextLength}
         />
       )}
