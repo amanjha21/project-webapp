@@ -19,8 +19,12 @@ export const postSlice = createSlice({
     setError: (state, action) => {
       state.error = action.payload;
     },
+    removePosts: (state, action) => {
+      state.data = [];
+    },
   },
 });
 
-export const { setPosts, setError, setLoading } = postSlice.actions;
+export const { setPosts, setError, setLoading, removePosts } =
+  postSlice.actions;
 export default postSlice.reducer;
