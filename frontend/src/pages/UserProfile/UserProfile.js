@@ -2,39 +2,46 @@ import Navbar from "../../components/Navbar/Navbar";
 import Profile from "../../components/Profile/Profile";
 import ProfileNavbar from "../../components/Profile/ProfileNavbar/ProfileNavbar";
 
+import { useDispatch, useSelector } from "react-redux";
+import { getUserById } from "../../redux/UserProfile";
+import { useEffect } from "react";
+
 const UserProfile = () => {
-  const userList = [
-    {
-      profileImage:
-        "https://w7.pngwing.com/pngs/396/63/png-transparent-rick-morty-illustration-rick-sanchez-morty-smith-rick-and-morty-season-3-television-show-adult-swim-rick-and-morty-television-child-face.png",
-      name: "Vinamra Singh",
-      roll: "2019UGCS115",
-      organization: "National Institute of Technology Jamshedpur",
-    },
-  ];
+  const userId = "62041a8360c7f0fb3032531d";
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getUserById(userId));
+  }, []);
+
+  const userArray = useSelector((state) => {
+    return state.userProfile.data.filter((user) => user._id === userId);
+  });
+  const user = userArray[0];
+
   return (
     <>
-      <div className="user-profile-grid-container">
-        <div className="navbar-grid">
-          <Navbar />
-        </div>
-        <div className="profile-card-grid">
-          {userList.map((user, i) => {
-            return (
+      {user && (
+        <>
+          <div className="user-profile-grid-container">
+            <div className="navbar-grid">
+              <Navbar />
+            </div>
+            <div className="profile-card-grid">
               <Profile
-                profileImage={user.profileImage}
+                profileImage={user.imageUrl}
                 name={user.name}
-                roll={user.roll}
-                organization={user.organization}
-                key={i}
+                roll={user.email.split("@")[0]}
+                organization={user.teams[0].name}
               />
-            );
-          })}
-        </div>
-        <div className="profile-navbar-grid">
-          <ProfileNavbar />
-        </div>
-      </div>
+            </div>
+            <div className="profile-navbar-grid">
+              <ProfileNavbar />
+            </div>
+          </div>
+        </>
+      )}
     </>
   );
 };
