@@ -78,7 +78,8 @@
   cursor: pointer;
 }
 
-.post-section {
+.post-section,
+.notice-section {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -86,6 +87,7 @@
 
 .profile-navbar,
 .post-section,
+.notice-section,
 .about-section {
   width: 60vw;
   /* max-width: 900px; */
