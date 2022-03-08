@@ -18,6 +18,7 @@ const UserProfile = () => {
   const userArray = useSelector((state) => {
     return state.userProfile.data.filter((user) => user._id === userId);
   });
+
   const user = userArray[0];
 
   return (
@@ -37,7 +38,7 @@ const UserProfile = () => {
               />
             </div>
             <div className="profile-navbar-grid">
-              <ProfileNavbar />
+              <ProfileNavbar type="user" />
             </div>
           </div>
         </>
