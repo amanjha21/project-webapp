@@ -70,7 +70,7 @@ module.exports = async (req, res) => {
       }
     }
 
-    //updat team.description
+    //update team.description
     if (description && description !== team.description) {
       team.description = description;
     }

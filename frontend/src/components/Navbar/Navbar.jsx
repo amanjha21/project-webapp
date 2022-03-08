@@ -59,7 +59,7 @@ const Navbar = () => {
   }, []);
 
   const navUser = useSelector((state) => state.currentUser.data);
-  console.log(!navUser);
+
   const navigate = useNavigate();
 
   const navProfileHandler = (e) => {
@@ -129,7 +129,7 @@ const Navbar = () => {
                   className="nav-login-btn rounded-corner"
                   onClick={navLoginBtnHandler}
                 >
-                  <span className="nav-login-text">Login</span>
+                  <span className="nav-login-text">Login/SignUp</span>
                 </div>
               </div>
             )}
@@ -147,7 +147,7 @@ const Navbar = () => {
         </div>
       </nav>
       <Popup visible={showUserSettings} setVisible={setShowUserSettings}>
-        <UserSettings />
+        <UserSettings setVisible={setShowUserSettings} />
       </Popup>
     </div>
   );
