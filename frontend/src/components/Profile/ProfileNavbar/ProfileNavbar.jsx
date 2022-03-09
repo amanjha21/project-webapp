@@ -4,8 +4,9 @@ import About from "../AboutSection/About";
 import Post from "../../Post/Post";
 import CreatePost from "../../Post/CreatePost/CreatePost";
 
-const ProfileNavbar = () => {
-  const [isPost, setPost] = useState(true);
+const ProfileNavbar = ({ type }) => {
+  const [isPost, setPost] = useState(type === "user" ? true : false);
+  const [isNotice, setNotice] = useState(type === "team" ? true : false);
   const [isAbout, setAbout] = useState(false);
 
   const handlePost = () => {
@@ -13,9 +14,15 @@ const ProfileNavbar = () => {
     setAbout(false);
   };
 
+  const handleNotice = () => {
+    setNotice(true);
+    setAbout(false);
+  };
+
   const handleAbout = () => {
     setAbout(true);
     setPost(false);
+    setNotice(false);
   };
 
   return (
@@ -23,12 +30,27 @@ const ProfileNavbar = () => {
       <div className="profile-navbar-head">
         <div className="profile-navbar">
           <ul className="profile-nav">
-            <li
-              className={isPost ? "profile-navbar__active" : ""}
-              onClick={handlePost}
-            >
-              Post
-            </li>
+            {type === "user" && (
+              <>
+                <li
+                  className={isPost ? "profile-navbar__active" : ""}
+                  onClick={handlePost}
+                >
+                  Post
+                </li>
+              </>
+            )}
+
+            {type === "team" && (
+              <>
+                <li
+                  className={isNotice ? "profile-navbar__active" : ""}
+                  onClick={handleNotice}
+                >
+                  Notice
+                </li>
+              </>
+            )}
             <li
               className={isAbout ? "profile-navbar__active" : ""}
               onClick={handleAbout}
@@ -38,14 +60,28 @@ const ProfileNavbar = () => {
           </ul>
         </div>
       </div>
-
-      <div className={isPost ? "post-section" : "hidden"}>
-        <CreatePost />
-        <Post />
-        <Post />
-        <Post />
-        <Post />
-      </div>
+      {type === "user" && (
+        <>
+          <div className={isPost ? "post-section" : "hidden"}>
+            <CreatePost />
+            <Post />
+            <Post />
+            <Post />
+            <Post />
+          </div>
+        </>
+      )}
+      {type === "team" && (
+        <>
+          <div className={isNotice ? "notice-section" : "hidden"}>
+            <CreatePost />
+            <Post />
+            <Post />
+            <Post />
+            <Post />
+          </div>
+        </>
+      )}
       <div className={isAbout ? "about-section" : "hidden"}>
         <About />
       </div>
