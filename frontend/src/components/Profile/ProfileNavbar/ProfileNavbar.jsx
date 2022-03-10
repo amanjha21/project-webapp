@@ -10,24 +10,24 @@ import { getNoticesByTeamId } from "../../../redux/TeamNotice";
 import { getPostsByUserId } from "../../../redux/UserPost";
 
 const ProfileNavbar = ({ type }) => {
-  const [isPost, setPost] = useState(type === "user" ? true : false);
-  const [isNotice, setNotice] = useState(type === "team" ? true : false);
+  const [isUser, setUser] = useState(type === "user" ? true : false);
+  const [isTeam, setTeam] = useState(type === "team" ? true : false);
   const [isAbout, setAbout] = useState(false);
 
   const handlePost = () => {
-    setPost(true);
+    setUser(true);
     setAbout(false);
   };
 
   const handleNotice = () => {
-    setNotice(true);
+    setTeam(true);
     setAbout(false);
   };
 
   const handleAbout = () => {
     setAbout(true);
-    setPost(false);
-    setNotice(false);
+    setUser(false);
+    setTeam(false);
   };
 
   return (
@@ -38,7 +38,7 @@ const ProfileNavbar = ({ type }) => {
             {type === "user" && (
               <>
                 <li
-                  className={isPost ? "profile-navbar__active" : ""}
+                  className={isUser ? "profile-navbar__active" : ""}
                   onClick={handlePost}
                 >
                   Post
@@ -49,7 +49,7 @@ const ProfileNavbar = ({ type }) => {
             {type === "team" && (
               <>
                 <li
-                  className={isNotice ? "profile-navbar__active" : ""}
+                  className={isTeam ? "profile-navbar__active" : ""}
                   onClick={handleNotice}
                 >
                   Notice
@@ -67,7 +67,7 @@ const ProfileNavbar = ({ type }) => {
       </div>
       {type === "user" && (
         <>
-          <div className={isPost ? "post-section" : "hidden"}>
+          <div className={isUser ? "post-section" : "hidden"}>
             <CreatePost />
             <Post />
             <Post />
@@ -78,7 +78,7 @@ const ProfileNavbar = ({ type }) => {
       )}
       {type === "team" && (
         <>
-          <div className={isNotice ? "notice-section" : "hidden"}>
+          <div className={isTeam ? "notice-section" : "hidden"}>
             <CreatePost />
             <Post />
             <Post />
