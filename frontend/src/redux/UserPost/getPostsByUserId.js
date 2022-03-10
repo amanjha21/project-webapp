@@ -1,7 +1,7 @@
 import axios from "axios";
 import { authHeader } from "../../helpers/authHeader";
 import { SERVER_ENDPOINT } from "../../helpers/Constants";
-import { setUserPosts, setLoading, setError } from "../UserPost/features";
+import { setUserPosts, setLoading, setError } from "./features/userPostsSlice";
 
 const getPostsByUserId =
   (userId, page = 1, limit = 10) =>
