@@ -6,11 +6,13 @@ const initialState = {
   error: "",
 };
 
-export const userPostSlice = createSlice({
+export const userPostsSlice = createSlice({
   name: "userPosts",
   initialState,
   reducers: {
-    setUserPost: (state, action) => {},
+    setUserPosts: (state, action) => {
+      state.data = [...state.data, ...action.payload];
+    },
     setLoading: (state, action) => {
       state.isLoading = action.payload;
     },
@@ -20,5 +22,5 @@ export const userPostSlice = createSlice({
   },
 });
 
-export const { setUserPost, setLoading, setError } = userPostSlice.actions;
-export default userPostSlice.reducer;
+export const { setUserPosts, setLoading, setError } = userPostsSlice.actions;
+export default userPostsSlice.reducer;

@@ -6,11 +6,13 @@ const initialState = {
   error: "",
 };
 
-export const teamNoticeSlice = createSlice({
+export const teamNoticesSlice = createSlice({
   name: "teamNotices",
   initialState,
   reducers: {
-    setTeamNotice: (state, action) => {},
+    setTeamNotices: (state, action) => {
+      state.data = [...state.data, ...action.payload];
+    },
     setLoading: (state, action) => {
       state.isLoading = action.payload;
     },
@@ -20,5 +22,6 @@ export const teamNoticeSlice = createSlice({
   },
 });
 
-export const { setTeamNotice, setLoading, setError } = teamNoticeSlice.actions;
-export default teamNoticeSlice.reducer;
+export const { setTeamNotices, setLoading, setError } =
+  teamNoticesSlice.actions;
+export default teamNoticesSlice.reducer;
