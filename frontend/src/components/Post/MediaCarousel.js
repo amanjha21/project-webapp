@@ -41,7 +41,6 @@ const MediaCarousel = ({ images, currentIndex }) => {
   const closeCarouselHandler = () => {
     getCurrentIndex.current.toggleFullScreen();
   };
-  // useEffect(()=>{},[])
   return (
     <>
       <ImageGallery
