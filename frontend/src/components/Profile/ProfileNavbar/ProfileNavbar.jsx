@@ -3,6 +3,11 @@ import "./ProfileNavbar.css";
 import About from "../AboutSection/About";
 import Post from "../../Post/Post";
 import CreatePost from "../../Post/CreatePost/CreatePost";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+
+import { getNoticesByTeamId } from "../../../redux/TeamNotice";
+import { getPostsByUserId } from "../../../redux/UserPost";
 
 const ProfileNavbar = ({ type }) => {
   const [isPost, setPost] = useState(type === "user" ? true : false);
