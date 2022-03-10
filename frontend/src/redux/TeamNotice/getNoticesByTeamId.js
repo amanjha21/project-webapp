@@ -5,17 +5,17 @@ import {
   setTeamNotices,
   setLoading,
   setError,
-} from "../TeamNotice/features/teamNoticesSlice";
+} from "./features/teamNoticesSlice";
 
 const getNoticesByTeamId =
   (teamId, page = 1, limit = 10) =>
-  (dispatch) => {
+  async (dispatch) => {
     try {
       dispatch(setError(""));
       dispatch(setLoading(true));
 
       const response = await axios.get(
-        `${SERVER_ENDPOINT}/notice/team/${teamId}?page=${page}&lim=${limit}`,
+        `${SERVER_ENDPOINT}/notice/team/${teamId}?page=${page}&limit=${limit}`,
         {
           headers: authHeader(),
         }
@@ -24,7 +24,7 @@ const getNoticesByTeamId =
       dispatch(setTeamNotices(response.data));
     } catch (error) {
       const errorResponse =
-        error?.response?.data?.message || errror.message || "";
+        error?.response?.data?.message || error.message || "";
       dispatch(setLoading(false));
       dispatch(setError(errorResponse));
     }
