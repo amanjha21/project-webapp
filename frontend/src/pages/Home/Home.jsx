@@ -5,6 +5,7 @@ import CreatePost from "../../components/Post/CreatePost/CreatePost";
 import Post from "../../components/Post/Post";
 import UserTeams from "../../components/UserTeams/UserTeams";
 import { getPosts } from "../../redux/post";
+import { removePosts, setLoading } from "../../redux/post/features/postSlice";
 import "./Home.css";
 
 const Home = () => {
@@ -12,13 +13,28 @@ const Home = () => {
   const posts = useSelector((state) => state.posts);
   const currentUser = useSelector((state) => state.currentUser.data);
   const [page, setPage] = useState(1);
-  const defaultLimit = 5;
+  const defaultLimit = 1;
   const loadMoreHandler = () => {
     setPage((prev) => prev + 1);
+  };
+  const onScroll = () => {
+    // if (
+    //   10 + window.innerHeight + document.documentElement.scrollTop >=
+    //     document.documentElement.offsetHeight &&
+    //   !posts.isLoading
+    // ) {
+    //   // setPage((prev) => prev + 1);
+    //   dispatch(setLoading(true));
+    //   console.log(posts.isLoading, "ran");
+    // }
   };
   useEffect(() => {
     dispatch(getPosts(page, defaultLimit));
   }, [page, currentUser]);
+  useEffect(() => {
+    // window.addEventListener("scroll", onScroll);
+    //remove event listener cleanup
+  }, []);
   return (
     <div className="homepage-grid-main">
       <div className="homepage-nav">
