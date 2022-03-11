@@ -3,13 +3,8 @@ import "./ProfileNavbar.css";
 import About from "../AboutSection/About";
 import Post from "../../Post/Post";
 import CreatePost from "../../Post/CreatePost/CreatePost";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
 
-import { getNoticesByTeamId } from "../../../redux/TeamNotice";
-import { getPostsByUserId } from "../../../redux/UserPost";
-
-const ProfileNavbar = ({ type }) => {
+const ProfileNavbar = ({ type, data }) => {
   const [isUser, setUser] = useState(type === "user" ? true : false);
   const [isTeam, setTeam] = useState(type === "team" ? true : false);
   const [isAbout, setAbout] = useState(false);
@@ -69,10 +64,8 @@ const ProfileNavbar = ({ type }) => {
         <>
           <div className={isUser ? "post-section" : "hidden"}>
             <CreatePost />
-            <Post />
-            <Post />
-            <Post />
-            <Post />
+            {data.length > 0 &&
+              data.map((post, index) => <Post key={index} data={post} />)}
           </div>
         </>
       )}
@@ -80,10 +73,8 @@ const ProfileNavbar = ({ type }) => {
         <>
           <div className={isTeam ? "notice-section" : "hidden"}>
             <CreatePost />
-            <Post />
-            <Post />
-            <Post />
-            <Post />
+            {data.length > 0 &&
+              data.map((post, index) => <Post key={index} data={post} />)}
           </div>
         </>
       )}
