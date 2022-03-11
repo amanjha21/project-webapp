@@ -4,10 +4,15 @@ import { useState } from "react";
 import Confirmation from "../Confirmation";
 import { defaultTeamNotFoundImgUrl } from "../../helpers/Constants";
 import "./UserTeams.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import { authHeader } from "../../helpers/authHeader";
+import { SERVER_ENDPOINT } from "../../helpers/Constants";
+import { getCurrentUserById } from "../../redux/userTeams/getCurrentUserById";
 const UserTeams = () => {
   const [visible, setVisible] = useState(false);
-
+  const dispatch = useDispatch();
+  const navUserData = useSelector((state) => state.currentUser.data);
   const [selectedTeam, setSelectedTeam] = useState("");
   const userTeams = useSelector((state) => state.currentUser.data?.teams) || [];
   const isLoading = useSelector((state) => state.currentUser.isLoading);
@@ -17,6 +22,19 @@ const UserTeams = () => {
     if (selectedTeam === i) {
       setSelectedTeam(userTeams.length + 1);
     } else setSelectedTeam(i);
+  };
+
+  const createTeamHandler = () => {
+    axios
+      .post(`${SERVER_ENDPOINT}/team/`, { headers: authHeader() })
+      .then((res) => {
+        dispatch(getCurrentUserById(navUserData._id));
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err?.response?.data);
+      });
+    // console.log("team created");
   };
   return (
     <>
@@ -59,7 +77,7 @@ const UserTeams = () => {
         setVisible={setVisible}
         message="Enter Team Name"
         option="Create Team"
-        onConfirm={(data) => console.log("Team Created", data)}
+        onConfirm={createTeamHandler}
         input={{ placeholder: "New Team Name" }}
       />
     </>
