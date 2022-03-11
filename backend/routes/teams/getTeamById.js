@@ -1,5 +1,6 @@
 const Schemas = require("../../models/index");
-
+const mongoose = require("mongoose");
+const ObjectId = mongoose.Types.ObjectId;
 module.exports = async (req, res) => {
   const teamId = req.params.id;
 
@@ -13,9 +14,37 @@ module.exports = async (req, res) => {
 
   try {
     //Check if team exists
-    const team = await Schemas.Team.findOne({ _id: teamId }).exec();
+    const team = await Schemas.Team.aggregate([
+      {
+        $match: {
+          _id: new ObjectId(teamId),
+        },
+      },
+      {
+        $lookup: {
+          from: "organizations",
+          localField: "organization",
+          foreignField: "_id",
+          as: "organization",
+        },
+      },
+      {
+        $project: {
+          _id: 1,
+          name: 1,
+          organization: {
+            $arrayElemAt: ["$organization", 0],
+          },
+          admin: 1,
+          moderator: 1,
+          createdAt: 1,
+          updatedAt: 1,
+          imageUrl: 1,
+        },
+      },
+    ]).exec();
 
-    if (!team) {
+    if (team.length === 0) {
       throw new Error("Team doesn't exist");
     }
 
