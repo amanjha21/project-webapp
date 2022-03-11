@@ -4,7 +4,7 @@ import About from "../AboutSection/About";
 import Post from "../../Post/Post";
 import CreatePost from "../../Post/CreatePost/CreatePost";
 
-const ProfileNavbar = ({ type, data }) => {
+const ProfileNavbar = ({ type, data, about }) => {
   const [isUser, setUser] = useState(type === "user" ? true : false);
   const [isTeam, setTeam] = useState(type === "team" ? true : false);
   const [isAbout, setAbout] = useState(false);
@@ -79,7 +79,7 @@ const ProfileNavbar = ({ type, data }) => {
         </>
       )}
       <div className={isAbout ? "about-section" : "hidden"}>
-        <About />
+        <About data={about} />
       </div>
     </>
   );
