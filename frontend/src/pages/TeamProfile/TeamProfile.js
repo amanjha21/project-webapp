@@ -7,6 +7,7 @@ import { useEffect } from "react";
 
 import { getTeamById } from "../../redux/TeamProfile";
 import { getNoticesByTeamId } from "../../redux/TeamNotice";
+import { getUserByTeamId } from "../../redux/TeamMember";
 
 const TeamProfile = () => {
   const teamId = "6203f6bf194afa73f40c5f6a";
@@ -16,6 +17,7 @@ const TeamProfile = () => {
   useEffect(() => {
     dispatch(getTeamById(teamId));
     dispatch(getNoticesByTeamId(teamId));
+    dispatch(getUserByTeamId(teamId));
   }, []);
 
   const teamArray = useSelector((state) => {
@@ -25,6 +27,8 @@ const TeamProfile = () => {
   const team = teamArray[0];
 
   const notices = useSelector((state) => state.teamNotices.data);
+
+  const teamMembers = useSelector((state) => state.teamMembers.data);
 
   return (
     <>
@@ -39,11 +43,11 @@ const TeamProfile = () => {
                 profileImage={team.imageUrl}
                 name={team.name}
                 roll=""
-                organization=""
+                organization={team.organization.name}
               />
             </div>
             <div className="profile-navbar-grid">
-              <ProfileNavbar type="team" data={notices} about="" />
+              <ProfileNavbar type="team" data={notices} about={teamMembers} />
             </div>
           </div>
         </>
