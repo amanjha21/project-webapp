@@ -1093,6 +1093,9 @@ const noticesByUserId = (
         image_link: {
           $first: "$image_link",
         },
+        team: {
+          $first: "$team",
+        },
         user: {
           $first: "$user",
         },
@@ -1154,6 +1157,7 @@ const noticesByUserId = (
         image_link: 1,
         createdAt: 1,
         updatedAt: 1,
+        team: 1,
         user: {
           $arrayElemAt: ["$user", 0],
         },
@@ -1171,6 +1175,7 @@ const noticesByUserId = (
         image_link: 1,
         createdAt: 1,
         updatedAt: 1,
+        team: 1,
         "user._id": 1,
         "user.imageUrl": 1,
         "user.name": 1,
@@ -1244,6 +1249,9 @@ const noticesByTeamId = (teamId, currentUserId, pageInput, number) => {
         image_link: {
           $first: "$image_link",
         },
+        team: {
+          $first: "$team",
+        },
         user: {
           $first: "$user",
         },
@@ -1305,6 +1313,7 @@ const noticesByTeamId = (teamId, currentUserId, pageInput, number) => {
         image_link: 1,
         createdAt: 1,
         updatedAt: 1,
+        team: 1,
         user: {
           $arrayElemAt: ["$user", 0],
         },
@@ -1322,6 +1331,7 @@ const noticesByTeamId = (teamId, currentUserId, pageInput, number) => {
         image_link: 1,
         createdAt: 1,
         updatedAt: 1,
+        team: 1,
         "user._id": 1,
         "user.imageUrl": 1,
         "user.name": 1,
