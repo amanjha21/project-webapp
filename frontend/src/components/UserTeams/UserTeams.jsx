@@ -4,14 +4,14 @@ import { useEffect, useState } from "react";
 import Confirmation from "../Confirmation";
 import { defaultTeamNotFoundImgUrl } from "../../helpers/Constants";
 import "./UserTeams.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { authHeader } from "../../helpers/authHeader";
 import { SERVER_ENDPOINT } from "../../helpers/Constants";
-
-const UserTeams = ({ teamChangeHandler }) => {
+import { getNoticesByTeamId } from "../../redux/TeamNotice";
+const UserTeams = ({ teamChangeHandler, page, defaultLimit }) => {
   const [visible, setVisible] = useState(false);
-
+  const dispatch = useDispatch();
   const [selectedTeam, setSelectedTeam] = useState("");
   const userTeams = useSelector((state) => state.currentUser.data?.teams) || [];
   const isLoading = useSelector((state) => state.currentUser.isLoading);
@@ -41,6 +41,7 @@ const UserTeams = ({ teamChangeHandler }) => {
     } else {
       const teamId = userTeams[selectedTeam - 1]?._id;
       if (teamId) {
+        dispatch(getNoticesByTeamId(teamId, page, defaultLimit));
         teamChangeHandler(teamId);
       }
     }
