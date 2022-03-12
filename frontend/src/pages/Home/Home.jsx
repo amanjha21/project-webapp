@@ -17,6 +17,15 @@ const Home = () => {
   const loadMoreHandler = () => {
     setPage((prev) => prev + 1);
   };
+  const teamChangeHandler = (data) => {
+    if (data === -1) {
+      console.log("home");
+    } else if (data === 0) {
+      console.log("all teams");
+    } else if (data) {
+      console.log("teamID", data);
+    }
+  };
   const onScroll = () => {
     // if (
     //   10 + window.innerHeight + document.documentElement.scrollTop >=
@@ -52,7 +61,7 @@ const Home = () => {
         {posts.error && <h1>{posts.error}</h1>}
       </div>
       <div className="homepage-right">
-        <UserTeams />
+        <UserTeams teamChangeHandler={teamChangeHandler} />
       </div>
     </div>
   );

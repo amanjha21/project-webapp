@@ -1,17 +1,17 @@
 import SingleTeam from "./SingleTeam";
 import { IoAddSharp } from "react-icons/io5";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Confirmation from "../Confirmation";
 import { defaultTeamNotFoundImgUrl } from "../../helpers/Constants";
 import "./UserTeams.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { authHeader } from "../../helpers/authHeader";
 import { SERVER_ENDPOINT } from "../../helpers/Constants";
-
-const UserTeams = () => {
+import { getNoticesByTeamId } from "../../redux/TeamNotice";
+const UserTeams = ({ teamChangeHandler, page, defaultLimit }) => {
   const [visible, setVisible] = useState(false);
-
+  const dispatch = useDispatch();
   const [selectedTeam, setSelectedTeam] = useState("");
   const userTeams = useSelector((state) => state.currentUser.data?.teams) || [];
   const isLoading = useSelector((state) => state.currentUser.isLoading);
@@ -19,7 +19,7 @@ const UserTeams = () => {
 
   const selectTeamHandler = (i) => {
     if (selectedTeam === i) {
-      setSelectedTeam(userTeams.length + 1);
+      setSelectedTeam(-1);
     } else setSelectedTeam(i);
   };
 
@@ -35,6 +35,17 @@ const UserTeams = () => {
         console.log(err?.response?.data);
       });
   };
+  useEffect(() => {
+    if (selectedTeam === 0 || selectedTeam === -1) {
+      teamChangeHandler(selectedTeam);
+    } else {
+      const teamId = userTeams[selectedTeam - 1]?._id;
+      if (teamId) {
+        dispatch(getNoticesByTeamId(teamId, page, defaultLimit));
+        teamChangeHandler(teamId);
+      }
+    }
+  }, [selectedTeam]);
   return (
     <>
       <div className="user-team-container rounded-corner">
