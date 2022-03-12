@@ -53,7 +53,7 @@ router.delete("/", verifyToken, deleteUser);
 router.get(
   "/team/:id",
   validation(validationSchema.getUsersByTeamIdValidation),
-  verifyToken,
+
   getUsersByTeamId
 );
 // get user by OrganizationId router

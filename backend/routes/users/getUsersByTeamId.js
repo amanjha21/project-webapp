@@ -2,7 +2,7 @@ const Schemas = require("../../models/index");
 const auth = require("../../helpers/auth/index");
 module.exports = async (req, res) => {
   const teamId = req.params.id;
-  const userId = req.user._id;
+
   let page = parseInt(req.query.page) || 1;
   page--;
   const limit = parseInt(req.query.limit) || 10;
@@ -12,16 +12,7 @@ module.exports = async (req, res) => {
       message: "Invalid Request",
     });
   }
-  const hasAuth =
-    (await auth.isMemberOfTeam(userId, teamId)) ||
-    (await auth.isModeratorOfTeam(userId, teamId)) ||
-    (await auth.isAdminOfTeam(userId, teamId));
-  if (!hasAuth) {
-    return res.status(401).json({
-      success: false,
-      message: "No authorization",
-    });
-  }
+
   try {
     const user = await Schemas.User.find({
       teams: {
