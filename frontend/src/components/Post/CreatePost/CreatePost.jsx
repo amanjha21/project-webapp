@@ -18,13 +18,13 @@ const CreatePost = ({
   type = "update",
   postId = "",
   onUpdateConfirm,
+  teamId = "",
 }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const currentUser = useSelector((state) => state.currentUser.data) || [];
   const [newImageList, setNewImageList] = useState([""]);
   const [text, setText] = useState("");
-
   const onSubmitHandler = async () => {
     const userId = JSON.parse(localStorage.getItem("currentUserId"));
     if (!userId) {
@@ -44,11 +44,13 @@ const CreatePost = ({
     } else if (type === "update") {
       data.append("deleteImageUrl", true);
     }
-
+    if (teamId) {
+      data.append("teamId", teamId);
+    }
     if (type === "update") {
       data.append("postId", postId);
       axios
-        .post(`${SERVER_ENDPOINT}/post/update`, data, {
+        .post(`${SERVER_ENDPOINT}/${teamId ? "notice" : "post"}/update`, data, {
           headers: { "Content-Type": "multipart/form-data", ...authHeader() },
         })
         .then((res) => {
@@ -61,7 +63,7 @@ const CreatePost = ({
         });
     } else if (type === "create") {
       axios
-        .post(`${SERVER_ENDPOINT}/post`, data, {
+        .post(`${SERVER_ENDPOINT}/${teamId ? "notice" : "post"}`, data, {
           headers: { "Content-Type": "multipart/form-data", ...authHeader() },
         })
         .then((res) => {
@@ -118,7 +120,7 @@ const CreatePost = ({
               />
               <div className="post-user-details">
                 <p>{currentUser.name || "-"}</p>
-                <p>Just now</p>
+                <p>{teamId ? "Create notice as Team" : "Just now"}</p>
               </div>
             </div>
             <textarea
@@ -163,7 +165,9 @@ const CreatePost = ({
                 }}
                 className={`postButton ${text ? "" : "disabled"}`}
               >
-                {type === "update" ? "Update Post" : "Post"}
+                {!teamId && (type === "update" ? "Update Post" : "Create Post")}
+                {teamId &&
+                  (type === "update" ? "Update Notice" : "Create Notice")}
               </button>
             </div>
           </div>
