@@ -1,0 +1,1 @@
+export { getNoticesByTeamId } from "./getNoticesByTeamId";

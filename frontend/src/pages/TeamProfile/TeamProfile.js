@@ -3,8 +3,10 @@ import Profile from "../../components/Profile/Profile";
 import ProfileNavbar from "../../components/Profile/ProfileNavbar/ProfileNavbar";
 
 import { useDispatch, useSelector } from "react-redux";
-import { getTeamById } from "../../redux/TeamProfile";
 import { useEffect } from "react";
+
+import { getTeamById } from "../../redux/TeamProfile";
+import { getNoticesByTeamId } from "../../redux/TeamNotice";
 
 const TeamProfile = () => {
   const teamId = "6203f6bf194afa73f40c5f6a";
@@ -13,6 +15,7 @@ const TeamProfile = () => {
 
   useEffect(() => {
     dispatch(getTeamById(teamId));
+    dispatch(getNoticesByTeamId(teamId));
   }, []);
 
   const teamArray = useSelector((state) => {
@@ -20,6 +23,8 @@ const TeamProfile = () => {
   });
 
   const team = teamArray[0];
+
+  const notices = useSelector((state) => state.teamNotices.data);
 
   return (
     <>
@@ -34,11 +39,11 @@ const TeamProfile = () => {
                 profileImage={team.imageUrl}
                 name={team.name}
                 roll=""
-                organization={team.organization}
+                organization=""
               />
             </div>
             <div className="profile-navbar-grid">
-              <ProfileNavbar type="team" />
+              <ProfileNavbar type="team" data={notices} about="" />
             </div>
           </div>
         </>
