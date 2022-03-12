@@ -10,6 +10,7 @@ import userProfileReducer from "./UserProfile/features/userSlice";
 import teamProfileReducer from "./TeamProfile/features/teamSlice";
 import userPostReducer from "./UserPost/features/userPostsSlice";
 import teamNoticeReducer from "./TeamNotice/features/teamNoticesSlice";
+import teamMemberReducer from "./TeamMember/features/teamMembersSlice";
 
 const store = configureStore({
   reducer: {
@@ -24,6 +25,7 @@ const store = configureStore({
     teamProfile: teamProfileReducer,
     userPosts: userPostReducer,
     teamNotices: teamNoticeReducer,
+    teamMembers: teamMemberReducer,
   },
 });
 
