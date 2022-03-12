@@ -2,40 +2,7 @@ import "./About.css";
 import Member from "../Members/Member";
 import { useState } from "react";
 
-const About = () => {
-  const memberList = [
-    {
-      name: "Vaibhav Kedia",
-      imgUrl: "http://i.pravatar.cc/150?img=53",
-      role: "admin",
-    },
-    {
-      name: "Vaibhav Kedia",
-      imgUrl: "http://i.pravatar.cc/150?img=53",
-      role: "moderator",
-    },
-    {
-      name: "Vaibhav Kedia",
-      imgUrl: "http://i.pravatar.cc/150?img=53",
-      role: "moderator",
-    },
-    {
-      name: "Vaibhav Kedia",
-      imgUrl: "http://i.pravatar.cc/150?img=53",
-      role: "member",
-    },
-    {
-      name: "Vaibhav Kedia",
-      imgUrl: "http://i.pravatar.cc/150?img=53",
-      role: "member",
-    },
-    {
-      name: "Vaibhav Kedia",
-      imgUrl: "http://i.pravatar.cc/150?img=53",
-      role: "member",
-    },
-  ];
-
+const About = ({ data }) => {
   const [limit, setLimit] = useState(5);
   const viewMoreHandler = () => {
     setLimit((previousLimit) => previousLimit + 5);
@@ -45,19 +12,19 @@ const About = () => {
     <>
       <div className="about-container">
         <div className="about-team-head">Team Members</div>
-        {memberList.map((member, i) => {
+        {data.map((member, i) => {
           if (i < limit)
             return (
               <Member
                 name={member.name}
-                imgUrl={member.imgUrl}
-                role={member.role}
+                imgUrl={member.imageUrl}
+                role={member.role || ""}
                 key={i}
               />
             );
           else return "";
         })}
-        {memberList.length > 5 && limit < memberList.length && (
+        {data.length > 5 && limit < data.length && (
           <div className="about-view-container">
             <button className="button-view" onClick={viewMoreHandler}>
               View more

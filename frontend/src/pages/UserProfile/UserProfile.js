@@ -3,8 +3,10 @@ import Profile from "../../components/Profile/Profile";
 import ProfileNavbar from "../../components/Profile/ProfileNavbar/ProfileNavbar";
 
 import { useDispatch, useSelector } from "react-redux";
-import { getUserById } from "../../redux/UserProfile";
 import { useEffect } from "react";
+
+import { getUserById } from "../../redux/UserProfile";
+import { getPostsByUserId } from "../../redux/UserPost";
 
 const UserProfile = () => {
   const userId = "62041a8360c7f0fb3032531d";
@@ -13,6 +15,7 @@ const UserProfile = () => {
 
   useEffect(() => {
     dispatch(getUserById(userId));
+    dispatch(getPostsByUserId(userId));
   }, []);
 
   const userArray = useSelector((state) => {
@@ -20,6 +23,8 @@ const UserProfile = () => {
   });
 
   const user = userArray[0];
+
+  const posts = useSelector((state) => state.userPosts.data);
 
   return (
     <>
@@ -38,7 +43,7 @@ const UserProfile = () => {
               />
             </div>
             <div className="profile-navbar-grid">
-              <ProfileNavbar type="user" />
+              <ProfileNavbar type="user" data={posts} about={user.teams} />
             </div>
           </div>
         </>
