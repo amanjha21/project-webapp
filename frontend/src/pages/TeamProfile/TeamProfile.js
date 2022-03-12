@@ -30,7 +30,11 @@ const TeamProfile = () => {
     return state.teamNotices.data.filter((notice) => notice.team === teamId);
   });
 
-  const teamMembers = useSelector((state) => state.teamMembers.data);
+  const teamMemberArray = useSelector((state) => {
+    return state.teamMembers.data.filter((member) => member.teamId === teamId);
+  });
+
+  const teamMembers = teamMemberArray[0];
 
   return (
     <>
@@ -49,7 +53,12 @@ const TeamProfile = () => {
               />
             </div>
             <div className="profile-navbar-grid">
-              <ProfileNavbar type="team" data={notices} about={teamMembers} />
+              <ProfileNavbar
+                type="team"
+                data={notices}
+                about={teamMembers}
+                teamId={teamId}
+              />
             </div>
           </div>
         </>
