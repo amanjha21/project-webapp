@@ -1,6 +1,6 @@
 import SingleTeam from "./SingleTeam";
 import { IoAddSharp } from "react-icons/io5";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Confirmation from "../Confirmation";
 import { defaultTeamNotFoundImgUrl } from "../../helpers/Constants";
 import "./UserTeams.css";
@@ -9,7 +9,7 @@ import axios from "axios";
 import { authHeader } from "../../helpers/authHeader";
 import { SERVER_ENDPOINT } from "../../helpers/Constants";
 
-const UserTeams = () => {
+const UserTeams = ({ teamChangeHandler }) => {
   const [visible, setVisible] = useState(false);
 
   const [selectedTeam, setSelectedTeam] = useState("");
@@ -19,7 +19,7 @@ const UserTeams = () => {
 
   const selectTeamHandler = (i) => {
     if (selectedTeam === i) {
-      setSelectedTeam(userTeams.length + 1);
+      setSelectedTeam(-1);
     } else setSelectedTeam(i);
   };
 
@@ -35,6 +35,16 @@ const UserTeams = () => {
         console.log(err?.response?.data);
       });
   };
+  useEffect(() => {
+    if (selectedTeam === 0 || selectedTeam === -1) {
+      teamChangeHandler(selectedTeam);
+    } else {
+      const teamId = userTeams[selectedTeam - 1]?._id;
+      if (teamId) {
+        teamChangeHandler(teamId);
+      }
+    }
+  }, [selectedTeam]);
   return (
     <>
       <div className="user-team-container rounded-corner">
