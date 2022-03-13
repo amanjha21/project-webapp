@@ -5,26 +5,23 @@ import CreatePost from "../../components/Post/CreatePost/CreatePost";
 import Post from "../../components/Post/Post";
 import UserTeams from "../../components/UserTeams/UserTeams";
 import { getPosts } from "../../redux/post";
-import { removePosts, setLoading } from "../../redux/post/features/postSlice";
 import "./Home.css";
 
 const Home = () => {
   const dispatch = useDispatch();
-  const posts = useSelector((state) => state.posts);
+  const postsData = useSelector((state) => state.posts);
+  const teamNotices = useSelector((state) => state.teamNotices);
+  let posts = postsData;
+  let notices = [];
   const currentUser = useSelector((state) => state.currentUser.data);
   const [page, setPage] = useState(1);
   const defaultLimit = 1;
+  const [activeTab, setActiveTab] = useState(-1);
   const loadMoreHandler = () => {
     setPage((prev) => prev + 1);
   };
   const teamChangeHandler = (data) => {
-    if (data === -1) {
-      console.log("home");
-    } else if (data === 0) {
-      console.log("all teams");
-    } else if (data) {
-      console.log("teamID", data);
-    }
+    setActiveTab(data);
   };
   const onScroll = () => {
     // if (
@@ -39,7 +36,17 @@ const Home = () => {
   };
   useEffect(() => {
     dispatch(getPosts(page, defaultLimit));
+    console.log("ran");
   }, [page, currentUser]);
+  useEffect(() => {
+    if (activeTab === -1) {
+      console.log("home");
+      // posts = postsData;
+    } else if (activeTab === 0) {
+      console.log("all teams");
+      // posts = teamNotices;
+    }
+  }, [activeTab]);
   useEffect(() => {
     // window.addEventListener("scroll", onScroll);
     //remove event listener cleanup
@@ -50,7 +57,7 @@ const Home = () => {
         <Navbar />
       </div>
       <div className="homepage-center">
-        <CreatePost type="create" />
+        {activeTab === -1 && <CreatePost type="create" />}
         {posts.isLoading && <h1>Loading...</h1>}
         {posts.data.length > 0 &&
           posts.data.map((post, index) => <Post key={index} data={post} />)}
@@ -61,7 +68,11 @@ const Home = () => {
         {posts.error && <h1>{posts.error}</h1>}
       </div>
       <div className="homepage-right">
-        <UserTeams teamChangeHandler={teamChangeHandler} />
+        <UserTeams
+          teamChangeHandler={teamChangeHandler}
+          page={page}
+          defaultLimit={defaultLimit}
+        />
       </div>
     </div>
   );
