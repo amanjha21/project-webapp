@@ -11,7 +11,10 @@ export const teamMemberSlice = createSlice({
   initialState,
   reducers: {
     setTeamMember: (state, action) => {
-      state.data = [...state.data, action.payload];
+      state.data = [
+        ...state.data,
+        { ...action.payload.data, teamId: action.payload.teamId },
+      ];
     },
     setLoading: (state, action) => {
       state.isLoading = action.payload;
