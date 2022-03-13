@@ -20,12 +20,15 @@ const getUserByTeamId = (teamId) => async (dispatch) => {
     });
 
     dispatch(setLoading(false));
-    dispatch(setTeamMember(response.data[0]));
+    dispatch(setTeamMember({ data: response.data, teamId }));
   } catch (error) {
     const errorResponse = error?.response?.data?.message || error.message || "";
 
     dispatch(setLoading(false));
     dispatch(setError(errorResponse));
+    if (errorResponse === "Access Denied") {
+      dispatch(setTeamMember({}));
+    }
   }
 };
 
