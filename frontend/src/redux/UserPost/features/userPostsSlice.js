@@ -11,7 +11,7 @@ export const userPostsSlice = createSlice({
   initialState,
   reducers: {
     setUserPosts: (state, action) => {
-      state.data = [...state.data, ...action.payload];
+      state.data = [...action.payload];
     },
     setLoading: (state, action) => {
       state.isLoading = action.payload;
