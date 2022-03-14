@@ -11,7 +11,7 @@ export const teamNoticesSlice = createSlice({
   initialState,
   reducers: {
     setTeamNotices: (state, action) => {
-      state.data = [...state.data, ...action.payload];
+      state.data = [...action.payload];
     },
     setLoading: (state, action) => {
       state.isLoading = action.payload;
