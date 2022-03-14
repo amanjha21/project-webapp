@@ -16,7 +16,7 @@ const getTeamById = (teamId) => async (dispatch) => {
     });
 
     dispatch(setLoading(false));
-    dispatch(setTeam(response.data));
+    dispatch(setTeam(response.data[0]));
   } catch (error) {
     const errorResponse = error?.response?.data?.message || error.message || "";
 
