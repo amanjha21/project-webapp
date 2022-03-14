@@ -12,7 +12,7 @@ const Home = () => {
   const postsData = useSelector((state) => state.posts);
   const teamNotices = useSelector((state) => state.teamNotices);
   let posts = postsData;
-  // let notices = [];
+  let notices = [];
   const currentUser = useSelector((state) => state.currentUser.data);
   const [page, setPage] = useState(1);
   const defaultLimit = 1;
