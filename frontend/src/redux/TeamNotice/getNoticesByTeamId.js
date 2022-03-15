@@ -27,6 +27,10 @@ const getNoticesByTeamId =
         error?.response?.data?.message || error.message || "";
       dispatch(setLoading(false));
       dispatch(setError(errorResponse));
+
+      if (errorResponse === "Access Denied") {
+        dispatch(setTeamNotices({}));
+      }
     }
   };
 
