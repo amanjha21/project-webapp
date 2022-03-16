@@ -31,9 +31,7 @@ const TeamProfile = () => {
   });
 
   const teamMemberArray = useSelector((state) => {
-    return state.teamMembers.data.filter(
-      (teamMember) => teamMember.teamId === teamId
-    );
+    return state.teamMembers.data.filter((member) => member.teamId === teamId);
   });
 
   const teamMembers = teamMemberArray[0];
