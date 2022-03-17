@@ -6,7 +6,6 @@
 .profile-navbar {
   background-color: var(--main-color1) !important;
   max-height: 200px;
-  /* border-radius: 2px; */
 }
 
 .profile-navbar .profile-nav {
