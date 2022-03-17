@@ -80,7 +80,7 @@ const Member = ({ name, imgUrl, role = "member" }) => {
       <Confirmation
         visible={showVisible}
         setVisible={setShowVisible}
-        message={`Make ${name} admin and demote yourself?`}
+        message={`Make ${name} admin and demote yourself ?`}
         option="Confirm"
         onConfirm={() => console.log("Request Sent Successfully")}
       />
