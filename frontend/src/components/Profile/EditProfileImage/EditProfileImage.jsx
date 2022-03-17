@@ -43,7 +43,7 @@ const EditProfileImage = ({ profileImage }) => {
 
   const saveHandler = (e) => {
     e.preventDefault();
-    console.log("Profile Image saved successfully.");
+    console.log("Profile Image Saved Successfully.");
   };
 
   const deleteHandler = (e) => {
@@ -51,7 +51,7 @@ const EditProfileImage = ({ profileImage }) => {
     setImagePreviewUrl(
       "https://github.com/OlgaKoplik/CodePen/blob/master/profile.jpg?raw=true"
     );
-    console.log("Profile Image deleted successfully.");
+    console.log("Profile Image Deleted Successfully.");
   };
 
   return (
