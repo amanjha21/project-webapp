@@ -25,7 +25,9 @@ const UserProfile = () => {
   const user = userArray[0];
 
   const posts = useSelector((state) => {
-    return state.userPosts.data.filter((post) => post.user._id === userId);
+    return state.userPosts.data.filter(
+      (userPost) => userPost.user._id === userId
+    );
   });
 
   return (
