@@ -27,7 +27,9 @@ const TeamProfile = () => {
   const team = teamArray[0];
 
   const notices = useSelector((state) => {
-    return state.teamNotices.data.filter((notice) => notice.team === teamId);
+    return state.teamNotices.data.filter(
+      (teamNotice) => teamNotice.team === teamId
+    );
   });
 
   const teamMemberArray = useSelector((state) => {
