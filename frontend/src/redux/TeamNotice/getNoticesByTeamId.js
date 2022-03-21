@@ -11,8 +11,8 @@ const getNoticesByTeamId =
   (teamId, page = 1, limit = 10) =>
   async (dispatch) => {
     try {
-      dispatch(setError(""));
       dispatch(setLoading(true));
+      dispatch(setError(""));
 
       const response = await axios.get(
         `${SERVER_ENDPOINT}/notice/team/${teamId}?page=${page}&limit=${limit}`,
@@ -20,8 +20,8 @@ const getNoticesByTeamId =
           headers: authHeader(),
         }
       );
-      dispatch(setLoading(false));
       dispatch(setTeamNotices(response.data));
+      dispatch(setLoading(false));
     } catch (error) {
       const errorResponse =
         error?.response?.data?.message || error.message || "";
