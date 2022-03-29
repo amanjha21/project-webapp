@@ -12,8 +12,8 @@ const getUserByTeamId = (teamId) => async (dispatch) => {
     if (!teamId) {
       return;
     }
-    dispatch(setError(""));
     dispatch(setLoading(true));
+    dispatch(setError(""));
 
     const response = await axios.get(`${SERVER_ENDPOINT}/user/team/${teamId}`, {
       headers: authHeader(),

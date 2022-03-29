@@ -18,7 +18,7 @@ const EditProfile = () => {
   const generalHandler = (e) => {
     e.preventDefault();
     const data = getFormData(e);
-    console.log("general", data);
+    console.log("userName", data);
     resetForm(e);
   };
   const passwordHandler = (e) => {
@@ -173,7 +173,7 @@ const EditProfile = () => {
               <h1>Delete ALL your post</h1>
               <h2>
                 Are you sure you want to delete ALL your posts ?<br /> All your
-                Posts will be deleted...
+                Posts will be deleted !!
               </h2>
               <div className="input-group">
                 {deletePostsFormInputs.map((input, i) => (
@@ -193,7 +193,7 @@ const EditProfile = () => {
               <h1>Delete your profile</h1>
               <h2>
                 Are you sure you want to delete your profile ?<br /> All your
-                data will be lost...
+                data will be lost !!
               </h2>
               <div className="input-group">
                 {deleteProfileFormInputs.map((input, i) => (
@@ -214,14 +214,14 @@ const EditProfile = () => {
         setVisible={setShowDeletePosts}
         message="Are you sure you want to delete all your posts?"
         option="Delete"
-        onConfirm={() => console.log("post delete confirmed")}
+        onConfirm={() => console.log("post deleted successfully")}
       />
       <Confirmation
         visible={showDeleteProfile}
         setVisible={setShowDeleteProfile}
         message="Are you sure you want to delete your profile?"
         option="Delete"
-        onConfirm={() => console.log("post delete confirmed")}
+        onConfirm={() => console.log("profile deleted successfully")}
       />
     </>
   );

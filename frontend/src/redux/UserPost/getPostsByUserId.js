@@ -23,6 +23,9 @@ const getPostsByUserId =
 
       dispatch(setLoading(false));
       dispatch(setError(errorResponse));
+      if (errorResponse === "Access Denied") {
+        dispatch(setUserPosts({}));
+      }
     }
   };
 

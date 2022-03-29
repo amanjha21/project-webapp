@@ -22,6 +22,9 @@ const getUserById = (userId) => async (dispatch) => {
 
     dispatch(setLoading(false));
     dispatch(setError(errorResponse));
+    if (errorResponse === "Access Denied") {
+      dispatch(setUser({}));
+    }
   }
 };
 

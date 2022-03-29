@@ -27,7 +27,7 @@ const About = ({ data }) => {
         {data.length > 5 && limit < data.length && (
           <div className="about-view-container">
             <button className="button-view" onClick={viewMoreHandler}>
-              View more
+              view more
             </button>
           </div>
         )}
