@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import FormInput from "./FormInput";
 import "./LoginComponent.css";
 import LoginImageSection from "./LoginImageSection";
-import { login } from "../../auth";
+import { login, signup } from "../../auth";
 
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -37,10 +37,11 @@ const Login = () => {
       dispatch(getCurrentUserById(userId));
     }
   };
-  const signupHandler = (e) => {
+  const signupHandler = async (e) => {
     e.preventDefault();
     const data = getFormData(e);
     console.log("signup", data);
+    await signup(data.username, data.email, data.password);
     setShowResetNotification("fadeIn");
     resetForm(e);
   };
@@ -126,11 +127,11 @@ const Login = () => {
   }, []);
   return (
     <>
-      <div className="signin-container">
+      <div className='signin-container'>
         <LoginImageSection />
-        <div className="sign-panels">
+        <div className='sign-panels'>
           <div className={`login ${showLogin}`}>
-            <div className="title">
+            <div className='title'>
               <span>Login</span>
               <p>Welcome back, please login to your account. </p>
             </div>
@@ -142,10 +143,10 @@ const Login = () => {
                   onChange={formInputChangeHandler}
                 />
               ))}
-              <button className="btn-signin">Login</button>
+              <button className='btn-signin'>Login</button>
 
               <div
-                className="btn-reset btn-fade"
+                className='btn-reset btn-fade'
                 onClick={() => {
                   setShowLogin("fadeOut");
                   setShowResetNotification("fadeOut");
@@ -155,7 +156,7 @@ const Login = () => {
                 Forgot password?
               </div>
               <div
-                className="btn-member btn-fade"
+                className='btn-member btn-fade'
                 onClick={() => {
                   setShowLogin("fadeOut");
                   setShowResetNotification("fadeOut");
@@ -167,7 +168,7 @@ const Login = () => {
             </form>
           </div>
           <div className={`signup ${showSignup}`}>
-            <div className="title">
+            <div className='title'>
               <span>Sign Up</span>
               <p>Create a new account.</p>
             </div>
@@ -187,9 +188,9 @@ const Login = () => {
                 />
               ))}
 
-              <button className="btn-signin">Sign Up</button>
+              <button className='btn-signin'>Sign Up</button>
               <div
-                className="btn-login btn-fade"
+                className='btn-login btn-fade'
                 onClick={() => {
                   setShowLogin("fadeIn");
                   setShowSignup("fadeOut");
@@ -201,7 +202,7 @@ const Login = () => {
           </div>
 
           <div className={`recover-password ${showResetPassword}`}>
-            <div className="title">
+            <div className='title'>
               <span>Recover Password</span>
               <p>Enter the email associated with your account</p>
             </div>
@@ -215,9 +216,9 @@ const Login = () => {
                 />
               ))}
 
-              <button className="btn-signin btn-password">Submit Reset</button>
+              <button className='btn-signin btn-password'>Submit Reset</button>
               <div
-                className="btn-login btn-fade"
+                className='btn-login btn-fade'
                 onClick={() => {
                   setShowLogin("fadeIn");
                   setShowResetPassword("fadeOut");

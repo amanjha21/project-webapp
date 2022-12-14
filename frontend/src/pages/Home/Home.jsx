@@ -14,11 +14,11 @@ const Home = () => {
   let posts = postsData;
   let notices = [];
   const currentUser = useSelector((state) => state.currentUser.data);
-  const [page, setPage] = useState(1);
-  const defaultLimit = 1;
+  const [page, setPage] = useState();
+  const defaultLimit = 5;
   const [activeTab, setActiveTab] = useState(-1);
   const loadMoreHandler = () => {
-    setPage((prev) => prev + 1);
+    setPage((prev) => (prev ? prev + 1 : 2));
   };
   const teamChangeHandler = (data) => {
     setActiveTab(data);
@@ -34,6 +34,10 @@ const Home = () => {
     //   console.log(posts.isLoading, "ran");
     // }
   };
+  // useEffect(() => {
+  //   dispatch(getPosts(page, defaultLimit));
+  // }, []);
+
   useEffect(() => {
     dispatch(getPosts(page, defaultLimit));
     console.log("ran");
@@ -52,12 +56,12 @@ const Home = () => {
     //remove event listener cleanup
   }, []);
   return (
-    <div className="homepage-grid-main">
-      <div className="homepage-nav">
+    <div className='homepage-grid-main'>
+      <div className='homepage-nav'>
         <Navbar />
       </div>
-      <div className="homepage-center">
-        {activeTab === -1 && <CreatePost type="create" />}
+      <div className='homepage-center'>
+        {activeTab === -1 && <CreatePost type='create' />}
         {posts.isLoading && <h1>Loading...</h1>}
         {posts.data.length > 0 &&
           posts.data.map((post, index) => <Post key={index} data={post} />)}
@@ -67,7 +71,7 @@ const Home = () => {
         {posts.isLoading && <h1>Loading...</h1>}
         {posts.error && <h1>{posts.error}</h1>}
       </div>
-      <div className="homepage-right">
+      <div className='homepage-right'>
         <UserTeams
           teamChangeHandler={teamChangeHandler}
           page={page}
